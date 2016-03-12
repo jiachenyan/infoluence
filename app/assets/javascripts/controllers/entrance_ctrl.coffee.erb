@@ -31,7 +31,7 @@ angular.module('Infoluence').controller 'EntranceController', [
 
    req =
     method : "post"
-    url : "/users.json"
+    url : "/user/login.json"
     dataType : "json"
     params:
      login:$scope.login
@@ -64,7 +64,7 @@ angular.module('Infoluence').controller 'EntranceController', [
 
    req =
     method : "post"
-    url : "/users.json"
+    url : "/user.json"
     dataType : "json"
     params:
      name:$scope.signupName
