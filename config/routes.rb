@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
 		controller :posts, path: '/posts' do
 			get '/:page',                                action: :send_timeline
+			get '/following/:page',                      action: :send_follow_timeline
 		end
 
 		controller :users, path: '/:username' do

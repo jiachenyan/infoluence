@@ -1,0 +1,14 @@
+API Docs
+
+POST  /users.json # create user, data: [password, passwordConfirmation, name, username]
+PUT   /user.json # update user, todo
+PATCH /user.json # update user avatar, todo
+GET   /:username.json # user info
+
+POST  /user/login.json # login, data: [login, password]
+PUT   /user/logout.json # logout
+
+POST  /posts.json # create post, data: [content]
+GET   /post/:id.json # post detail, todo: params: [inf_id]
+GET   /posts/:page.json # timeline
+GET   /posts/following/:page.json # timeline

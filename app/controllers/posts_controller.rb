@@ -23,6 +23,10 @@ class PostsController < ApplicationController
 		render jsonize(serialize_posts)
 	end
 
+	def send_follow_timeline
+		render jsonize({todo: 'following timeline'})
+	end
+
 	private
 
 	def serialize_post
@@ -33,6 +37,7 @@ class PostsController < ApplicationController
 
 	def serialize_posts
 		query_ast = posts_query_ast
+		# todo: paginate
 		json_agg_exec(query_ast)
 	end
 
