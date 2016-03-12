@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: MyText
+  user_id: 
+  post_id: 
+  from_inf_id: 1
+  properties: 
+
+two:
+  type: MyText
+  user_id: 
+  post_id: 
+  from_inf_id: 1
+  properties: 

@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
 				post '/login',                             action: :create_session
 				put '/logout',                             action: :destroy_session
+
+				put '/follow/:username',                   action: :update_relationship
 		end
 
 		resources :posts, only: [:create]

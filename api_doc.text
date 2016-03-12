@@ -35,6 +35,15 @@ POST  /user/login.json
 PUT   /user/logout.json
 	# logout
 
+PUT   /user/follow/:username.json
+	# follow/unfollow user
+	# on success => follow status
+		{
+			"username": string,
+			"following": boolean
+		}
+	# on error => {"errors": [string]}
+
 
 POST  /posts.json
 	# create post

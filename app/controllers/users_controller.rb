@@ -65,6 +65,20 @@ class UsersController < ApplicationController
 		render json_success('Logged out')
 	end
 
+	def update_relationship
+		follows_user = User.find_by_username(params[:username])
+		return render json_error('Invalid user to follow') if follows_user.blank?
+			
+		if current_user.update_relationship(follows_user)
+			render jsonize({
+				username: follows_user.username,
+				following: current_user.follows?(follows_user)
+			})
+		else
+			render json_error('Invalid user to follow')
+		end
+	end
+
 	private
 
 	def serialize_user(user)

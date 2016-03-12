@@ -11,11 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160312143156) do
+ActiveRecord::Schema.define(version: 20160312191353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "pg_trgm"
+
+  create_table "influences", force: :cascade do |t|
+    t.text     "type",        null: false
+    t.integer  "user_id"
+    t.integer  "post_id",     null: false
+    t.integer  "from_inf_id", null: false
+    t.jsonb    "properties"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "influences", ["from_inf_id"], name: "index_influences_on_from_inf_id", using: :btree
+  add_index "influences", ["post_id"], name: "index_influences_on_post_id", using: :btree
+  add_index "influences", ["type"], name: "index_influences_on_type", using: :btree
+  add_index "influences", ["user_id"], name: "index_influences_on_user_id", using: :btree
 
   create_table "posts", force: :cascade do |t|
     t.integer  "user_id"
@@ -27,6 +42,16 @@ ActiveRecord::Schema.define(version: 20160312143156) do
 
   add_index "posts", ["content"], name: "gin_index_posts_on_content", using: :gin
   add_index "posts", ["user_id"], name: "index_posts_on_user_id", using: :btree
+
+  create_table "user_relationships", force: :cascade do |t|
+    t.integer  "follower_id", null: false
+    t.integer  "follows_id",  null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "user_relationships", ["follower_id"], name: "index_user_relationships_on_follower_id", using: :btree
+  add_index "user_relationships", ["follows_id"], name: "index_user_relationships_on_follows_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.text     "name",                null: false
@@ -48,5 +73,10 @@ ActiveRecord::Schema.define(version: 20160312143156) do
   add_index "users", ["username"], name: "gin_index_users_on_username", using: :gin
   add_index "users", ["username"], name: "index_users_on_username", using: :btree
 
+  add_foreign_key "influences", "influences", column: "from_inf_id"
+  add_foreign_key "influences", "posts"
+  add_foreign_key "influences", "users"
   add_foreign_key "posts", "users"
+  add_foreign_key "user_relationships", "users", column: "follower_id"
+  add_foreign_key "user_relationships", "users", column: "follows_id"
 end

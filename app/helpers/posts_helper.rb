@@ -1,5 +1,6 @@
 module PostsHelper
 	private
+
 	# serializer helper
 	def post_projs
 		post_tb = Post.arel_table

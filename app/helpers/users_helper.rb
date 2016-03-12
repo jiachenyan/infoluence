@@ -42,15 +42,29 @@ module UsersHelper
 
 	# serializer helpers
 
+	def users_cte(users_cte)
+		users_tb = User.arel_table
+
+		user_cte_projs = user_projs
+		user_cte_projs << users_tb[:id]
+		users_ast = users_tb.project(user_cte_projs)
+		unless filter.nil?
+			# todo
+			# users_ast.where()
+		end
+
+		Arel::Nodes::As.new(users_cte, users_ast)
+	end
+
 	def user_projs
-		user_tb = User.arel_table
+		users_tb = User.arel_table
 		[
-			user_tb[:name],
-			user_tb[:username],
+			users_tb[:name],
+			users_tb[:username],
 			avatar_url_attr(:thumb, :avatarThumb),
 			avatar_url_attr(:medium, :avatarMedium),
-			user_tb[:total_influence].as('totalInf'),
-			arel_sql_epoch(user_tb, :created_at, :regTime)
+			users_tb[:total_influence].as('totalInf'),
+			arel_sql_epoch(users_tb, :created_at, :regTime)
 		]
 	end
 
