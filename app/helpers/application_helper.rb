@@ -29,6 +29,13 @@ module ApplicationHelper
 
 	# serializer helpers
 
+	def paginate(query_ast, page, items_per_page)
+		page = page.to_i unless page.is_a?(Fixnum)
+		offset = 0
+		offset = (page-1)*items_per_page if page > 1
+		query_ast.take(items_per_page).skip(offset)
+	end
+
 	def json_agg_exec(query_ast)
 		data = ActiveRecord::Base.connection.execute <<-SQL.squish
 			SELECT
@@ -56,7 +63,7 @@ module ApplicationHelper
 		end		
 
 		Arel.sql( <<-SQL.squish
-			EXTRACT(EPOCH FROM "#{arel_tb.name}"."#{col_name}")::INT
+			CAST(EXTRACT(EPOCH FROM "#{arel_tb.name}"."#{col_name}") AS INT)
 		SQL
 		).as("\"#{as_name}\"")
 	end

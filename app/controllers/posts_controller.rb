@@ -1,6 +1,8 @@
 class PostsController < ApplicationController
 	before_action :signed_in_user, only: [:create]
 
+	POSTS_PER_PAGE = 20
+
 	def create
 		@post = current_user.posts.new
 		@post.content = params[:content]
@@ -20,7 +22,7 @@ class PostsController < ApplicationController
 	end
 
 	def send_timeline
-		render jsonize(serialize_posts)
+		render jsonize(serialize_posts(params[:page]))
 	end
 
 	def send_follow_timeline
@@ -35,8 +37,11 @@ class PostsController < ApplicationController
 		json_agg_exec(query_ast).first
 	end
 
-	def serialize_posts
-		query_ast = posts_query_ast
+	def serialize_posts(page=1)
+		query_ast = paginate(
+			posts_query_ast, page, POSTS_PER_PAGE
+		)
+		.order(@post_tb[:created_at].desc)
 		# todo: paginate
 		json_agg_exec(query_ast)
 	end
