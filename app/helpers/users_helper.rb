@@ -42,20 +42,6 @@ module UsersHelper
 
 	# serializer helpers
 
-	def users_cte(users_cte)
-		users_tb = User.arel_table
-
-		user_cte_projs = user_projs
-		user_cte_projs << users_tb[:id]
-		users_ast = users_tb.project(user_cte_projs)
-		unless filter.nil?
-			# todo
-			# users_ast.where()
-		end
-
-		Arel::Nodes::As.new(users_cte, users_ast)
-	end
-
 	def user_projs
 		users_tb = User.arel_table
 		[
@@ -63,13 +49,16 @@ module UsersHelper
 			users_tb[:username],
 			avatar_url_attr(:thumb, :avatarThumb),
 			avatar_url_attr(:medium, :avatarMedium),
-			users_tb[:total_influence].as('totalInf'),
+			users_tb[:total_read_influence].as('"totalRdInf"'),
+			users_tb[:total_share_influence].as('"totalShInf"'),
+			users_tb[:total_shares].as('"totalShares"'),
+			users_tb[:total_posts].as('"totalPosts"'),
 			arel_sql_epoch(users_tb, :created_at, :regTime)
 		]
 	end
 
-	def avatar_url_attr(style, as_name)
-		Arel.sql <<-SQL.squish
+	def avatar_url_attr(style, as_name=nil)
+		arel_sql = Arel.sql <<-SQL.squish
 			CASE WHEN "users"."avatar_file_name" IS NOT NULL  THEN
 				'http://s3.amazonaws.com/infoluence/users/avatars/' ||
 				TO_CHAR("users"."id",'FM000/000/000') ||
@@ -80,7 +69,13 @@ module UsersHelper
 			ELSE
 				'http://s3.amazonaws.com/infoluence/default_avatar.jpg'
 			END
-			AS "#{as_name}"
 		SQL
+
+		arel_sql = arel_sql.as("\"#{as_name}\"") unless as_name.nil?
+		arel_sql
+	end
+
+	def json_build_object(*values)
+		Arel::Nodes::NamedFunction.new('JSON_BUILD_OBJECT', values)
 	end
 end

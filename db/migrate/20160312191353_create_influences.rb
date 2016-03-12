@@ -2,7 +2,7 @@ class CreateInfluences < ActiveRecord::Migration
   def change
     create_table :influences do |t|
       t.text :type, null: false
-      t.references :user, index: true, foreign_key: true # null on OC
+      t.references :user, index: true, foreign_key: true # null on OC and anon
       t.references :post, index: true, foreign_key: true, null: false
       t.integer :from_inf_id, index: true, null: false
       t.jsonb :properties

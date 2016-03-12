@@ -7,6 +7,8 @@ module PostsHelper
 		[
 			post_tb[:id].as('"postId"'),
 			post_tb[:content],
+			post_tb[:total_reads].as('"totalReads"'),
+			post_tb[:total_shares].as('"totalShares"'),
 			arel_sql_epoch(post_tb, :created_at, :timestamp)
 		]
 	end

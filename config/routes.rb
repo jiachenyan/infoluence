@@ -16,8 +16,8 @@ Rails.application.routes.draw do
 
 		resources :posts, only: [:create]
 		controller :posts, path: '/post' do
-			# &inf_id=influence_id
-			get '/:id',                                  action: :send_post
+			get '/:inf_id',                              action: :send_post
+			post '/share/:from_inf_id',                  action: :share_post
 		end
 
 		controller :posts, path: '/posts' do

@@ -11,33 +11,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160312191353) do
+ActiveRecord::Schema.define(version: 20160312232745) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "pg_trgm"
 
   create_table "influences", force: :cascade do |t|
-    t.text     "type",        null: false
+    t.text     "inf_type",    null: false
     t.integer  "user_id"
     t.integer  "post_id",     null: false
-    t.integer  "from_inf_id", null: false
+    t.integer  "from_inf_id"
     t.jsonb    "properties"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
   add_index "influences", ["from_inf_id"], name: "index_influences_on_from_inf_id", using: :btree
+  add_index "influences", ["inf_type", "post_id"], name: "index_influences_on_inf_type_and_post_id", using: :btree
+  add_index "influences", ["inf_type"], name: "index_influences_on_inf_type", using: :btree
   add_index "influences", ["post_id"], name: "index_influences_on_post_id", using: :btree
-  add_index "influences", ["type"], name: "index_influences_on_type", using: :btree
   add_index "influences", ["user_id"], name: "index_influences_on_user_id", using: :btree
 
   create_table "posts", force: :cascade do |t|
     t.integer  "user_id"
     t.jsonb    "content"
     t.jsonb    "properties"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "total_reads",  default: 0, null: false
+    t.integer  "total_shares", default: 0, null: false
   end
 
   add_index "posts", ["content"], name: "gin_index_posts_on_content", using: :gin
@@ -54,18 +57,21 @@ ActiveRecord::Schema.define(version: 20160312191353) do
   add_index "user_relationships", ["follows_id"], name: "index_user_relationships_on_follows_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.text     "name",                null: false
-    t.text     "username",            null: false
-    t.text     "password_digest",     null: false
-    t.text     "token",               null: false
-    t.integer  "total_influence",     null: false
+    t.text     "name",                              null: false
+    t.text     "username",                          null: false
+    t.text     "password_digest",                   null: false
+    t.text     "token",                             null: false
     t.jsonb    "properties"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.string   "avatar_file_name"
     t.string   "avatar_content_type"
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.integer  "total_read_influence",  default: 0, null: false
+    t.integer  "total_share_influence", default: 0, null: false
+    t.integer  "total_shares",          default: 0, null: false
+    t.integer  "total_posts",           default: 0, null: false
   end
 
   add_index "users", ["name"], name: "gin_index_users_on_name", using: :gin

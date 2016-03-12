@@ -52,24 +52,11 @@ module ApplicationHelper
 	end
 
 	def arel_sql_epoch(arel_tb, col_name, as_name=nil)
-		col_name = col_name.to_s
-
-		if as_name
-			as_name = as_name.to_s
-		elsif camelize_col?(col_name)
-			as_name = col_name.camelize(:lower)
-		else
-			as_name = col_name
-		end		
-
-		Arel.sql( <<-SQL.squish
+		arel_sql = Arel.sql <<-SQL.squish
 			CAST(EXTRACT(EPOCH FROM "#{arel_tb.name}"."#{col_name}") AS INT)
 		SQL
-		).as("\"#{as_name}\"")
-	end
 
-	def camelize_col?(col_name)
-		# convert if all lowercase and has underscore
-		(!(col_name =~ /[A-Z]/) and (col_name =~ /\_/))
+		arel_sql = arel_sql.as("\"#{as_name}\"") unless as_name.nil?
+		arel_sql
 	end
 end

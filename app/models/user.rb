@@ -57,7 +57,6 @@ class User < ActiveRecord::Base
 		if new_record?
 			# initialize login token
 			self.token = SecureRandom.urlsafe_base64
-			self.total_influence = 0
 		end
 	end
 end
