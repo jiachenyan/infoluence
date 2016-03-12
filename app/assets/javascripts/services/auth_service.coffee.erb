@@ -16,8 +16,8 @@ angular.module('Infoluence').service 'AuthService', [
 		  method : "delete"
 		  url : "/sessions.json"
 		  dataType : "json"
-		  params:
-		   authenticity_token:$("meta[name='csrf-token']").attr("content")
+		  # params:
+		  #  authenticity_token:$("meta[name='csrf-token']").attr("content")
 
 		 promise = $http(req)
 		 promise

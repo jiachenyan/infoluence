@@ -5,9 +5,16 @@ angular.module('Infoluence').config [
  "$urlRouterProvider"
  "$locationProvider"
  "$compileProvider"
- ($stateProvider,$urlRouterProvider,$locationProvider,$compileProvider) ->
+ "$httpProvider"
+ ($stateProvider,$urlRouterProvider,$locationProvider,$compileProvider,$httpProvider) ->
 
   $compileProvider.debugInfoEnabled(false)
+
+  # set csrf token for rails
+  for metaEle in angular.element(document).find('meta')
+   if angular.element(metaEle).attr('name') == 'csrf-token'
+    $httpProvider.defaults.headers.common['X-CSRF-Token'] = angular.element(metaEle).attr('content')
+    break
 
   $stateProvider
 
