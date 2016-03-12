@@ -20,9 +20,6 @@ module Infoluence
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    # Don't wrap a Rack::Lock mutex around requests.
-    config.allow_concurrency = true
-
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
 
