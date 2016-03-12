@@ -20,24 +20,33 @@ class PostsController < ApplicationController
 	end
 
 	def send_timeline
-		render jsonize({todo: 'timeline'})
+		render jsonize(serialize_posts)
 	end
 
 	private
 
 	def serialize_post
-		post_tb = Post.arel_table
-		user_tb = User.arel_table
+		query_ast = posts_query_ast
+		.where(@post_tb[:id].eq(@post.id))
+		json_agg_exec(query_ast).first
+	end
+
+	def serialize_posts
+		query_ast = posts_query_ast
+		json_agg_exec(query_ast)
+	end
+
+	def posts_query_ast
+		@post_tb = Post.arel_table
+		@user_tb = User.arel_table
 
 		projs = post_projs + user_projs
 
-		query_ast = post_tb.project(projs)
-		.join(user_tb)
-		.on(user_tb[:id].eq(post_tb[:user_id]))
-		.where(post_tb[:id].eq(@post.id))
+		@post_tb.project(projs)
+		.join(@user_tb)
+		.on(@user_tb[:id].eq(@post_tb[:user_id]))
+
 		#todo: join graph data
 		#todo: join influence info
-
-		json_agg_exec(query_ast).first
 	end
 end
