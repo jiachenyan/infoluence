@@ -18,14 +18,15 @@ class UsersController < ApplicationController
 
 	def user_info
 		user = User.find_by_username(params[:username])
-		return render json_error('Invalid user') if user.blank?
+		return render json_error('Invalid user') unless user.present?
 
 		render jsonize({
 			name: user.name,
 			username: user.username,
 			totalInf: user.total_influence,
 			avatarThumb: user.avatar.url(:thumb),
-			avatarMedium: user.avatar.url(:medium)
+			avatarMedium: user.avatar.url(:medium),
+			regTime: user.created_at.to_i
 		})
 	end
 
@@ -47,11 +48,11 @@ class UsersController < ApplicationController
 	end
 
 	def create_session
-		if params[:login].include? '@'
-			user = User.find_by_email(params[:login])
-		else
+		# if params[:login].include? '@'
+			# user = User.find_by_email(params[:login])
+		# else
 			user = User.find_by_username(params[:login])
-		end
+		# end
 
 		if user.present? and user.authenticate(params[:password])
 			sign_in user

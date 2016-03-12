@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
 	attr_accessible(:name, :username, :email)
 
 	has_secure_password
+	has_many :posts
 
 	before_validation :set_user_defaults
 
