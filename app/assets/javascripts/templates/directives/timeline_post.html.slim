@@ -32,10 +32,8 @@
 
 	.postContentPreview
 		.previewParagraph
-			p
-				|{{post.content.data}}
-			p style="width:500px"
-				|{{post}}
+			p ng-repeat="pg in post.content.data"
+				|{{pg.body}}
 
 		/ .postContentImg
 		/ 	img src="https://cdn-images-1.medium.com/max/800/1*wl-telbKckBU58z84fwvoQ.jpeg"

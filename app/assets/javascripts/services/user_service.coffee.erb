@@ -1,0 +1,19 @@
+
+angular.module('Infoluence').service 'UserService', [
+
+ '$http'
+ ($http) ->
+ 
+  @getUserInfo = (username) =>
+   url = "/#{username}.json"
+   req =
+    method : "GET"
+    url : url
+    dataType : "json"
+   promise = $http(req)
+   promise
+
+
+  return
+
+]

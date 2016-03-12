@@ -12,17 +12,77 @@ html
 
 body.c.wh100 ng-app="Infoluence" ng-controller="ApplicationController" ng-init="initialize()"
 	.appMenu
-		h1
-			|INFOLUENCE
+		a href="/"
+			.c
+				h1.ac
+					|INFOLUENCE
+				h2.ac
+					|Share the Worth Knowings
 
 		.myPanel.r ng-if="me"
 			.f1
 
-			.myPanelButton.c
-				.myProfileImg
-					img ng-src="{{me.avatarThumb}}"
+			a href="/{{me.username}}"
+				.myPanelButton.c
+					.myProfileImg
+						img ng-src="{{me.avatarThumb}}"
+			a href="/settings"
+				.myPanelButton.c
+					i.fa.fa-cog
 			.myPanelButton.c ng-click="signout()"
 				i.fa.fa-sign-out
 
-	.appBody.f1
+	.appBody.f1.c
+		.entranceSection.c.s0 ng-controller="EntranceController" ng-if="!isSignedIn"
+			.entranceWrapper
+				.entranceNavWrapper.r
+					.entranceNav.f1.c.trans100 ng-click="switchToSignUp()" ng-class="{'selected':entranceState == 'signup'}"
+						h1.ac
+							|Get Started
+					.entranceNav.f1.c.trans100 ng-click="switchToSignIn()" ng-class="{'selected':entranceState == 'signin'}"
+						h1.ac
+							|Log In
+				form.c ng-show="entranceState == 'signup'"
+					.r
+						.c.f1
+							h1.inputLable
+								|Name
+							input ng-model="signupName" placeholder="You full name"
+						.ninepx
+						.c.f1
+							h1.inputLable
+								|Username
+							input ng-model="signupUsername" placeholder="Minimum 4 characters"
+
+					h1.inputLable
+						|Password
+					input ng-model="signupPassword" type="password" placeholder="Minimun 8 characters"
+					h1.inputLable
+						|Confirm Password
+					input ng-model="confirmPassword" type="password" placeholder="Type in again to confirm"
+
+					.submitButton ng-click="signup()"
+						|Sign Up
+					.errMsgs
+						.errMsg ng-repeat="err in signupErrMsgs"
+							|{{err}}
+
+
+				form.c ng-show="entranceState == 'signin'"
+
+					h1.inputLable
+						|Username
+					input ng-model="login" placeholder="Your Infoluence username"
+					h1.inputLable
+						|Password
+					input ng-model="signinPassword" type="password" placeholder="Password"
+
+					.submitButton ng-click="signin()"
+						|Sign In
+					.errMsgs
+						.errMsg ng-repeat="err in signinErrMsgs"
+							|{{err}}
+
+
+
 		ui-view.wh100

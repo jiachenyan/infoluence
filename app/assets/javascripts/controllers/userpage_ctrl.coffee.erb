@@ -1,0 +1,39 @@
+
+angular.module('Infoluence').controller 'UserpageController', [
+
+ 'CookieService'
+ 'UUID'
+ 'PostService'
+ 'UserService'
+
+ '$scope'
+ '$state'
+ '$stateParams'
+
+
+ (CookieService,UUID,PostService,UserService,$scope,$state,$stateParams) ->
+
+ 	$scope.username = $stateParams.username
+  $scope.me = null
+  $scope.timeline = [123,123]
+  $scope.post = null
+
+  $scope.userInfo = null
+
+  $scope.getUserInfo = =>
+   UserService.getUserInfo($scope.username).then (res) =>
+    $scope.userInfo = res.data
+
+
+  $scope.back = =>
+   $state.go("^")
+
+  $scope.getDetailPost = =>
+  	console.log $scope.postId
+  	PostService.getDetailPost($scope.postId).then (res) =>
+  		$scope.post = res.data
+
+  		console.log res.data
+
+
+]
