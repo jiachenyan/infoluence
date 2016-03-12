@@ -14,6 +14,7 @@
 //= require d3
 //= require jquery_ujs
 //= require angular
+//= require angular-cookies
 //= require angular-ui-router
 //= require angular-rails-templates
 //= require turbolinks

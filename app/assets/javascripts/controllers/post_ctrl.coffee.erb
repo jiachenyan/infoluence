@@ -3,20 +3,29 @@ angular.module('Infoluence').controller 'PostController', [
 
  'CookieService'
  'UUID'
+ 'PostService'
 
  '$scope'
  '$state'
  '$stateParams'
 
 
- (CookieService,UUID,$scope,$state,$stateParams) ->
+ (CookieService,UUID,PostService,$scope,$state,$stateParams) ->
 
+ 	$scope.postId = $stateParams.postId
   $scope.me = null
   $scope.timeline = [123,123]
+  $scope.post = null
 
 
   $scope.back = =>
    $state.go("^")
+
+  $scope.getDetailPost = =>
+  	console.log $scope.postId
+  	PostService.getDetailPost($scope.postId).then (res) =>
+  		$scope.post = res.data
+  		console.log res.data
 
 
 ]

@@ -5,7 +5,7 @@ angular.module('Infoluence').service 'PostService', [
  ($http) ->
  
   @getDetailPost = (postId) =>
-   url = "/posts/#{postId}.json"
+   url = "/post/#{postId}.json"
    req =
     method : "GET"
     url : url

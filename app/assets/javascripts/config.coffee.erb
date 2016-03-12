@@ -47,14 +47,14 @@ angular.module('Infoluence').config [
 
 
   .state "home.post",
-   url: "posts/:rootId"
+   url: "posts/:postId"
    templateUrl: "directives/detail_post.html"
    #controller: "PostController"
    resolve:
-    rootId: [
+    postId: [
      "$stateParams"
      ($stateParams) ->
-      return $stateParams.rootId
+      return $stateParams.postId
     ]
 
   ##########################################################

@@ -3,54 +3,62 @@ angular.module('Infoluence').controller 'ApplicationController', [
 
  'CookieService'
  'UUID'
+ 'AuthService'
 
  '$scope'
  '$stateParams'
 
 
- (CookieService,UUID,$scope,$stateParams) ->
+ (CookieService,UUID,AuthService,$scope,$stateParams) ->
 
   $scope.me = null
+  $scope.isSignedIn =    AuthService.isSignedIn()
 
   $scope.initialize = =>
    $scope.me = CookieService.getUserInfo()
+   console.log $scope.me
+
+  $scope.signout = =>
+   AuthService.signout().then (res) =>
+    window.location.replace(window.location.origin)
+
    
 
-  $scope.publishComment = (post) ->
+  # $scope.publishComment = (post) ->
 
-   if $scope.commentContent.length > 0
+  #  if $scope.commentContent.length > 0
 
-    CommentsFactory.publishComment(post.rootId,$scope.commentContent)
+  #   CommentsFactory.publishComment(post.rootId,$scope.commentContent)
 
-    currentTime = new Date().getTime()
+  #   currentTime = new Date().getTime()
 
-    if $scope.commentContent.length >= 2000
-     $scope.commentErrMsg.push "Comment too long.(exceeded 2000 characters)"
-     return
+  #   if $scope.commentContent.length >= 2000
+  #    $scope.commentErrMsg.push "Comment too long.(exceeded 2000 characters)"
+  #    return
 
-    comment =
-    	imgUrl:     $scope.imgUrl
-    	firstName:  CookieService.getCookie("firstName")
-    	lastName:   CookieService.getCookie("lastName")
-    	username:   CookieService.getCookie("username")
-    	content:    $scope.commentContent
-    	time:       moment(currentTime * 1000).format("L, h:mm:ss a")
-     timeString: moment.duration((currentTime - currentTime) * 1000).humanize()
-     guid:       UUID.newguid()
+  #   comment =
+  #   	imgUrl:     $scope.imgUrl
+  #   	firstName:  CookieService.getCookie("firstName")
+  #   	lastName:   CookieService.getCookie("lastName")
+  #   	username:   CookieService.getCookie("username")
+  #   	content:    $scope.commentContent
+  #   	time:       moment(currentTime * 1000).format("L, h:mm:ss a")
+  #    timeString: moment.duration((currentTime - currentTime) * 1000).humanize()
+  #    guid:       UUID.newguid()
      
-    if post.commentBool == false
-	    post.commentBool = true
-	    post.commentLoaded = true
+  #   if post.commentBool == false
+	 #    post.commentBool = true
+	 #    post.commentLoaded = true
 
-    post.commentList.push comment
+  #   post.commentList.push comment
 
-    $scope.commentContent = ""
+  #   $scope.commentContent = ""
 
 
- 	$scope.focus = (inputId) =>
- 		id = "#commentInput_#{inputId}"
- 		$(id).focus()
-   $scope.commentErrMsg = []
+ 	# $scope.focus = (inputId) =>
+ 	# 	id = "#commentInput_#{inputId}"
+ 	# 	$(id).focus()
+  #  $scope.commentErrMsg = []
 
 
 ]

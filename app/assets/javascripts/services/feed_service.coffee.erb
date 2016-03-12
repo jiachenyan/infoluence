@@ -1,0 +1,19 @@
+
+angular.module('Infoluence').service 'FeedService', [
+
+ '$http'
+ ($http) ->
+ 
+  @getFeed = (type,pageNum) =>
+   url = "/posts#{type}/#{pageNum}.json"
+   req =
+    method : "GET"
+    url : url
+    dataType : "json"
+   promise = $http(req)
+   promise
+
+
+  return
+
+]

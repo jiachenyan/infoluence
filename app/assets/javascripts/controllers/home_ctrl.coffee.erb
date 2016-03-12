@@ -3,15 +3,33 @@ angular.module('Infoluence').controller 'HomeController', [
 
  'CookieService'
  'UUID'
+ 'FeedFactory'
 
  '$scope'
  '$stateParams'
 
 
- (CookieService,UUID,$scope,$stateParams) ->
+ (CookieService,UUID,FeedFactory,$scope,$stateParams) ->
 
   $scope.me = null
-  $scope.timeline = [123,123]
+  $scope.feed = FeedFactory.feed
+
+  $scope.feedType = "" #'/following' for following feed
+
+  $scope.getFeed = =>
+   FeedFactory.getFeed($scope.feedType)
+
+  $scope.switchToPublic = =>
+   FeedFactory.clear()
+   $scope.feedType = ""
+   $scope.getFeed()
+
+  $scope.switchToFollowing = =>
+   FeedFactory.clear()
+   $scope.feedType = "/following"
+   $scope.getFeed()
+
+
 
   # $scope.initialize = =>
   #  $scope.me = CookieService.getUserInfo()
