@@ -10,9 +10,19 @@ html
 		= javascript_include_tag 'application', 'data-turbolinks-track' => true
 		= csrf_meta_tags
 
-body.c.wh100 ng-app="Infoluence" ng-controller="ApplicationController"
+body.c.wh100 ng-app="Infoluence" ng-controller="ApplicationController" ng-init="initialize()"
 	.appMenu
 		h1
 			|INFOLUENCE
-	.appBody.f1.ofys
+
+		.myPanel.r ng-if="me"
+			.f1
+
+			.myPanelButton.c
+				.myProfileImg
+					img ng-src="{{me.avatarThumb}}"
+			.myPanelButton.c ng-click="signout()"
+				i.fa.fa-sign-out
+
+	.appBody.f1
 		ui-view.wh100

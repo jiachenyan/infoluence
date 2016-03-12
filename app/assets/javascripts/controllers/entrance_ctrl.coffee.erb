@@ -12,9 +12,9 @@ angular.module('Infoluence').controller 'EntranceController', [
 
  (CookieService,AuthService,UUID,$scope,$stateParams,$http) ->
 
-  $scope.commentContent = ""
-  $scope.imgUrl = decodeURIComponent(CookieService.getCookie("imgUrlSmall"))
-  $scope.commentErrMsg = []
+  # $scope.commentContent = ""
+  # $scope.imgUrl = decodeURIComponent(CookieService.getCookie("imgUrlSmall"))
+  # $scope.commentErrMsg = []
 
   $scope.signupUsername = ""
   $scope.signupName = ""
@@ -29,7 +29,6 @@ angular.module('Infoluence').controller 'EntranceController', [
   $scope.signinErrMsgs = ["signin err msg"]
 
   $scope.signin = =>
-   alert("working")
 
    req =
     method : "post"
@@ -39,30 +38,26 @@ angular.module('Infoluence').controller 'EntranceController', [
      login: $scope.login
      password: $scope.signinPassword
 
-   $http(req).success((data) ->
-    if data.success != undefined
-     #$scope.signupMsg = JSON.stringify(data)
-     $scope.signupSuccessShow = true
-
-     setTimeout (=>
-      window.location.replace(window.location.origin)
-     ), 1000
+   $http(req).then (data) ->
     
     if data.errors != undefined
      alert(JSON.stringify(res.data))
      data.errors.forEach (err) =>
       $scope.signupErr = true
       $scope.signupErrMsgs.push "#{err}."
+    else
+     $scope.signupSuccessShow = true
+
+     setTimeout (=>
+      alert("go")
+      window.location.replace(window.location.origin)
+     ), 1000
 
     $scope.buttonState = true
 
-   ).error (data) ->
-    $scope.signupErrorMsg = JSON.stringify(data)
-    #todo: error handler
 
 
   $scope.signup = =>
-   alert("working")
 
    req =
     method : "post"
@@ -71,14 +66,23 @@ angular.module('Infoluence').controller 'EntranceController', [
 
     params:
      name:$scope.signupName
-     username:$scope.signupUesername
+     username:$scope.signupUsername
      #email:$scope.email
      password:$scope.signupPassword
      password_confirmation:$scope.confirmPassword
 
 
-   $http(req).success((data) ->
-    if data.success != undefined
+   $http(req).then (data) ->
+
+    console.log data
+
+    if data.errors != undefined
+     alert(JSON.stringify(res.data))
+     data.errors.forEach (err) =>
+      $scope.signupErr = true
+      $scope.signupErrMsgs.push err
+
+    else
      #$scope.signupMsg = JSON.stringify(data)
      $scope.signupSuccessShow = true
 
@@ -86,15 +90,10 @@ angular.module('Infoluence').controller 'EntranceController', [
       window.location.replace(window.location.origin)
      ), 1000
     
-    if data.errors != undefined
-     alert(JSON.stringify(res.data))
-     data.errors.forEach (err) =>
-      $scope.signupErr = true
-      $scope.signupErrMsgs.push "#{err}."
 
     $scope.buttonState = true
 
-   ).error (data) ->
+   .error (data) ->
     $scope.signupErrorMsg = JSON.stringify(data)
     #todo: error handler
 

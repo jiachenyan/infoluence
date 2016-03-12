@@ -1,0 +1,42 @@
+
+angular.module('Infoluence').factory "FeedFactory", [
+
+ 'FeedService'
+
+ (FeedService) ->
+
+  o =
+   feed: []
+   pageNum: 0
+
+  o.getFeed = (type) =>
+
+   o.pageNum++
+   FeedService.getFeed(type,o.pageNum).then (res) =>
+
+    data = res.data
+
+    data.forEach (post) =>
+     # comment.timestamp  = comment.time
+     post.timeString = moment(post.timestamp * 1000).format("L, h:mm:ss a")
+     
+     o.feed.push post
+
+  o.clear = =>
+   o.feed = []
+   pageNum:0
+
+  # o.publishComment = (rootId,content) =>
+  #  CommentsService.postComment(rootId,content).then (res) =>
+  #   comment =
+  #    firstName: "TEST"
+  #    lastName: "TSET"
+  #    content: content
+  #    timestamp: null
+  #    time: null
+  #    imgUrl: ""
+  #   o.commentList.unshift comment
+
+  o
+
+]
