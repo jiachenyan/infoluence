@@ -12,15 +12,20 @@ html
 
 body.c.wh100 ng-app="Infoluence" ng-controller="ApplicationController" ng-init="initialize()"
 	.appMenu
-		h1
-			|INFOLUENCE
+		a href="/"
+			h1
+				|INFOLUENCE
 
 		.myPanel.r ng-if="me"
 			.f1
 
-			.myPanelButton.c
-				.myProfileImg
-					img ng-src="{{me.avatarThumb}}"
+			a href="/{{me.username}}"
+				.myPanelButton.c
+					.myProfileImg
+						img ng-src="{{me.avatarThumb}}"
+			a href="/settings"
+				.myPanelButton.c
+					i.fa.fa-cog
 			.myPanelButton.c ng-click="signout()"
 				i.fa.fa-sign-out
 

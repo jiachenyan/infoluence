@@ -29,17 +29,6 @@ angular.module('Infoluence').config [
       return $stateParams.postId
     ]
 
-  .state "userpage",
-   url: "/:username"
-   #controller: "HomeController"
-   templateUrl: "userpage/base.html"
-   resolve:
-    username: [
-     "$stateParams"
-     ($stateParams) ->
-      return $stateParams.username
-    ]
-
   .state "settings",
    url: "/settings"
    #controller: "HomeController"
@@ -55,6 +44,17 @@ angular.module('Infoluence').config [
      "$stateParams"
      ($stateParams) ->
       return $stateParams.postId
+    ]
+
+  .state "userpage",
+   url: "/:username"
+   #controller: "HomeController"
+   templateUrl: "userpage/base.html"
+   resolve:
+    username: [
+     "$stateParams"
+     ($stateParams) ->
+      return $stateParams.username
     ]
 
   ##########################################################
