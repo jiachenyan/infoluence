@@ -1,52 +1,8 @@
+
 .wh100.ofys ng-controller="HomeController"
 	.timeline ng-init="getFeed()"
 
-		.entranceSection.c ng-controller="EntranceController" ng-if="!isSignedIn"
-			.entranceTitle
-				h1
-					|entrance intro text
-			form.c
-			 h1.inputLable
-			 	|Username
-				input ng-model="signupUsername"
-			 h1.inputLable
-			 	|Name
-				input ng-model="signupName"
-			 / h1.inputLable
-			 / 	|Email
-				/ input ng-model="email"
-			 h1.inputLable
-			 	|Password
-				input ng-model="signupPassword" type="password"
-			 h1.inputLable
-			 	|Confirm Password
-				input ng-model="confirmPassword" type="password"
-
-				.submitButton ng-click="signup()"
-					|Sign Up
-				.errMsgs
-					.errMsg ng-repeat="err in signupErrMsgs"
-						|{{err}}
-
-
-				br
-
-			 h1.inputLable
-			 	|Username
-				input ng-model="login"
-			 h1.inputLable
-			 	|Password
-				input ng-model="signinPassword" type="password"
-
-				.submitButton ng-click="signin()"
-					|Sign In
-				.errMsgs
-					.errMsg ng-repeat="err in signinErrMsgs"
-						|{{err}}
-
-
-
-		.postCreation.c ng-controller="NewPostController"
+		.postCreation.c ng-controller="NewPostController" ng-if="isSignedIn"
 			form ng-init="initNewPost()"
 				input placeholder="title" ng-model="title"
 				.c ng-repeat="content in content"

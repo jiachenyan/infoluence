@@ -16,6 +16,8 @@ angular.module('Infoluence').controller 'EntranceController', [
   # $scope.imgUrl = decodeURIComponent(CookieService.getCookie("imgUrlSmall"))
   # $scope.commentErrMsg = []
 
+  $scope.entranceState = "signup"
+
   $scope.signupUsername = ""
   $scope.signupName = ""
   #$scope.email = ""
@@ -25,8 +27,8 @@ angular.module('Infoluence').controller 'EntranceController', [
   $scope.login = ""
   $scope.signinPassword = ""
 
-  $scope.signupErrMsgs = ["signup err msg"]
-  $scope.signinErrMsgs = ["signin err msg"]
+  $scope.signupErrMsgs = []
+  $scope.signinErrMsgs = []
 
   $scope.signin = =>
 
@@ -54,7 +56,6 @@ angular.module('Infoluence').controller 'EntranceController', [
      ), 1000
 
     $scope.buttonState = true
-
 
 
   $scope.signup = =>
@@ -93,9 +94,12 @@ angular.module('Infoluence').controller 'EntranceController', [
 
     $scope.buttonState = true
 
-   .error (data) ->
-    $scope.signupErrorMsg = JSON.stringify(data)
-    #todo: error handler
+
+  $scope.switchToSignIn = =>
+   $scope.entranceState = "signin"
+   
+  $scope.switchToSignUp = =>
+   $scope.entranceState = "signup"
 
   $scope.signout = =>
    AuthService.signout().then (res) =>
