@@ -35,9 +35,9 @@ angular.module('Infoluence').controller 'EntranceController', [
     method : "post"
     url : "/user/login.json"
     dataType : "json"
-    params:
-     login:$scope.login
-     password:$scope.signinPassword
+    data:
+     login: $scope.login
+     password: $scope.signinPassword
 
    $http(req).success((data) ->
     if data.success != undefined
@@ -66,14 +66,16 @@ angular.module('Infoluence').controller 'EntranceController', [
 
    req =
     method : "post"
-    url : "/user.json"
+    url : "/users.json"
     dataType : "json"
+
     params:
      name:$scope.signupName
-     username:$scope.signupUsername
+     username:$scope.signupUesername
      #email:$scope.email
      password:$scope.signupPassword
      password_confirmation:$scope.confirmPassword
+
 
    $http(req).success((data) ->
     if data.success != undefined

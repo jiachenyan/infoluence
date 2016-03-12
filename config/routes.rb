@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
 	scope format: true, constraints: { format: :json } do
 
-		resources :user, only: [:create]
+		resources :users, only: [:create]
 		controller :users, path: '/user' do
 				put '/',                                   action: :update
 				patch '/',                                 action: :update_avatar
@@ -12,7 +12,20 @@ Rails.application.routes.draw do
 				put '/logout',                             action: :destroy_session
 		end
 
-		resources :post, only: [:create]
+		resources :posts, only: [:create]
+
+		controller :posts, path: '/post' do
+			get '/:id', action: :send_post
+			
+		end
+
+		controller :posts, path: '/posts' do
+			get '/:page',                                action: :send_timeline
+		end
+
+		controller :users, path: '/:username' do
+			get '/',                                     action: :user_info
+		end
 	end
 
 	# load application container by default

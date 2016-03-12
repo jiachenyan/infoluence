@@ -13,7 +13,8 @@ class User < ActiveRecord::Base
 	VALID_USERNAME_REGEX = /\A[0-9a-z_\-]+\z/i
 	validates :username, presence: true, 
 		length: { minimum: 4, maximum: 20 },
-		format: { with: VALID_USERNAME_REGEX }
+		format: { with: VALID_USERNAME_REGEX },
+		uniqueness: { case_sensitive: false }
 
 	# email is case insensitive and with specific format
 	VALID_EMAIL_REGEX = /\A.+@.+\.[a-z]+\z/i
