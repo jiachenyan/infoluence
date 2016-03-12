@@ -2,6 +2,7 @@
 angular.module('Infoluence').controller 'EntranceController', [
 
  'CookieService'
+ 'AuthService'
  'UUID'
 
  '$scope'
@@ -9,7 +10,7 @@ angular.module('Infoluence').controller 'EntranceController', [
  '$http'
 
 
- (CookieService,UUID,$scope,$stateParams,$http) ->
+ (CookieService,AuthService,UUID,$scope,$stateParams,$http) ->
 
   $scope.commentContent = ""
   $scope.imgUrl = decodeURIComponent(CookieService.getCookie("imgUrlSmall"))
@@ -93,41 +94,10 @@ angular.module('Infoluence').controller 'EntranceController', [
     $scope.signupErrorMsg = JSON.stringify(data)
     #todo: error handler
 
-  $scope.publishComment = (post) ->
+  $scope.signout = =>
+   AuthService.signout().then (res) =>
+    window.location.replace(window.location.origin)
 
-   if $scope.commentContent.length > 0
-
-    CommentsFactory.publishComment(post.rootId,$scope.commentContent)
-
-    currentTime = new Date().getTime()
-
-    if $scope.commentContent.length >= 2000
-     $scope.commentErrMsg.push "Comment too long.(exceeded 2000 characters)"
-     return
-
-    comment =
-    	imgUrl:     $scope.imgUrl
-    	firstName:  CookieService.getCookie("firstName")
-    	lastName:   CookieService.getCookie("lastName")
-    	username:   CookieService.getCookie("username")
-    	content:    $scope.commentContent
-    	time:       moment(currentTime * 1000).format("L, h:mm:ss a")
-     timeString: moment.duration((currentTime - currentTime) * 1000).humanize()
-     guid:       UUID.newguid()
-     
-    if post.commentBool == false
-	    post.commentBool = true
-	    post.commentLoaded = true
-
-    post.commentList.push comment
-
-    $scope.commentContent = ""
-
-
- 	$scope.focus = (inputId) =>
- 		id = "#commentInput_#{inputId}"
- 		$(id).focus()
-   $scope.commentErrMsg = []
 
 
 ]
