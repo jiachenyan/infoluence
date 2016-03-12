@@ -4,9 +4,15 @@ Rails.application.routes.draw do
 	scope format: true, constraints: { format: :json } do
 
 		resources :user, only: [:create]
-		resources :session, only: [:create, :destroy]
-		resources :post, only: [:create]
+		controller :users, path: '/user' do
+				put '/',                                   action: :update
+				patch '/',                                 action: :update_avatar
 
+				post '/login',                             action: :create_session
+				put '/logout',                             action: :destroy_session
+		end
+
+		resources :post, only: [:create]
 	end
 
 	# load application container by default
