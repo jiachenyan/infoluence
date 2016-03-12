@@ -1,4 +1,4 @@
-.timeline
+.timeline ng-controller="HomeController"
 
 	.entranceSection.c ng-controller="EntranceController"
 		.entranceTitle
@@ -11,9 +11,9 @@
 		 h1.inputLable
 		 	|Name
 			input ng-model="signupName"
-		 h1.inputLable
-		 	|Email
-			input ng-model="email"
+		 / h1.inputLable
+		 / 	|Email
+			/ input ng-model="email"
 		 h1.inputLable
 		 	|Password
 			input ng-model="signupPassword"
@@ -31,7 +31,7 @@
 			br
 
 		 h1.inputLable
-		 	|Username or Email
+		 	|Username
 			input ng-model="login"
 		 h1.inputLable
 		 	|Password
@@ -45,40 +45,16 @@
 
 
 
-	.timelinePost.c
+	.postCreation.c ng-controller="NewPostController"
+		form ng-init="initNewPost()"
+			input placeholder="title"
+			.c ng-repeat="content in postContent"
+				textarea ng-if="content.type == 'pg'" placeholder="content"
+			.linkSharing
+				input placeholder="linkUrl"
+			.submitButton
+				|Publish
 
-		.underlineBackground
+	timeline-post ng-repeat="post in timeline track by $index"
 
-		.postPublisher.r
-			.profileImg
-				img src="https://scontent-iad3-1.xx.fbcdn.net/hprofile-xtp1/v/t1.0-1/p160x160/12193837_1046447422067106_6615205571884963325_n.jpg?oh=193f3310102a1207e9aa9c162b34969a&oe=574AEDB4"
-			.publisher.f1.c
-				a href="/machineheart"
-					h1.regularText
-						|Machine Heart
-				h2
-					|Yesterday at 11:04pm
-
-		.post
-
-		.postAuthor.r
-			.profileImg
-				img src="https://scontent-iad3-1.xx.fbcdn.net/hprofile-xtp1/v/t1.0-1/p160x160/12193837_1046447422067106_6615205571884963325_n.jpg?oh=193f3310102a1207e9aa9c162b34969a&oe=574AEDB4"
-			.publisher.f1.c
-				a href="/machineheart"
-					h1.regularText
-						|Machine Heart
-				h2
-					|Yesterday at 11:04pm
-
-		.postTitle
-			h1
-				|Interview with Hui Fan: AlphaGo may already have found a different beauty of GO that beyond human’s imagination （1）
-
-		.postContentPreview
-			.previewParagraph
-				p
-					|The game between AlphaGo ( the AI Go player program from Google Deepmin) and Lee Sedol ( the South Korean professional Go player of 9 dan ) might be written in the history. This is the first time an AI player challenges the top human player in Go game, the game that has been recognized as the most complex game in human history. The show of AlpahGo was started last year by the game against Hui Fan, the European Professional Go Champion. 
-
-			.postContentImg
-				img src="https://cdn-images-1.medium.com/max/800/1*wl-telbKckBU58z84fwvoQ.jpeg"
+ui-view style="position:fixed;z-index:99;"

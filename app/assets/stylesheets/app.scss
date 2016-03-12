@@ -12,12 +12,31 @@ $FONT_SIZE_REGULAR:13px;
 
 *{
 	position:relative;
+	font-family:"Microsoft Yahei";
+	//font-family:"Open Sans";
 }
+
+img{margin-bottom:-4px;}
 
 body{
 	background-color:#222222;
 	width:100%;height:100;
 }
+
+
+.node {
+  stroke: #fff;
+  stroke-width: 0px;
+  //box-shadow:0 0 3px blue;
+  //filter: url(#f1);
+}
+
+.link {
+  stroke: #999;
+  stroke:rgba(102, 153, 255,0.4);
+  //stroke-opacity: .6;
+}
+
 
 .appMenu{
 	position:fixed;
@@ -27,6 +46,12 @@ body{
 	///border-bottom:$LINE_COLOR solid 1px;
 	background-color:#111111;
 	z-index:90;
+
+	h1{
+		margin-top:24px;
+		text-align:center;
+		font-size:24px;color:white;font-weight:think;
+	}
 }
 
 .appBody{
@@ -70,15 +95,6 @@ body{
 			}
 		}
 
-		.submitButton{
-			margin:6px 12px;
-			width:100px;
-			max-width:100px;
-			padding:6px 12px;
-
-			background-color:green;
-			font-size:14px;color:white;font-weight:bold;
-		}
 
 		.errMsgs{
 			@include align-items(flex-start);
@@ -93,10 +109,23 @@ body{
 	}
 }
 
+
+.submitButton{
+	text-align:center;
+	margin:6px 12px;
+	width:100px;
+	max-width:100px;
+	padding:6px 12px;
+
+	background-color:green;
+	font-size:14px;color:white;font-weight:bold;
+}
+
 .timeline{
 	margin:0 auto;
-	width:500px;
-	height:120%;
+	width:520px;
+	//height:120%;
+	padding-bottom:360px;
 }
 
 .timelinePost{
@@ -113,16 +142,16 @@ body{
 		top:0;left:0;
 		width:100%;height:100%;
 		border-radius:2px;
-		background:
-			-webkit-linear-gradient(45deg, hsla(196, 24%, 100%, 1) 0%, hsla(196, 24%, 100%, 0) 70%),
-			-webkit-linear-gradient(315deg, hsla(200, 21%, 100%, 1) 10%, hsla(200, 21%, 100%, 0) 80%),
-			-webkit-linear-gradient(225deg, hsla(189, 19%, 72%, 1) 10%, hsla(189, 19%, 72%, 0) 80%),
-			-webkit-linear-gradient(135deg, hsla(200, 9%, 55%, 1) 100%, hsla(200, 9%, 55%, 0) 70%);
-		background:
-			linear-gradient(45deg, hsla(196, 24%, 100%, 1) 0%, hsla(196, 24%, 100%, 0) 70%),
-			linear-gradient(135deg, hsla(200, 21%, 100%, 1) 10%, hsla(200, 21%, 100%, 0) 80%),
-			linear-gradient(225deg, hsla(189, 19%, 72%, 1) 10%, hsla(189, 19%, 72%, 0) 80%),
-			linear-gradient(315deg, hsla(200, 9%, 55%, 1) 100%, hsla(200, 9%, 55%, 0) 70%);
+		// background:
+		// 	-webkit-linear-gradient(45deg, hsla(196, 24%, 100%, 1) 0%, hsla(196, 24%, 100%, 0) 70%),
+		// 	-webkit-linear-gradient(315deg, hsla(200, 21%, 100%, 1) 10%, hsla(200, 21%, 100%, 0) 80%),
+		// 	-webkit-linear-gradient(225deg, hsla(189, 19%, 72%, 1) 10%, hsla(189, 19%, 72%, 0) 80%),
+		// 	-webkit-linear-gradient(135deg, hsla(200, 9%, 55%, 1) 100%, hsla(200, 9%, 55%, 0) 70%);
+		// background:
+		// 	linear-gradient(45deg, hsla(196, 24%, 100%, 1) 0%, hsla(196, 24%, 100%, 0) 70%),
+		// 	linear-gradient(135deg, hsla(200, 21%, 100%, 1) 10%, hsla(200, 21%, 100%, 0) 80%),
+		// 	linear-gradient(225deg, hsla(189, 19%, 72%, 1) 10%, hsla(189, 19%, 72%, 0) 80%),
+		// 	linear-gradient(315deg, hsla(200, 9%, 55%, 1) 100%, hsla(200, 9%, 55%, 0) 70%);
 		
 	}
 
@@ -151,6 +180,7 @@ body{
 	}
 
 	.postAuthor{
+		padding-top:6px;
 
 		.profileImg{
 			margin-right:12px;
@@ -206,6 +236,219 @@ body{
 			height:100%;
 			width:auto;
 			margin:0 auto;
+		}
+	}
+}
+
+.postCreation{
+	height:400px;
+	background-color:grey;
+	margin:12px 0;
+	border-radius:2px;
+
+	form{
+
+		input{
+			@include calc(width,"100% - 24px");
+			padding:6px 12px;
+			font-size:14px;color:black;
+			border:none;
+			border-bottom:transparent;
+
+			&:focus{
+				border:none;
+				border-bottom:$LINE_COLOR solid 1px;
+			}
+		}
+
+		textarea{
+			@include calc(width,"100% - 24px");
+			padding:6px 12px;
+			font-size:14px;color:black;
+			border:none;
+			border-bottom:transparent;
+
+			&:focus{
+				border:none;
+				border-bottom:$LINE_COLOR solid 1px;
+			}
+		}
+	}
+}
+
+.detailPostBase{
+	position:fixed;
+	top:0;left:0;
+	width:100%;
+	background-color:rgba(0,0,0,0.5);
+	z-index:99;
+	@include align-items(strech);
+
+	.detailPostBackground{
+	}
+}
+
+.detailPost{
+	margin:72px auto 36px auto;
+	width:720px;
+	border-radius:3px;
+	z-index:99;
+	border:grey solid 1px;
+
+	.influenceChart{
+		position:absolute;
+		right:0;bottom:0;
+		height:100%;width:50%;
+		border-left:grey solid 1px;
+
+		detail-post-influence-chart{
+			width:100%;height:100%;
+		}
+	}
+
+	.detailPostHead{
+		//height:444px;
+		width:100%;
+		background-color:black;
+
+		.postTitle{
+			padding:18px 275px 18px 18px;
+
+			h1{
+
+				font-size:21px;color:#EEE;font-weight:bold;
+			}
+		}
+
+		.detailPostAuthor{
+			padding:9px 18px;
+
+			.profileImg{
+
+				img{
+					width:50px;height:50px;
+				}
+			}
+
+			.authorInfo{
+				padding:0 0 0 0;
+
+				h1{
+					margin-left:18px;
+					font-size:16px;color:white;font-weight:bold;
+				}
+			}
+		}
+	}
+
+	.detailPostPublisher{
+		padding:9px 0;
+		width:64%;
+		margin:0 18px;
+		border-top:grey solid 1px;
+
+		.profileImg{
+			margin-right:12px;
+
+			img{
+				width:24px;height:24px;
+				border-radius:1px;
+			}
+		}
+
+		.publishInfo{
+
+			h1{
+				margin-top:3px;
+				font-size:13px;font-weight:normal;color:grey;
+			}
+		}
+	}
+
+	.detailPostMain{
+
+		width:100%;
+		background-color:white;
+
+		.paragraph{
+			padding:18px;
+
+			p{
+				line-height:26px;
+				font-size:16px;color:#333333;font-weight:normal;
+			}
+		}
+	}
+
+	.detailPostFoot{
+		width:100%;
+		background-color:#111111;
+
+
+		.relationshipUpdate{
+			border-right:grey solid 1px;
+
+			.authorProfileImg{
+				margin:0 auto;
+				margin-top:18px;
+			
+				img{
+					width:50px;height:50px;
+				}
+			}
+
+			.unfollowButton{
+				margin:9px auto;
+				padding:3px 9px;
+				border-radius:2px;
+				background-color:#333333;
+				font-size:13px;color:grey;
+			}
+
+			.followButton{
+				margin:9px auto;
+				padding:3px 9px;
+				border-radius:2px;
+				background-color:#333333;
+				font-size:13px;color:grey;
+			}
+		}
+
+		.spreadInfluence{
+
+			.share{
+				margin:0 auto;
+				margin-top:18px;
+
+				.icon{
+					width:18px;height:18px;
+					border:rgb(0, 153, 255) solid 2px;
+					border-radius:50%;
+					box-shadow:0 0 9px rgb(0, 153, 255);
+
+					&:hover{
+						cursor:pointer;
+						border:white solid 2px;
+						box-shadow:0 0 90px rgb(0, 153, 255);
+					}
+				}
+			}
+
+			.socialMedia{
+				padding:18px;
+
+				h1{
+					font-size:13px;color:grey;font-weight:normal;
+				}
+
+				.socialMediaIcon{
+					padding:3px;
+
+					i{
+						font-size:13px;color:grey;
+					}
+				}
+			}
 		}
 	}
 }
