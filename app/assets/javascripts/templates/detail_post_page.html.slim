@@ -1,0 +1,58 @@
+.detailPostBase.wh100.ofys.r ng-controller="PostController" ng-init="getDetailPost()"
+	.detailPostBackground.f1 ng-click="back()"
+	.detailPost.c
+		.detailPostHead.c
+			.influenceChart.c
+				detail-post-influence-chart.wh100
+				
+
+			.postTitle
+				h1
+					|{{post.content.title}}
+
+			.detailPostAuthor.r
+				.profileImg
+					img ng-src="{{post.avatarThumb}}"
+				.authorInfo
+					h1
+						|{{post.name}}
+
+			.detailPostPublisher.r
+				.profileImg
+					img ng-src="{{post.avatarThumb}}"
+				.publishInfo
+					h1
+						|{{post.name}} shared
+
+		.detailPostMain
+			.paragraph
+				p
+					|{{post.content.data}}
+
+
+
+		.detailPostFoot.r
+			.relationshipUpdate.f1.c
+				.authorProfileImg
+					img src="https://scontent-iad3-1.xx.fbcdn.net/hprofile-xtp1/v/t1.0-1/p160x160/12193837_1046447422067106_6615205571884963325_n.jpg?oh=193f3310102a1207e9aa9c162b34969a&oe=574AEDB4"
+				.unfollowButton
+					i.fa.fa-minus-square
+					|&nbsp;Unfollow
+				.followButton
+					i.fa.fa-plus-square
+					|&nbsp;Follow
+			.spreadInfluence.f1.c
+				.share
+					.icon.trans100
+				.socialMedia.c
+					h1.ac
+						|Extent Influence
+
+					.r
+						.f1
+						.socialMediaIcon
+							i.fa.fa-facebook-official
+						.socialMediaIcon
+							i.fa.fa-twitter-square
+						.f1
+	.detailPostBackground.f1 ng-click="back()"
