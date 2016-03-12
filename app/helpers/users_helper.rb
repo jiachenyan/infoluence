@@ -3,7 +3,9 @@ module UsersHelper
 		cookies.permanent[:user_token] = user.token
 		cookies.permanent[:userInfo] = Oj.dump({
 			username: user.username,
-			name: user.name
+			name: user.name,
+			avatarThumb: user.avatar.url(:thumb),
+			avatarMedium: user.avatar.url(:medium)
 		})
 		@current_user = user
 	end

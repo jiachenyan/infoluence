@@ -16,6 +16,19 @@ class UsersController < ApplicationController
 		end
 	end
 
+	def user_info
+		user = User.find_by_username(params[:username])
+		return render json_error('Invalid user') if user.blank?
+
+		render jsonize({
+			name: user.name,
+			username: user.username,
+			totalInf: user.total_influence,
+			avatarThumb: user.avatar.url(:thumb),
+			avatarMedium: user.avatar.url(:medium)
+		})
+	end
+
 	def update
 		if params[:password].present?
 			current_user.password = params[:password]
