@@ -107,6 +107,25 @@ body{
 	background-color:white;
 	border-radius:2px;
 
+	.underlineBackground{
+		position:absolute;
+		z-index:0;
+		top:0;left:0;
+		width:100%;height:100%;
+		border-radius:2px;
+		background:
+			-webkit-linear-gradient(45deg, hsla(196, 24%, 100%, 1) 0%, hsla(196, 24%, 100%, 0) 70%),
+			-webkit-linear-gradient(315deg, hsla(200, 21%, 100%, 1) 10%, hsla(200, 21%, 100%, 0) 80%),
+			-webkit-linear-gradient(225deg, hsla(189, 19%, 72%, 1) 10%, hsla(189, 19%, 72%, 0) 80%),
+			-webkit-linear-gradient(135deg, hsla(200, 9%, 55%, 1) 100%, hsla(200, 9%, 55%, 0) 70%);
+		background:
+			linear-gradient(45deg, hsla(196, 24%, 100%, 1) 0%, hsla(196, 24%, 100%, 0) 70%),
+			linear-gradient(135deg, hsla(200, 21%, 100%, 1) 10%, hsla(200, 21%, 100%, 0) 80%),
+			linear-gradient(225deg, hsla(189, 19%, 72%, 1) 10%, hsla(189, 19%, 72%, 0) 80%),
+			linear-gradient(315deg, hsla(200, 9%, 55%, 1) 100%, hsla(200, 9%, 55%, 0) 70%);
+		
+	}
+
 	.postPublisher{
 		border-bottom:grey solid 1px;
 
@@ -166,6 +185,14 @@ body{
 		border-top:grey solid 1px;
 		border-left:grey solid 1px;
 		border-right:grey solid 1px;
+	}
+
+	.previewParagraph{
+		padding:0 12px;
+
+		p{
+			font-size:14px;color:#555555;font-weight:normal;
+		}
 	}
 
 	.postContentImg{

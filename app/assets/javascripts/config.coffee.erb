@@ -20,13 +20,24 @@ angular.module('Infoluence').config [
 
   .state "home",
    url: "/"
-  #controller: "HomeController"
+   #controller: "HomeController"
    templateUrl: "home/home.html"
    resolve:
     postId: [
      "$stateParams"
      ($stateParams) ->
       return $stateParams.postId
+    ]
+
+  .state "userpage",
+   url: "/:username"
+   #controller: "HomeController"
+   templateUrl: "userpage/base.html"
+   resolve:
+    username: [
+     "$stateParams"
+     ($stateParams) ->
+      return $stateParams.username
     ]
 
   # .state "home.post",
