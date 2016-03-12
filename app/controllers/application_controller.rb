@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
 		response.headers["Connection"] = "close"
 	end
 
-	def correct_authentication
+	def correct_auth
 		sign_out if cookies[:user_token].present? and current_user.blank?
 	end
 end
