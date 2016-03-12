@@ -2,10 +2,13 @@ doctype html
 html
 	head
 		title Infoluence
+		base href="/"
 
 		= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
 		= javascript_include_tag 'application', 'data-turbolinks-track' => true
 		= csrf_meta_tags
 
-body
-	== yield
+body.c.wh100 ng-app="Infoluence" ng-controller="ApplicationController"
+	.appMenu
+	.appBody.f1.ofys
+		ui-view.wh100

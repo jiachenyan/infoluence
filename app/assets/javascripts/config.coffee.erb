@@ -1,0 +1,42 @@
+
+angular.module('Infoluence').config [
+
+ "$stateProvider"
+ "$urlRouterProvider"
+ "$locationProvider"
+ "$compileProvider"
+ ($stateProvider,$urlRouterProvider,$locationProvider,$compileProvider) ->
+
+  $compileProvider.debugInfoEnabled(false)
+
+  $stateProvider
+
+  .state "home",
+   url: "/"
+  #controller: "HomeController"
+   templateUrl: "home/home.html"
+   resolve:
+    postId: [
+     "$stateParams"
+     ($stateParams) ->
+      return $stateParams.postId
+    ]
+
+  # .state "home.post",
+  #  url: "posts/:rootId"
+  #  templateUrl: "directive_templates/detail_post.html"
+  #  controller: "PostController"
+  #  resolve:
+  #   rootId: [
+  #    "$stateParams"
+  #    ($stateParams) ->
+  #     return $stateParams.rootId
+  #   ]
+
+  ##########################################################
+  ##########################################################
+   
+  $urlRouterProvider.otherwise "/404"
+  $locationProvider.html5Mode true
+
+]

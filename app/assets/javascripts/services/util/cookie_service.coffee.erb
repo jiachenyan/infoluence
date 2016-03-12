@@ -1,0 +1,78 @@
+angular.module('Infoluence').service 'CookieService', [
+
+ ()->
+
+  @getUserInfo = =>
+   userInfo = document.cookies.getObject 'userInfo'
+   for key, val of userInfo
+    # rails encodes spaces with plus signs
+    if angular.isString(val)
+     userInfo[key] = val.replace(/\+/g, ' ')
+   userInfo
+
+  @getCookie = (key) =>
+   nameEQ = key + '='
+   ca = document.cookie.split(';')
+   i = 0
+   while i < ca.length
+    c = ca[i]
+    while c.charAt(0) == ' '
+     c = c.substring(1, c.length)
+    if c.indexOf(nameEQ) == 0
+     return c.substring(nameEQ.length, c.length)
+    i++
+   null
+
+   # o.getCookies = =>
+   #  o.username = o.readCookie("username")
+   #  o.imgUrlMedium = o.readCookie("imgUrlMedium")
+   #  o.imgUrlSmall = o.readCookie("imgUrlSmall")
+   #  o.imgUrlThumb = o.readCookie("imgUrlThumb")
+   #  o.firstName = o.readCookie("firstName")
+   #  o.lastName = o.readCookie("lastName")
+
+  @getUsername = =>
+   o.username = o.readCookie("username")
+   o.username
+   
+  @getImgUrlMedium = =>
+   o.imgUrlMedium = o.readCookie("imgUrlMedium")
+   o.imgUrlMedium
+   
+  @getImgUrlSmall = =>
+   o.imgUrlSmall = o.readCookie("imgUrlSmall")
+   o.imgUrlSmall
+   
+  @getImgUrlThumb = =>
+   o.imgUrlThumb = o.readCookie("imgUrlThumb")
+   o.imgUrlThumb
+
+  @createCookie = (name, value, days) ->
+   `var expires`
+   if days
+    date = new Date
+    date.setTime date.getTime() + days * 24 * 60 * 60 * 1000
+    expires = '; expires=' + date.toGMTString()
+   else
+    expires = ''
+   document.cookie = name + '=' + value + expires + '; path=/'
+   return
+
+  @readCookie = (name) ->
+   nameEQ = name + '='
+   ca = document.cookie.split(';')
+   i = 0
+   while i < ca.length
+    c = ca[i]
+    while c.charAt(0) == ' '
+     c = c.substring(1, c.length)
+    if c.indexOf(nameEQ) == 0
+     return c.substring(nameEQ.length, c.length)
+    i++
+   null
+
+  @eraseCookie = (name) ->
+   @createCookie name, '', -1
+
+  return
+]

@@ -1,0 +1,386 @@
+
+angular.module('Infoluence').controller 'EntranceController', [
+
+ 'CookieService'
+ 'UUID'
+
+ '$scope'
+ '$stateParams'
+ '$http'
+
+
+ (CookieService,UUID,$scope,$stateParams,$http) ->
+
+  $scope.commentContent = ""
+  $scope.imgUrl = decodeURIComponent(CookieService.getCookie("imgUrlSmall"))
+  $scope.commentErrMsg = []
+
+  $scope.signupUsername = ""
+  $scope.signupName = ""
+  $scope.signupPassword = ""
+  $scope.confirmPassword = ""
+
+  $scope.login = ""
+  $scope.signinPassword = ""
+
+  $scope.signupErrMsgs = ["signup err msg"]
+  $scope.signinErrMsgs = ["signin err msg"]
+
+  $scope.signin = =>
+   alert("working")
+
+   req =
+    method : "post"
+    url : "/users.json"
+    dataType : "json"
+    params:
+     login:$scope.login
+     password:$scope.signinPassword
+
+   $http(req).success((data) ->
+    if data.success != undefined
+     #$scope.signupMsg = JSON.stringify(data)
+     $scope.signupSuccessShow = true
+
+     setTimeout (=>
+      window.location.replace(window.location.origin)
+     ), 1000
+    
+    if data.errors != undefined
+     alert(JSON.stringify(res.data))
+     data.errors.forEach (err) =>
+      $scope.signupErr = true
+      $scope.signupErrMsgs.push "#{err}."
+
+    $scope.buttonState = true
+
+   ).error (data) ->
+    $scope.signupErrorMsg = JSON.stringify(data)
+    #todo: error handler
+
+
+  $scope.signup = =>
+   alert("working")
+
+   req =
+    method : "post"
+    url : "/users.json"
+    dataType : "json"
+    params:
+     name:$scope.signupName
+     username:$scope.signupUsername
+     password:$scope.signupPassword
+     password_confirmation:$scope.confirmPassword
+
+   $http(req).success((data) ->
+    if data.success != undefined
+     #$scope.signupMsg = JSON.stringify(data)
+     $scope.signupSuccessShow = true
+
+     setTimeout (=>
+      window.location.replace(window.location.origin)
+     ), 1000
+    
+    if data.errors != undefined
+     alert(JSON.stringify(res.data))
+     data.errors.forEach (err) =>
+      $scope.signupErr = true
+      $scope.signupErrMsgs.push "#{err}."
+
+    $scope.buttonState = true
+
+   ).error (data) ->
+    $scope.signupErrorMsg = JSON.stringify(data)
+    #todo: error handler
+
+  $scope.publishComment = (post) ->
+
+   if $scope.commentContent.length > 0
+
+    CommentsFactory.publishComment(post.rootId,$scope.commentContent)
+
+    currentTime = new Date().getTime()
+
+    if $scope.commentContent.length >= 2000
+     $scope.commentErrMsg.push "Comment too long.(exceeded 2000 characters)"
+     return
+
+    comment =
+    	imgUrl:     $scope.imgUrl
+    	firstName:  CookieService.getCookie("firstName")
+    	lastName:   CookieService.getCookie("lastName")
+    	username:   CookieService.getCookie("username")
+    	content:    $scope.commentContent
+    	time:       moment(currentTime * 1000).format("L, h:mm:ss a")
+     timeString: moment.duration((currentTime - currentTime) * 1000).humanize()
+     guid:       UUID.newguid()
+     
+    if post.commentBool == false
+	    post.commentBool = true
+	    post.commentLoaded = true
+
+    post.commentList.push comment
+
+    $scope.commentContent = ""
+
+
+ 	$scope.focus = (inputId) =>
+ 		id = "#commentInput_#{inputId}"
+ 		$(id).focus()
+   $scope.commentErrMsg = []
+
+
+]
+
+angular.module('Infoluence').controller 'SignupController', [
+
+ '$scope'
+ '$http'
+ '$state'
+ 'AuthService'
+ 'AuthFactory'
+
+ ($scope,$http,$state,AuthService,AuthFactory) ->
+
+  AuthFactory.checkSession()
+  $scope.sessionStatus = AuthFactory.sessionStatus
+
+  $scope.signupErr = false
+  $scope.ErrMsgList = []
+  $scope.buttonState = true
+
+  $scope.checkSession = ->
+   AuthFactory.checkSession()
+   $scope.sessionStatus = AuthFactory.sessionStatus
+
+  $scope.signup = ->
+   if $scope.signupFilter() == true
+
+    if $scope.buttonState == true
+     $scope.buttonState = false
+
+     req =
+      method : "post"
+      url : "/users.json"
+      dataType : "json"
+      params:
+       first_name:$scope.SU_firstname
+       last_name:$scope.SU_lastname
+       email:$scope.SU_email
+       username:$scope.SU_username
+       password:$scope.SU_password
+       password_confirmation:$scope.SU_c_password
+       authenticity_token: $("meta[name='csrf-token']").attr("content")
+
+     $http(req).success((data) ->
+      if data.Success != undefined
+       #$scope.signupMsg = JSON.stringify(data)
+       $scope.signupSuccessShow = true
+
+       setTimeout (=>
+        window.location.replace(window.location.origin)
+       ), 3000
+      
+      if data.Error != undefined
+       alert(JSON.stringify(res.data))
+       data.Error.forEach (err) =>
+        $scope.signupErr = true
+        $scope.ErrMsgList.push "#{err}."
+
+      $scope.buttonState = true
+
+     ).error (data) ->
+      $scope.signupErrorMsg = JSON.stringify(data)
+      #todo: error handler
+
+
+  $scope.checkUsername = ->
+   if $scope.SU_username.length > 0
+    url = "/users/#{$scope.SU_username}.json"
+    $http.get(url).then (res) =>
+     if JSON.stringify(res.data).length < 32
+      $scope.SU_username_err = ""
+     else
+      $scope.SU_username_err = "*username taken"
+
+  $scope.signupFilter = ->
+
+   #collects sign up error into an err array, return true if no error, false if error exits.
+
+   $scope.ErrMsgList = []
+
+   ################################################################### check first name
+
+   if $scope.SU_firstname.length > 0
+
+    if /^[a-zA-Z0-9- ]*$/.test($scope.SU_firstname) == false
+     $scope.ErrMsgList.push "Illegal characters in first name."
+
+   else
+
+    $scope.ErrMsgList.push "First name cannot be empty."
+
+   ################################################################### check last name
+
+   if $scope.SU_lastname.length > 0
+
+    if /^[a-zA-Z0-9- ]*$/.test($scope.SU_firstname) == false
+     $scope.ErrMsgList.push "Illegal characters in last name."
+
+   else
+
+    $scope.ErrMsgList.push "Last name cannot be empty."
+
+   ################################################################### check username length
+
+   if $scope.SU_username.length > 0
+
+    if /^[a-zA-Z0-9- ]*$/.test($scope.SU_username) == false
+     $scope.ErrMsgList.push "Illegal characters in username."
+
+   else
+
+    $scope.ErrMsgList.push "Username cannot be empty."
+
+   ################################################################### check email
+
+   if $scope.SU_email.length > 0
+
+    if $scope.validateEmail($scope.SU_email) == false
+     $scope.ErrMsgList.push "Invalid email."
+
+   else
+
+    $scope.ErrMsgList.push "Email cannot be empty."
+
+   ################################################################### check password
+
+   if $scope.SU_password.length > 0
+    if $scope.SU_password.length < 7
+      $scope.ErrMsgList.push "Password too short."
+
+   else
+
+    $scope.ErrMsgList.push "Please enter password."
+
+   if $scope.ErrMsgList.length == 0
+    $scope.signupErr = false
+    return true
+   else
+    $scope.signupErr = true
+    return false
+
+]
+
+
+angular.module('Infoluence').controller 'SignInController', [
+
+ '$scope'
+ '$http'
+ '$state'
+ 'AuthFactory'
+ 'AuthService'
+
+ ($scope,$http,$state,AuthFactory,AuthService) ->
+
+  AuthFactory.checkSession()
+
+  $scope.sessionStatus =               AuthFactory.sessionStatus
+
+  $scope.buttonState =                 true
+
+  $scope.resendConfirmationEmailMsg =  ""
+
+  $scope.signinErr =                   false
+  $scope.LoginErrMsgList =             []
+
+  $scope.login =                       ""
+  $scope.password =                    ""
+
+
+  $scope.checkSession = ->
+   AuthFactory.checkSession()
+   $scope.sessionStatus = AuthFactory.sessionStatus
+
+  $scope.inputFocus = =>
+   $scope.LoginErrMsgList = []
+
+  $scope.signin = ->
+
+   if $scope.signinFilter() == true
+    if $scope.buttonState == true
+     $scope.buttonState = false
+     $scope.signinErrorMsg = ""
+     req =
+      method : "post"
+      url:"/sessions.json"
+      params:
+       login: $scope.login
+       password: $scope.password
+       authenticity_token: $("meta[name='csrf-token']").attr("content")
+      dataType : "json"
+
+     $http(req).success((data) ->
+      AuthFactory.sessionStatus = true
+
+      if data.Success != undefined
+       window.location.replace(window.location.origin)
+
+      if data.Error != undefined
+       $scope.signinErr = true
+       data.Error.forEach (err) =>
+        $scope.LoginErrMsgList.push "#{err}."
+      $scope.buttonState = true
+     ).error (data) ->
+      #todo: error handler
+
+  $scope.signout = =>
+   AuthService.signout().then (res) =>
+    window.location.replace(window.location.origin)
+  
+  $scope.signinFilter = ->
+
+   #collects sign up error into an err array, return true if no error, false if error exits.
+
+   $scope.LoginErrMsgList = []
+
+   ################################################################### check first name
+
+   if $scope.login.length == 0
+
+    $scope.LoginErrMsgList.push "Login info cannot be empty"
+
+   ################################################################### check last name
+
+   if $scope.password.length == 0
+
+    $scope.LoginErrMsgList.push "Password cannot be empty"
+
+   if $scope.LoginErrMsgList.length == 0
+    $scope.signinErr = false
+    return true
+   else
+    $scope.signinErr = true
+    return false
+
+  $scope.resentConfirmationEmail = (email) =>
+
+   req =
+    method : "post"
+    url:"/email_confirmations.json"
+    params:
+     email: email
+     authenticity_token: $("meta[name='csrf-token']").attr("content")
+    dataType : "json"
+
+   $http(req).success((data) ->
+    if data.Success != undefined
+     $scope.resendConfirmationEmailMsg = data.Success
+     #window.location.replace(window.location.origin)
+    if data.Error != undefined
+     $scope.resendConfirmationEmailMsg = "Error resending confirmation email."
+
+   ).error (data) ->
+    #todo: error handler
+
+]

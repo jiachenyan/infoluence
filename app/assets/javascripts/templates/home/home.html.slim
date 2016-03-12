@@ -1,0 +1,62 @@
+.timeline
+	.entranceSection.c ng-controller="EntranceController"
+		.entranceTitle
+			h1
+				|entrance intro text
+		form.c
+		 h1.inputLable
+		 	|Username
+			input ng-model="signupUsername"
+		 h1.inputLable
+		 	|Name
+			input ng-model="signupName"
+		 h1.inputLable
+		 	|Password
+			input ng-model="signupPassword"
+		 h1.inputLable
+		 	|Confirm Password
+			input ng-model="confirmPassword"
+
+			.submitButton ng-click="signup()"
+				|Sign Up
+			.errMsgs
+				.errMsg ng-repeat="err in signupErrMsgs"
+					|{{err}}
+
+
+			br
+
+		 h1.inputLable
+		 	|Username or Email
+			input ng-model="login"
+		 h1.inputLable
+		 	|Password
+			input ng-model="signinPassword"
+
+			.submitButton ng-click="signin()"
+				|Sign In
+			.errMsgs
+				.errMsg ng-repeat="err in signinErrMsgs"
+					|{{err}}
+
+
+
+	.timelinePost.c
+
+		.underlineBackground
+
+		.postHead.r
+			.profileImg
+				img src="https://scontent-iad3-1.xx.fbcdn.net/hprofile-xtp1/v/t1.0-1/p160x160/12193837_1046447422067106_6615205571884963325_n.jpg?oh=193f3310102a1207e9aa9c162b34969a&oe=574AEDB4"
+			.publisher.f1.c
+				h1.regularText
+					|Machine Heart
+				h2
+					|Yesterday at 11:04pm
+
+
+
+		.postPublisher
+		.postAuthor
+		.postTitle
+		.postContentPreview

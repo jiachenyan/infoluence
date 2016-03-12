@@ -1,0 +1,28 @@
+angular.module('Infoluence').service 'AuthService', [
+
+	'$http'
+ 'CookieService'
+ ($http,CookieService) ->
+
+  @isSignedIn = =>
+   if CookieService.readCookie('username') == null then CookieService.eraseCookie('remember_token')
+   if CookieService.readCookie('nvest_session') != null or CookieService.readCookie('username') != null
+    true
+   else
+    false
+
+	 @signout = ->
+		 req =
+		  method : "delete"
+		  url : "/sessions.json"
+		  dataType : "json"
+		  params:
+		   authenticity_token:$("meta[name='csrf-token']").attr("content")
+
+		 promise = $http(req)
+		 promise
+
+		
+  return
+
+]

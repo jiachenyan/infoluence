@@ -1,0 +1,129 @@
+
+@import "bourbon";
+.r{
+	@include display(flex);
+	@include flex-direction(row);
+ //display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+}
+
+.c{
+	@include display(flex);
+	@include flex-direction(column);
+	@include align-items(strech);
+ //display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+}
+.wr{
+	@include flex-wrap(wrap);
+ -webkit-flex-wrap: wrap; /* Safari 6.1+ */
+ -webkit-flex-flow: row wrap;
+}
+
+.f5{
+	@include display(flex);
+ //display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+	@include flex(5);
+}
+.f4{
+	@include display(flex);
+ //display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+	@include flex(4);
+}
+.f3{
+	@include display(flex);
+ //display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+	@include flex(3);
+}
+.f2{
+	@include display(flex);
+ //display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+	@include flex(2);
+}
+
+.f1{
+	@include display(flex);
+ //display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+	@include flex(1);
+}
+
+.ofxh{overflow-x:hidden;}
+.ofxs{overflow-x:scroll;}
+.ofyh{overflow-y:hidden;}
+.ofys{overflow-y:scroll;}
+.ofya{overflow-y:auto;}
+.ofxv{overflow-x:visible;}
+
+.ar{text-align:right;}
+.ac{text-align:center;}
+
+.h100{min-height:100%;height:100%;max-height:100%;}
+.w100{min-width:100%;width:100%;max-width:100%;}
+.mr12{margin-right:12px;}
+
+.wh100{width:100%;height:100%;}
+.br1{border-radius:1px;}
+.br2{border-radius:2px;}
+
+.trans50{
+	@include transition-duration(0.05s);
+	@include transition-property(all);
+	@include transition-timing-function(ease-out);
+}
+
+.trans100{
+	@include transition-duration(0.1s);
+	@include transition-property(all);
+	@include transition-timing-function(ease-out);
+}
+
+.trans150{
+	@include transition-duration(0.15s);
+	@include transition-property(all);
+	@include transition-timing-function(ease-in-out);
+}
+
+.trans200{
+	@include transition-duration(0.2s);
+	@include transition-property(all);
+	@include transition-timing-function(ease-out);
+}
+
+.trans300{
+	@include transition-duration(0.3s);
+	@include transition-property(all);
+	@include transition-timing-function(ease-out);
+}
+
+.trans500{
+	@include transition-duration(0.5s);
+	@include transition-property(all);
+	@include transition-timing-function(ease-out);
+}
+
+.trans1000{
+	@include transition-duration(1s);
+	@include transition-property(all);
+	@include transition-timing-function(ease-out);
+}
+
+.blur7{
+ -webkit-transform: translate3d(0, 0, 0);
+	-webkit-filter: blur(7px);
+ -moz-filter: blur(7px);
+ -o-filter: blur(7px);
+ -ms-filter: blur(7px);
+ filter: blur(7px);
+ //opacity: 0.7;
+
+	filter: url(blur.svg#blur);
+	filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='7');
+
+	@include transition-duration(0.05s);
+	@include transition-property(all);
+	@include transition-timing-function(ease-out);
+}
+
+.wr{
+	@include flex-wrap(wrap);
+ -webkit-flex-wrap: wrap; /* Safari 6.1+ */
+ -webkit-flex-flow: row wrap;
+}

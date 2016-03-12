@@ -12,5 +12,19 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require angular
+//= require angular-ui-router
+//= require angular-rails-templates
 //= require turbolinks
 //= require_tree .
+
+
+//= require app
+//= require config
+//= require_tree ./controllers
+//= require_tree ./directives
+//= require_tree ./factories
+//= require_tree ./util
+//= require_tree ./lib
+//= require_tree ./services
+//= require_tree ./templates
