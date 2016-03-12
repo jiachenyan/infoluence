@@ -64,7 +64,7 @@ module UsersHelper
 			WHEN "users"."id" IS NULL THEN
 				NULL
 			ELSE
-				'/'
+				'http://s3.amazonaws.com/infoluence/default_avatar.jpg'
 			END
 			AS "#{as_name}"
 		SQL
