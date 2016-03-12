@@ -483,3 +483,44 @@ body{
 		}
 	}
 }
+
+.userpage{
+
+	.userpageHead{
+		width:100%;
+		padding:36px;
+		border-bottom:grey solid 1px;
+
+
+	}
+
+	.centerColumn{
+		width:720px;
+		margin:0 auto;
+	}
+
+	.userProfile{
+		.profileImg{
+
+			img{
+				width:200px;height:200px;
+			}
+		}
+
+		.userInfo{
+			padding-left:18px;
+
+			h1{
+				font-size:21px;color:white;font-weight:normal;
+			}
+
+			h2{
+				font-size:14px;color:grey;font-weight:normal;
+			}
+
+			p{
+				font-size:14px;color:grey;font-weight:normal;
+			}
+		}
+	}
+}

@@ -1,0 +1,12 @@
+.userpage.base.wh100.c.ofys ng-controller="UserpageController" ng-init="getUserInfo()"
+	.userpageHead
+		.userProfile.centerColumn.r
+			.profileImg
+				img ng-src="{{userInfo.avatarThumb}}"
+			.userInfo.c
+				h1
+					|{{userInfo.name}}
+				h2
+					|{{userInfo.username}}
+				/ p
+				/ 	|{{userInfo}}
