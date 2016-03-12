@@ -13,14 +13,14 @@ Rails.application.routes.draw do
 		end
 
 		resources :posts, only: [:create]
-
 		controller :posts, path: '/post' do
-			get '/:id', action: :send_post
-			
+			# &inf_id=influence_id
+			get '/:id',                                  action: :send_post
 		end
 
 		controller :posts, path: '/posts' do
 			get '/:page',                                action: :send_timeline
+			get '/following/:page',                      action: :send_follow_timeline
 		end
 
 		controller :users, path: '/:username' do

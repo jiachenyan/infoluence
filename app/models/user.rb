@@ -1,7 +1,8 @@
 class User < ActiveRecord::Base
-	attr_accessible(:name, :username, :email)
+	attr_accessible(:name, :username)
 
 	has_secure_password
+	has_many :posts
 
 	before_validation :set_user_defaults
 
@@ -16,12 +17,6 @@ class User < ActiveRecord::Base
 		format: { with: VALID_USERNAME_REGEX },
 		uniqueness: { case_sensitive: false }
 
-	# email is case insensitive and with specific format
-	VALID_EMAIL_REGEX = /\A.+@.+\.[a-z]+\z/i
-	validates :email, presence: true, 
-		format: { with: VALID_EMAIL_REGEX },
-		uniqueness: { case_sensitive: false }
-
 	validates :password, 
 		length: { minimum: 6, maximum: 30 },
 		on: :create
@@ -34,7 +29,7 @@ class User < ActiveRecord::Base
 
 	has_attached_file :avatar,
 		styles: { medium: '300x300#', thumb: '100x100#' },
-		default_url: "/"
+		default_url: 'http://s3.amazonaws.com/infoluence/default_avatar.jpg'
 
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 

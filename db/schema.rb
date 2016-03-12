@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160312050333) do
+ActiveRecord::Schema.define(version: 20160312143156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,7 +31,6 @@ ActiveRecord::Schema.define(version: 20160312050333) do
   create_table "users", force: :cascade do |t|
     t.text     "name",                null: false
     t.text     "username",            null: false
-    t.text     "email",               null: false
     t.text     "password_digest",     null: false
     t.text     "token",               null: false
     t.integer  "total_influence",     null: false
@@ -44,7 +43,6 @@ ActiveRecord::Schema.define(version: 20160312050333) do
     t.datetime "avatar_updated_at"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", using: :btree
   add_index "users", ["name"], name: "gin_index_users_on_name", using: :gin
   add_index "users", ["token"], name: "index_users_on_token", using: :btree
   add_index "users", ["username"], name: "gin_index_users_on_username", using: :gin
