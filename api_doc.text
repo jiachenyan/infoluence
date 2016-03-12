@@ -1,14 +1,65 @@
 API Docs
 
-POST  /users.json # create user, data: [password, passwordConfirmation, name, username]
-PUT   /user.json # update user, todo
-PATCH /user.json # update user avatar, todo
-GET   /:username.json # user info
+POST  /users.json 
+	# create user
+	# data: [password, password_confirmation, name, username]
+	# on success => user object
+		{ "name": string,
+			"username": string,
+			"avatarThumb": string,
+			"avatarMedium": string,
+			"totalInf": int,
+			"regTime ": int,
+		}
+	# on error => {"errors": [string]}
 
-POST  /user/login.json # login, data: [login, password]
-PUT   /user/logout.json # logout
+PUT   /user.json 
+	# update user
+	# data: [old_password, password, password_confirmation, name, username]
+	# old password required to change password
+	# on success => user object
+	# on error => {"errors": [string]}
 
-POST  /posts.json # create post, data: [content]
-GET   /post/:id.json # post detail, todo: params: [inf_id]
+PATCH /user.json
+	# update user avatar
+	# todo
+
+GET   /:username.json
+	# => user object
+
+
+POST  /user/login.json
+	# login
+	# data: [login, password]
+
+PUT   /user/logout.json
+	# logout
+
+
+POST  /posts.json
+	# create post
+	# data: [content]
+	# on success => post object
+		{
+			"postId": int,
+		  "content": {},
+		  "timestamp": int,
+		  "name": string,
+		  "username": string,
+		  "avatarThumb": string,
+		  "avatarMedium": string,
+		  "totalinf": int,
+		  "regTime": int
+		}
+	# on error => {"errors": [string]}
+
+GET   /post/:id.json
+	# post detail
+	# => post object
+	# todo: params: [inf_id]
+
 GET   /posts/:page.json # timeline
+	# => post object array
+
 GET   /posts/following/:page.json # timeline
+	# => todo
