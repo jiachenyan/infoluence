@@ -38,8 +38,6 @@ class User < ActiveRecord::Base
 	def set_user_defaults # before_save
 		# titleize replaces dash with spaces
 		self.name = name.strip.split('-').map!(&:titleize).join('-') unless name.nil?
-		
-		self.email = email.strip.downcase unless email.nil?
 
 		if new_record?
 			# initialize login token
