@@ -40,6 +40,12 @@ angular.module('Infoluence').config [
       return $stateParams.username
     ]
 
+  .state "settings",
+   url: "/settings"
+   #controller: "HomeController"
+   templateUrl: "settings/base.html"
+
+
   # .state "home.post",
   #  url: "posts/:rootId"
   #  templateUrl: "directive_templates/detail_post.html"
