@@ -18,6 +18,7 @@ angular.module('Infoluence').controller 'EntranceController', [
 
   $scope.signupUsername = ""
   $scope.signupName = ""
+  $scope.email = ""
   $scope.signupPassword = ""
   $scope.confirmPassword = ""
 
@@ -70,6 +71,7 @@ angular.module('Infoluence').controller 'EntranceController', [
     params:
      name:$scope.signupName
      username:$scope.signupUsername
+     email:$scope.email
      password:$scope.signupPassword
      password_confirmation:$scope.confirmPassword
 
