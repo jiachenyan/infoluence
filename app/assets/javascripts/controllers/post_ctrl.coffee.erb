@@ -1,0 +1,22 @@
+
+angular.module('Infoluence').controller 'PostController', [
+
+ 'CookieService'
+ 'UUID'
+
+ '$scope'
+ '$state'
+ '$stateParams'
+
+
+ (CookieService,UUID,$scope,$state,$stateParams) ->
+
+  $scope.me = null
+  $scope.timeline = [123,123]
+
+
+  $scope.back = =>
+   $state.go("^")
+
+
+]

@@ -1,0 +1,54 @@
+
+angular.module('Infoluence').controller 'NewPostController', [
+
+ 'CookieService'
+ 'UUID'
+ 'PostService'
+
+ '$scope'
+ '$stateParams'
+
+
+ (CookieService,UUID,PostService,$scope,$stateParams) ->
+
+  $scope.me = null
+  $scope.timeline = [123,123]
+
+  #post content is an array of object with different types
+  $scope.postContent = []
+
+  $scope.initNewPost = =>
+   pg = 
+    type:"pg"
+    body:""
+   $scope.postContent.push pg
+
+
+  $scope.submitPost = =>
+   params =
+
+    company:        $scope.companySymbol
+    certainty:      $scope.certainty
+    post_content:   $scope.recommendation.contentArr
+    id:             $scope.rootId
+    tags:           $scope.postTags.join(",")
+    stop_loss:      $scope.stopLoss
+    expected_exit:  $scope.expectedExit
+
+    authenticity_token: $("meta[name='csrf-token']").attr("content")
+    button:             $scope.action
+
+   PostService.submitPost(params).then (res) =>
+    FeedFactory.pushNewPost(res.data.rootId)
+    $scope.previewing = false
+    $scope.refresh()
+
+    $scope.submitting = false
+
+    PostService.getDetailPost(res.data.rootId).then (res) =>
+     if res.data.status == 'open' || res.data.status == 'pending_open'
+      MyHoldingFactory.addToHoldings(res.data)
+     if res.data.status == 'closed' || res.data.status == 'pending_close'
+      MyHoldingFactory.removeFromHoldings(res.data)
+
+]

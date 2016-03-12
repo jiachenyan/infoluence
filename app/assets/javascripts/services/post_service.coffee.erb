@@ -1,0 +1,72 @@
+
+angular.module('Infoluence').service 'PostService', [
+
+ '$http'
+ ($http) ->
+ 
+  @getDetailPost = (postId) =>
+   url = "/posts/#{postId}.json"
+   req =
+    method : "GET"
+    url : url
+    dataType : "json"
+   promise = $http(req)
+   promise
+
+  @submitPost = (params) =>
+
+   url = "/posts.json"
+   req =
+     method : "POST"
+     url : url
+     data : params
+     dataType : "json"
+   promise = $http(req)
+   promise
+
+
+  @generateSharingUrl = (post) =>
+
+   if post.type == "buy" and (post.status == "open" or post.status == "pending_open") then post.action = "buy"
+   if post.type == "buy" and (post.status == "closed" or post.status == "pending_close") then post.action = "sell"
+   if post.type == "short" and (post.status == "open" or post.status == "pending_open") then post.action = "short"
+   if post.type == "short" and (post.status == "closed" or post.status == "pending_close") then post.action = "buy back"
+
+   post.facebookLink = "https://www.facebook.com/sharer/sharer.php?u=http://www.nvest.me/posts/#{post.rootId}"
+
+   if post.type == "thought"
+    # if post.content.length > 45
+    #  post.sharingContent = "#{post.content.substring(0,45)}.."
+    #post.twitterLink = "https://twitter.com/intent/tweet?url=http://www.nvest.me/posts/#{post.rootId}&text=#{post.firstName} on $#{post.companySymbol}: \"#{post.sharingContent}\"&via=Nvest_Platform"
+    post.twitterLink = "https://twitter.com/intent/tweet?url=http://www.nvest.me/posts/#{post.rootId}&text=#{post.firstName} on $#{post.companySymbol}&via=Nvest_Platform"
+
+   else
+    # if post.content.length > 40
+    #  post.sharingContent = "#{post.content.substring(0,40)}.."
+
+    if post.status == "pending_open" or post.status == "pending_close"
+     
+     if post.status == "pending_open" and post.type == "buy" then action = "buy"
+     if post.status == "pending_open" and post.type == "short" then action = "short"
+     if post.status == "pending_close" and post.type == "buy" then action = "sell"
+     if post.status == "pending_close" and post.type == "short" then action = "cover"
+     
+     post.twitterLink = "https://twitter.com/intent/tweet?url=http://www.nvest.me/posts/#{post.rootId}&text=#{post.firstName} recommends to #{action} $#{post.companySymbol}&via=Nvest_Platform"
+     
+    else
+     if post.status == "open"
+      #post.twitterLink = "https://twitter.com/intent/tweet?url=http://www.nvest.me/posts/#{post.rootId}&text=#{post.firstName} recommends to #{(post.action).toLowerCase()} $#{post.companySymbol} at $#{post.openPrice}: \"#{post.content}\"&via=Nvest_Platform"
+      if post.type == "buy"
+       post.twitterLink = "https://twitter.com/intent/tweet?url=http://www.nvest.me/posts/#{post.rootId}&text=#{post.firstName} recommends to buy $#{post.companySymbol} at $#{post.openPrice}&via=Nvest_Platform"
+      if post.type == "short"
+       post.twitterLink = "https://twitter.com/intent/tweet?url=http://www.nvest.me/posts/#{post.rootId}&text=#{post.firstName} recommends to short $#{post.companySymbol} at $#{post.openPrice}&via=Nvest_Platform"
+     if post.status == "closed"
+      if post.type == "buy"
+       post.twitterLink = "https://twitter.com/intent/tweet?url=http://www.nvest.me/posts/#{post.rootId}&text=#{post.firstName} recommends to sell $#{post.companySymbol} at $#{post.closePrice}&via=Nvest_Platform"
+      if post.type == "short"
+       post.twitterLink = "https://twitter.com/intent/tweet?url=http://www.nvest.me/posts/#{post.rootId}&text=#{post.firstName} recommends to buy back $#{post.companySymbol} at $#{post.closePrice}&via=Nvest_Platform"
+
+
+  return
+
+]

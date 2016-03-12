@@ -45,4 +45,16 @@
 
 
 
-	timeline-post ng-repeat="post in timeline"
+	.postCreation.c ng-controller="NewPostController"
+		form ng-init="initNewPost()"
+			input placeholder="title"
+			.c ng-repeat="content in postContent"
+				textarea ng-if="content.type == 'pg'" placeholder="content"
+			.linkSharing
+				input placeholder="linkUrl"
+			.submitButton
+				|Publish
+
+	timeline-post ng-repeat="post in timeline track by $index"
+
+ui-view style="position:fixed;z-index:99;"
