@@ -42,21 +42,6 @@ module UsersHelper
 
 	# serializer helpers
 
-	def user_projs
-		users_tb = User.arel_table
-		[
-			users_tb[:name],
-			users_tb[:username],
-			avatar_url_attr(:thumb, :avatarThumb),
-			avatar_url_attr(:medium, :avatarMedium),
-			users_tb[:total_read_influence].as('"totalRdInf"'),
-			users_tb[:total_share_influence].as('"totalShInf"'),
-			users_tb[:total_shares].as('"totalShares"'),
-			users_tb[:total_posts].as('"totalPosts"'),
-			arel_sql_epoch(users_tb, :created_at, :regTime)
-		]
-	end
-
 	def avatar_url_attr(style, as_name=nil)
 		arel_sql = Arel.sql <<-SQL.squish
 			CASE WHEN "users"."avatar_file_name" IS NOT NULL  THEN

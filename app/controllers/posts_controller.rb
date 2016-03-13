@@ -1,38 +1,29 @@
 class PostsController < ApplicationController
-	before_action :signed_in_user, only: [:create]
+	before_action :signed_in_user, only: [:create, :share_post]
 
 	POSTS_PER_PAGE = 20
 
 	def create
-		@post = current_user.posts.new
-		@post.content = params[:content]
+		post = current_user.posts.new
+		post.content = params[:content]
 
-		if @post.save
-			# update stats
-			ActiveRecord::Base.connection.execute(<<-SQL
-				BEGIN;
-				INSERT INTO influences (
-					inf_type, user_id, post_id, from_inf_id, created_at, updated_at
-				)
-				VALUES (
-					'oc', NULL, #{@post.id}, NULL, 
-					'#{@post.created_at.iso8601(10)}',
-					'#{@post.updated_at.iso8601(10)}'
-				);
+		return render json_error(post) unless post.save
 
-				UPDATE users SET total_posts = total_posts+1
-				WHERE id = #{@post.user.id};
-				COMMIT;
-			SQL
-			)
+		@influence = post.influences.new
+		@influence.inf_type = 'oc'
+		return render json_error(@influence) unless @influence.save
 
-			# TODO: add to post_links (low pri, for data purposes)
+		# update stats
+		ActiveRecord::Base.connection.execute(<<-SQL.squish
+			UPDATE users SET total_posts = total_posts+1
+			WHERE id = #{post.user.id};
+			COMMIT;
+		SQL
+		)
 
-			# render text: serialize_post
-			render jsonize(serialize_post)
-		else
-			render json_error(@post)
-		end
+		# TODO: add to post_links (low pri, for data purposes)
+
+		render jsonize(serialize_inf)
 	end
 
 	def send_post
@@ -44,8 +35,8 @@ class PostsController < ApplicationController
 		
 		# update stats
 		user_id = current_user.try(:id) || 'NULL'
-		time = Time.now.iso8601(10)
-		ActiveRecord::Base.connection.execute(<<-SQL
+		time = Time.now.utc.iso8601(10)
+		ActiveRecord::Base.connection.execute(<<-SQL.squish
 			BEGIN;
 			INSERT INTO influences (
 				inf_type, user_id, post_id, from_inf_id, created_at, updated_at
@@ -70,29 +61,41 @@ class PostsController < ApplicationController
 		from_inf_id = params[:from_inf_id]
 		from_influence = Influence.includes(:post).find_by_id(from_inf_id)
 		return render json_error('Invalid id') unless from_influence.present?
-		@post = from_influence.post
-		return render json_error('Invalid id') unless @post.present?
+		post = from_influence.post
+		return render json_error('Invalid id') unless post.present?
 
 		@influence = Influence.new
+		@influence.inf_type = 'sh'
+		@influence.user_id = current_user.id
+		@influence.post_id = post.id
+		@influence.from_inf_id = from_inf_id
 
-		@post.connection.execute(<<-SQL
-			INSERT INTO influences (inf_type, user_id, post_id, from_inf_id, created_at, updated_at)
-			VALUES ('rd', #{user_id}, #{@post.id}, #{inf_id})
+		if @influence.save
+			ActiveRecord::Base.connection.execute(<<-SQL.squish
+				BEGIN;
+				UPDATE posts SET total_shares = total_shares+1
+				WHERE id = #{post.id};
 
-			UPDATE posts SET total_reads = total_reads+1
-			WHERE id = #{@post.id};
+				UPDATE users SET total_share_influence = total_share_influence+1
+				WHERE id = #{post.user.id};
 
-			UPDATE users SET total_read_influence = total_read_influence+1
-			WHERE id = #{@post.user.id};
-		SQL
-		)
+				UPDATE users SET total_shares = total_shares+1
+				WHERE id = #{current_user.id};
+				COMMIT;
+			SQL
+			)
+			render jsonize(serialize_inf)
+		else
+			render json_error(@influence)
+		end
 
-		render jsonize({todo: 'share'})
+
+
+		
 	end
 
 	def send_timeline
-		# render jsonize(serialize_posts(params[:page]))
-		render jsonize({todo: 'public'})
+		render jsonize(serialize_infs(params[:page]))
 	end
 
 	def send_follow_timeline
@@ -102,19 +105,7 @@ class PostsController < ApplicationController
 
 	private
 
-	# for create
-	def serialize_post
-		infs_query_init
-
-		@infs_query_ast.where(
-			@infs_tb[:post_id].eq(@post.id)
-			.and(@infs_tb[:inf_type].eq('oc'))
-		).take(1)
-
-		json_agg_exec(infs_query).first
-	end
-
-	# for send_post and share_post
+	# for create, send_post and share_post
 	def serialize_inf
 		infs_query_init
 
@@ -125,9 +116,21 @@ class PostsController < ApplicationController
 		json_agg_exec(infs_query).first
 	end
 
-	def serialize_infs
+	# for timeline
+	def serialize_infs(page)
 		infs_query_init
-		# paginate @infs_tb
+
+		@infs_query_ast
+		.where(
+			@infs_tb[:inf_type].eq('oc')
+			.or(
+				@infs_tb[:inf_type].eq('sh')
+			)
+		)
+		.order(@infs_tb[:created_at].desc)
+		.take(POSTS_PER_PAGE)
+
+		json_agg_exec(infs_query)
 	end
 
 	def infs_query_init
@@ -218,12 +221,13 @@ class PostsController < ApplicationController
 			@authors_cte[:user_data].as('"author"'),
 			@publishers_cte[:user_data].as('"publisher"')
 		)
-		.join(@posts_cte)
+		.join(@posts_cte, Arel::Nodes::OuterJoin)
 		.on(@infs_cte[:post_id].eq(@posts_cte[:id]))
-		.join(@authors_cte)
+		.join(@authors_cte, Arel::Nodes::OuterJoin)
 		.on(@posts_cte[:user_id].eq(@authors_cte[:id]))
 		.join(@publishers_cte, Arel::Nodes::OuterJoin)
 		.on(@infs_cte[:user_id].eq(@publishers_cte[:id]))
+		.order(@infs_cte[:publishTime].desc)
 		.with(
 			@infs_cte_as,
 			@posts_cte_as,
