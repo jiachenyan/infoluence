@@ -19,13 +19,18 @@ angular.module('Infoluence').controller 'PostController', [
   $scope.timeline = [123,123]
   $scope.post = null
 
+  $scope.shareStatus = null
+
 
   $scope.back = =>
    $state.go("^")
 
   $scope.sharePost = =>
-   PostService.sharePost($scope.postId).then (res) =>
-    FeedFactory.feed.unshift res.data
+   if $scope.shareStatus != "sharing" && $scope.shareStatus != 'shared'
+    $scope.shareStatus = "sharing"
+    PostService.sharePost($scope.postId).then (res) =>
+     $scope.shareStatus = "shared"
+     FeedFactory.feed.unshift res.data
 
   $scope.getDetailPost = =>
 

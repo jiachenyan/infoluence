@@ -18,6 +18,8 @@ angular.module('Infoluence').controller 'UserpageController', [
   $scope.timeline = [123,123]
   $scope.post = null
 
+  $scope.rootUrl = "/#{$scope.username}/"
+
   $scope.userInfo = null
 
   $scope.getUserInfo = =>

@@ -58,9 +58,13 @@
 					|&nbsp;Follow
 			.spreadInfluence.f1.c
 				.share ng-click="sharePost()"
-					.icon.trans200
-						h1.ac.trans200
+					.icon.trans200 ng-class="{'sharing':shareStatus == 'sharing','shared':shareStatus == 'shared','normal':shareStatus == 'shared'}"
+						h1.ac.trans200 ng-show="shareStatus == 'null'"
 							|Share
+						h1.ac.trans200 ng-show="shareStatus == 'sharing'"
+							|Sharing..
+						h1.ac.trans200 ng-show="shareStatus == 'shared'"
+							|Shared
 				.socialMedia.c
 					h1.ac
 						|Extent Influence

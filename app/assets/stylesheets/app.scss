@@ -492,6 +492,10 @@ body{
 				margin-top:3px;
 				font-size:12px;font-weight:normal;color:grey;
 			}
+
+			i{
+				color:$BLUE;
+			}
 		}
 	}
 
@@ -576,6 +580,40 @@ body{
 						}
 					}
 				}
+
+				.sharing{
+
+					margin-top:-9px;
+					margin-bottom:-33px;
+					width:68px;height:68px;
+					cursor:pointer;
+					border:white solid 1px;
+					box-shadow:0 0 90px rgb(0, 153, 255);
+
+					h1{
+						margin-left:0;
+						text-align:center;
+						margin-top:24px;
+						opacity:1;
+					}
+				}
+
+				.shared{
+
+					margin-top:0px;
+					margin-bottom:-24px;
+					width:68px;height:68px;
+					cursor:pointer;
+					border:rgb(0, 153, 255) solid 1px;
+					box-shadow:0 0 90px rgb(0, 153, 255);
+
+					h1{
+						margin-left:0;
+						text-align:center;
+						margin-top:24px;
+						opacity:1;
+					}
+				}
 			}
 
 			.socialMedia{
@@ -635,8 +673,11 @@ body{
 		width:100%;
 		padding:36px;
 		border-bottom:grey solid 1px;
+		background-color:#222222;
+	}
 
-
+	.userpageBody{
+		padding-top:15px;
 	}
 
 	.centerColumn{
@@ -743,7 +784,7 @@ body{
 
 	.profileImgWrapper{
 		margin:0 auto;
-		margin-top:18px;
+		margin-top:36px;
 
 		img{
 			width:200px;height:200px;
