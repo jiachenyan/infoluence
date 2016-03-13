@@ -1,0 +1,25 @@
+
+angular.module('Infoluence').controller 'UserController', [
+
+
+ 'UserService'
+ '$scope'
+ '$stateParams'
+
+
+ (UserService,$scope,$stateParams) ->
+
+
+
+  $scope.follow = (username) =>
+   UserService.follow(username).then (res) =>
+    $scope.user.followStatus = true
+
+  $scope.unfollow = (username) =>
+   UserService.follow(username).then (res) =>
+    $scope.user.followStatus = false
+
+
+
+
+]

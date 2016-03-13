@@ -28,6 +28,8 @@ angular.module('Infoluence').controller 'UserpageController', [
 
   $scope.getUserInfo = =>
 
+   $('body').scrollTop()
+
    UserService.getUserInfo($scope.username).then (res) =>
     $scope.userInfo = res.data
 

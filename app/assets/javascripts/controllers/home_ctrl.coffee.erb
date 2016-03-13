@@ -18,6 +18,11 @@ angular.module('Infoluence').controller 'HomeController', [
   $scope.feedType = FeedFactory.feedType
   #$$scope.feedType = "" #'/following' for following feed
 
+
+  $scope.homeInit = =>
+   
+   $('body').scrollTop()
+
   $scope.getFeed = =>
    FeedFactory.getFeed($scope.feedType)
 

@@ -1,11 +1,11 @@
 doctype html
-html
+html ng-app="Infoluence"
 	head
 		title Infoluence
 		base href="/"
 		javascript:
 			WebFontConfig = {google: { families: [ 'Open+Sans:600,400,300:latin','Droid+Serif:400,700:latin','Inconsolata::latin','Ubuntu+Mono::latin'] }};(function() {var wf = document.createElement('script');wf.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';wf.type = 'text/javascript';wf.async = 'true';var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(wf, s);})();
-		
+		script type='text/javascript' src='path/to/angular.min.js'
 		title
 			|Infoluence
 
@@ -33,14 +33,22 @@ html
 		= javascript_include_tag 'application', 'data-turbolinks-track' => true
 		= csrf_meta_tags
 
-body.c.wh100.ofys ng-app="Infoluence" ng-controller="ApplicationController" ng-init="initialize()" infinite-scroll="loadMoreCurrentStuff()" infinite-scroll-distance="3"
-	.appMenu
+body.c.wh100.ofys ng-controller="ApplicationController" infinite-scroll="loadMoreCurrentStuff()" infinite-scroll-distance="3"
+ 
+	.appMenu.r ng-init="initialize()"
+		.f1
 		a href="/"
 			.c
 				h1.ac
 					|INFOLUENCE
 				h2.ac
-					|Visualialize Your Influence
+					|Share And Visualize Influence
+
+		.f1
+		.searchBar
+			form
+				input placeholder="Search Infoluence"
+			.searchResultPanel
 
 		.myPanel.r ng-if="me"
 			.f1
