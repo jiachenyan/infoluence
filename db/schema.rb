@@ -18,12 +18,21 @@ ActiveRecord::Schema.define(version: 20160313031542) do
   enable_extension "pg_trgm"
 
   create_table "external_links", force: :cascade do |t|
-    t.text     "url"
-    t.text     "origin"
+    t.text     "url",                              null: false
+    t.text     "origin",                           null: false
+    t.decimal  "trend_value",        default: 0.0, null: false
     t.jsonb    "properties"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
+
+  add_index "external_links", ["origin"], name: "index_external_links_on_origin", using: :btree
+  add_index "external_links", ["trend_value"], name: "index_external_links_on_trend_value", using: :btree
+  add_index "external_links", ["url"], name: "index_external_links_on_url", using: :btree
 
   create_table "influences", force: :cascade do |t|
     t.text     "inf_type",    null: false
@@ -80,10 +89,6 @@ ActiveRecord::Schema.define(version: 20160313031542) do
     t.integer  "total_share_influence", default: 0, null: false
     t.integer  "total_shares",          default: 0, null: false
     t.integer  "total_posts",           default: 0, null: false
-    t.string   "image_file_name"
-    t.string   "image_content_type"
-    t.integer  "image_file_size"
-    t.datetime "image_updated_at"
   end
 
   add_index "users", ["name"], name: "gin_index_users_on_name", using: :gin

@@ -164,3 +164,28 @@ GET   /posts/following/:page.json # timeline
 	# => post object array same as above
 
 
+POST  /link
+	# data: [link]
+	# => link object
+		{
+			"id": int,
+			"url": string,
+			"title": string,
+
+			"siteName": string,
+			"description": string,
+			"publishTime": string,
+
+			"author": string,
+			"firstName": string,
+			"lastName": string,
+
+			"video": string,
+			"videoWidth": string,
+			"videoHeight": string,
+			"videoType": string,
+
+			"imgSmall": string,
+			"imgLarge": string,
+			"images": [string]
+		}

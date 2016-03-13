@@ -1,4 +1,13 @@
 class User < ActiveRecord::Base
+	RESERVED_USERNAMES = [
+		'api', 'apis',
+		'user','users',
+		'post', 'posts',
+		'link', 'links',
+		'trend', 'trends',
+		'share', 'shares',
+		'timeline', 'timelines'
+	]
 	attr_accessible(:name, :username)
 
 	has_secure_password
@@ -51,6 +60,11 @@ class User < ActiveRecord::Base
   private
 
 	def set_user_defaults # before_save
+		if RESERVED_USERNAMES.include?(username.try(:downcase))
+			errors.add(:username, 'is already taken')
+			return false
+		end
+
 		# titleize replaces dash with spaces
 		self.name = name.strip.split('-').map!(&:titleize).join('-') unless name.nil?
 

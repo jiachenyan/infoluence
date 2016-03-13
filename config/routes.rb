@@ -30,13 +30,13 @@ Rails.application.routes.draw do
 			get '/:page',                                action: :send_timeline
 			get '/following/:page',                      action: :send_follow_timeline
 		end
+		
+		controller :links, path: '/link' do
+			get '/',                                    action: :save_link
+		end
 
 		controller :users, path: '/:username' do
 			get '/',                                     action: :user_info
-		end
-
-		controller :external_links, path: 'link' do
-			post '/',                                    action: :save_link
 		end
 	end
 
