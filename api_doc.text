@@ -203,3 +203,11 @@ POST  /link.json
 			"imgLarge": string,
 			"images": [string]
 		}
+
+
+GET  /discover.json?q=query&p=page
+	# =>
+		{
+			"users": [{ user object}],
+			"posts": [{ post object}]
+		}
