@@ -16,6 +16,7 @@ angular.module('Infoluence').controller 'PostController', [
 
  	$scope.postId = $stateParams.postId
   $scope.me = null
+  $scope.me = CookieService.getUserInfo()
   $scope.timeline = [123,123]
   $scope.post = null
 

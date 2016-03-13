@@ -66,7 +66,7 @@
 				.unfollowButton ng-if="post.author.followStatus == true" ng-click="unfollow(post.author.username)"
 					i.fa.fa-minus-square
 					|&nbsp;Unfollow
-				.followButton ng-if="post.author.followStatus == false" ng-click="follow(post.author.username)"
+				.followButton ng-if="post.author.followStatus == false && (post.author.username != me.username)" ng-click="follow(post.author.username)"
 					i.fa.fa-plus-square
 					|&nbsp;Follow
 			.spreadInfluence.f1.c
