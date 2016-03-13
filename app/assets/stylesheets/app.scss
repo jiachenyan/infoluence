@@ -508,7 +508,7 @@ body{
 			padding:18px;
 
 			p{
-				margin-top:-26px;
+				//margin-top:-26px;
 				white-space:pre-line;
 				line-height:26px;
 				font-size:16px;color:#333333;font-weight:normal;
@@ -671,21 +671,36 @@ body{
 
 	.userpageHead{
 		width:100%;
-		padding:36px;
-		border-bottom:grey solid 1px;
+		height:260px;
+		padding:0 0 0 0;
 		background-color:#222222;
+
+		.userpageNavWrapper{
+			margin-top:18px;
+			background-color:#333333;
+
+			.userpageNav{
+				padding:6px 18px;
+
+				h1{
+
+					font-size:14px;color:grey;font-weight:bold;
+				}
+			}
+		}
 	}
 
 	.userpageBody{
-		padding-top:15px;
+		padding-top:30px;
 	}
 
 	.centerColumn{
-		width:900px;
+		width:842px;
 		margin:0 auto;
 	}
 
 	.userProfile{
+
 		.profileImg{
 
 			img{

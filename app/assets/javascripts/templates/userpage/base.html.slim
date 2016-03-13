@@ -1,5 +1,6 @@
 .userpage.base.wh100.c ng-controller="UserpageController" ng-init="getUserInfo()"
-	.userpageHead
+	.userpageHead.c
+		.f1
 		.userProfile.centerColumn.r
 			.profileImg
 				img ng-src="{{userInfo.avatarThumb}}"
@@ -12,7 +13,16 @@
 					|{{userInfo.regTime}}
 				h2
 					|{{userInfo.totalInf}}
-
+		.userpageNavWrapper.centerColumn.r
+			.userpageNav.c
+				h1.ac
+					|Posts
+			.userpageNav.c
+				h1.ac
+					|Following
+			.userpageNav.c
+				h1.ac
+					|Info
 	.userpageBody.w100 ng-controller="HomeController"
 
 		.timeline ng-init="getFeed()"
