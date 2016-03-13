@@ -16,18 +16,31 @@ angular.module('Infoluence').controller 'NewPostController', [
 
   #post content is an array of object with different types
   $scope.content = []
+  $scope.links = []
 
   $scope.linkUrl = ""
   $scope.previousLinkUrl = ""
 
+  $scope.linkFetchStatus = null
+
   $scope.initNewPost = =>
+
    pg = 
     type:"pg"
     body:""
+
    $scope.content.push pg
 
   $scope.initializeLinkLoading = =>
-   
+   $scope.linkFetchStatus = "fetching"
+
+
+   PostService.parseLink($scope.linkUrl).then (res) =>
+    console.log res.data
+    $scope.linkFetchStatus = "fetched"
+    $scope.links.push res.data
+
+
 
 
 
@@ -36,6 +49,8 @@ angular.module('Infoluence').controller 'NewPostController', [
 
    console.log "submitting"
 
+   $scope.links.forEach (link) =>
+    $scope.content.push link
    params =
     content:        
      title: $scope.title
@@ -49,7 +64,7 @@ angular.module('Infoluence').controller 'NewPostController', [
 
   $scope.$watch "linkUrl", =>
    if ($scope.linkUrl.length - $scope.previousLinkUrl.length) > 5
-    $scope.initializeLinkLoading
+    $scope.initializeLinkLoading()
 
 
 

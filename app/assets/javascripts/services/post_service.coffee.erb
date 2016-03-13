@@ -22,7 +22,16 @@ angular.module('Infoluence').service 'PostService', [
    promise = $http(req)
    promise
 
-  @parseLink = (url) =>
+  @parseLink = (linkUrl) =>
+   url = "/link.json"
+   req =
+    method : "POST"
+    url : url
+    dataType : "json"
+    data:
+     link:linkUrl
+   promise = $http(req)
+   promise
 
   @submitPost = (params) =>
 

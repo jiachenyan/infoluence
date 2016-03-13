@@ -7,16 +7,18 @@
 				input placeholder="title" ng-model="title"
 				.c ng-repeat="content in content"
 					textarea ng-if="content.type == 'pg'" placeholder="content" ng-model="content.body"
-					.link
-						.linkImg
+					.link.r ng-repeat="link in links track by $index"
+						.linkImg ng-if='link.images[0]'
+							img ng-src="link.images[0]"
 						.linkContent.c
-							h1
-								|saldkf
+							a href="{{link.url}}"
+								h1
+									|{{link.title}}
 							h2
-								|alskdfjasldf
+								|{{link.description}}
 							h3
-								|laskdfj
-				.linkLoading.c
+								|{{link.siteName}}
+				.linkLoading.c ng-show="linkFetchStatus == 'fetching'"
 					loading
 					h1.ac
 						|Fetching Link..
