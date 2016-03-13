@@ -29,7 +29,8 @@ PUT   /user.json
 
 PATCH /user.json
 	# update user avatar
-	# todo
+	# data: [file]
+	# on success => user object
 
 GET   /:username.json
 	# => user object

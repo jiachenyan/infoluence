@@ -34,8 +34,27 @@ class UsersController < ApplicationController
 	end
 
 	def update_avatar
-		# sign_in(current_user)
-		render jsonize({todo: 'update avatar'})
+		return render json_error('Invalid upload') if params[:file].blank?
+
+		user = current_user
+		temp_user = User.new
+		temp_user.avatar = user.avatar
+
+		user.avatar = params[:file]
+		return render json_error(user) unless user.save
+		
+		begin 
+			url = user.avatar.url(:medium)
+			img = Nokogiri::HTML(open(url))
+			# file opened successfully
+
+			sign_in(user)
+			render jsonize(serialize_user(user))
+		rescue => e
+			user.update_attribute(:avatar, temp_user.avatar)
+			sign_in(user)
+			render json_error('upload unsuccessful')
+		end
 	end
 
 	def user_info
