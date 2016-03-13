@@ -13,6 +13,17 @@ angular.module('Infoluence').service 'UserService', [
    promise = $http(req)
    promise
 
+ 
+  @follow = (username) =>
+   url = "/user/follow/#{username}.json"
+   req =
+    method : "PUT"
+    url : url
+    dataType : "json"
+   promise = $http(req)
+   promise
+
+
 
   return
 

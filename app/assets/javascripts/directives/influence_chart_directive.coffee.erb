@@ -48,21 +48,26 @@ angular.module('Infoluence').directive "detailPostInfluenceChart", [
     i++
    console.log graph
 
-   maxCharge = -100
-   minCharge = -5
+   # maxCharge = -100
+   # minCharge = -5
 
-   charge = maxCharge/(1 + Math.pow(2.72,(-3*(data.length - 50))))
-			force = d3.layout.force().charge(charge).linkDistance(1).size([
+   # charge = maxCharge/(1 + Math.pow(2.72,(-3*(data.length - 50))))
+			# force = d3.layout.force().charge(charge).linkDistance(1).size([
+			#   width
+			#   height
+			# ])
+			force = d3.layout.force().charge(-20).linkDistance(1).size([
 			  width
 			  height
 			])
+
 
 			#svg = d3.select('#chartSVG').attr('width', width).attr('height', height)
    chartId = "#chartSVG"
    console.log chartId
 
 
-   svg = d3.select("#chartSVG_#{infId}")
+   svg = d3.select("#chartSVG")
 
 
     

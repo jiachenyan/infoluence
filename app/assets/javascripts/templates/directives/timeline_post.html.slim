@@ -5,7 +5,7 @@
 		/ .influenceChart.c.wh100 ng-if="post"
 		/ 	detail-post-influence-chart.wh100
 
-	.postPublisher.r ng-if="post.publisher.username != post.author.username"
+	.postPublisher.r ng-if="post.createTime != post.publishTime"
 		.profileImg
 			img ng-src="{{post.publisher.avatarThumb}}"
 		.publisher.f1.c

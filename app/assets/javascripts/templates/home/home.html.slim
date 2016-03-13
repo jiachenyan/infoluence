@@ -9,14 +9,17 @@
 					textarea ng-if="content.type == 'pg'" placeholder="content" ng-model="content.body"
 				.linkSharing
 					input placeholder="linkUrl"
-				.submitButton ng-click="submitPost()"
-					|Publish
+				.r
+					.f1
+					.submitButton ng-click="submitPost()"
+						|Publish
+					.ninepx
 
 		.feedSelectorWrapper.r
-			.feedSelector.c ng-click="switchToPublic()"
+			.feedSelector.c ng-click="switchToPublic()" ng-class="{selected:feedType == ''}"
 				h1.ar
 					|Public
-			.feedSelector.c ng-click="switchToFollowing()"
+			.feedSelector.c ng-click="switchToFollowing()" ng-class="{selected:feedType == '/following'}"
 				h1.ar
 					|Following
 		timeline-post ng-repeat="post in feed track by $index"

@@ -1,9 +1,9 @@
 #chart.wh100
  svg#chartSVG
-   defs
-     filter#f1 x="0" y="0" 
-       fegaussianblur in="SourceGraphic" stddeviation="1" /
-     filter#f2 height="200%" width="200%" x="0" y="0" 
-       feoffset dx="0" dy="0" in="SourceGraphic" result="offOut" /
-       fegaussianblur in="offOut" result="blurOut" stddeviation="3" /
-       feblend in="SourceGraphic" in2="blurOut" mode="normal" /
+  defs
+   filter#f1 x="0" y="0" 
+    fegaussianblur in="SourceGraphic" stddeviation="1" /
+   filter#f2 height="200%" width="200%" x="0" y="0" 
+    feoffset dx="0" dy="0" in="SourceGraphic" result="offOut" /
+    fegaussianblur in="offOut" result="blurOut" stddeviation="3" /
+    feblend in="SourceGraphic" in2="blurOut" mode="normal" /

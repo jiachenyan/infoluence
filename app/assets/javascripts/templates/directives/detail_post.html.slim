@@ -1,11 +1,14 @@
 .detailPostBase.wh100.ofys.r ng-controller="PostController" ng-init="getDetailPost()"
+
 	.detailPostBackground.f1 ng-click="back()"
+
 	.detailPost.c
+
 		.detailPostHead.c
+
 			.influenceChart.c ng-if="post.infId"
 				detail-post-influence-chart.wh100
 				
-
 			.postTitle
 				h1
 					|{{post.content.title}}
@@ -13,46 +16,64 @@
 			.detailPostAuthor.r
 				.profileImg
 					img ng-src="{{post.author.avatarThumb}}"
-				.authorInfo
-					h1
-						|{{post.author.name}}
+				.authorInfo.c
+					a href="/{{post.author.username}}"
+						h1
+							|{{post.author.name}}
+					.f1
+					h2
+						|{{post.publishTimeString}}
 
-			.detailPostPublisher.r
+			.detailPostPublisher.r ng-if="post.createTime != post.publishTime"
 				.profileImg
 					img ng-src="{{post.publisher.avatarThumb}}"
 				.publishInfo
-					h1
-						|{{post.publisher.name}} shared
+					.r
+						a href="/{{post.author.username}}"
+							h1
+								|{{post.publisher.name}}&nbsp;
+								i.fa.fa-retweet
+								|&nbsp;{{post.publishTimeString}}
 
 		.detailPostMain
 			.paragraph
-				p
-					|{{post.content.data}}
+				.c ng-repeat="e in post.content.data"
+					p
+						|{{e.body}}
 
 
 
 		.detailPostFoot.r
 			.relationshipUpdate.f1.c
 				.authorProfileImg
-					img src="https://scontent-iad3-1.xx.fbcdn.net/hprofile-xtp1/v/t1.0-1/p160x160/12193837_1046447422067106_6615205571884963325_n.jpg?oh=193f3310102a1207e9aa9c162b34969a&oe=574AEDB4"
-				.unfollowButton ng-if="post.author.followStatus == true"
+					img ng-src="{{post.author.avatarThumb}}"
+				.authorName
+					h1.ac
+						|{{post.author.name}}
+				.unfollowButton ng-if="post.author.followStatus == true" ng-click="unfollow(post.author.username)"
 					i.fa.fa-minus-square
 					|&nbsp;Unfollow
-				.followButton ng-if="post.author.followStatus == false"
+				.followButton ng-if="post.author.followStatus == false" ng-click="follow(post.author.username)"
 					i.fa.fa-plus-square
 					|&nbsp;Follow
 			.spreadInfluence.f1.c
 				.share ng-click="sharePost()"
-					.icon.trans100
+					.icon.trans200
+						h1.ac.trans200
+							|Share
 				.socialMedia.c
 					h1.ac
 						|Extent Influence
 
 					.r
 						.f1
+
 						.socialMediaIcon
 							i.fa.fa-facebook-official
+
 						.socialMediaIcon
 							i.fa.fa-twitter-square
+
 						.f1
+
 	.detailPostBackground.f1 ng-click="back()"

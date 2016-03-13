@@ -5,13 +5,14 @@ angular.module('Infoluence').controller 'PostController', [
  'UUID'
  'PostService'
  'FeedFactory'
+ 'UserService'
 
  '$scope'
  '$state'
  '$stateParams'
 
 
- (CookieService,UUID,PostService,FeedFactory,$scope,$state,$stateParams) ->
+ (CookieService,UUID,PostService,FeedFactory,UserService,$scope,$state,$stateParams) ->
 
  	$scope.postId = $stateParams.postId
   $scope.me = null
@@ -24,15 +25,25 @@ angular.module('Infoluence').controller 'PostController', [
 
   $scope.sharePost = =>
    PostService.sharePost($scope.postId).then (res) =>
-    console.log res.data
     FeedFactory.feed.unshift res.data
-    console.log JSON.stringify(res)
 
   $scope.getDetailPost = =>
-  	console.log $scope.postId
+
   	PostService.getDetailPost($scope.postId).then (res) =>
-  		$scope.post = res.data
-  		console.log res.data
+    post = res.data
+    post.publishTimeString = moment(post.publishTime * 1000).format("L, h:mm a")
+    post.createTimeString = moment(post.createTime * 1000).format("L, h:mm a")
+  		$scope.post = post
+
+  $scope.follow = (username) =>
+   UserService.follow(username).then (res) =>
+    $scope.post.author.followStatus = true
+
+  $scope.unfollow = (username) =>
+   UserService.follow(username).then (res) =>
+    $scope.post.author.followStatus = false
+
+
 
 
 ]

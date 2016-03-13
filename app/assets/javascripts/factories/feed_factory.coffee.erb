@@ -19,8 +19,8 @@ angular.module('Infoluence').factory "FeedFactory", [
     data.forEach (post) =>
      console.log post
 
-     post.publishTimeString = moment(post.publishTime * 1000).format("L, h:mm:ss a")
-     post.createTimeString = moment(post.createTime * 1000).format("L, h:mm:ss a")
+     post.publishTimeString = moment(post.publishTime * 1000).format("L, h:mm a")
+     post.createTimeString = moment(post.createTime * 1000).format("L, h:mm a")
      
      o.feed.push post
 

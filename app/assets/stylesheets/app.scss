@@ -238,6 +238,11 @@ body{
 				border-bottom:$BLUE solid 2px;
 			}
 		}
+
+		.selected{
+			cursor:pointer;
+			border-bottom:$BLUE solid 2px;
+		}
 	}
 }
 
@@ -245,7 +250,6 @@ body{
 	@include calc(width,"100% - 24px");
 	padding:12px;
 	margin-bottom:12px;
-	background-color:rgba(100,100,100,0.1);
 	background-color:white;
 	border-radius:2px;
 
@@ -255,17 +259,6 @@ body{
 		top:0;left:0;
 		width:100%;height:100%;
 		border-radius:2px;
-		// background:
-		// 	-webkit-linear-gradient(45deg, hsla(196, 24%, 100%, 1) 0%, hsla(196, 24%, 100%, 0) 70%),
-		// 	-webkit-linear-gradient(315deg, hsla(200, 21%, 100%, 1) 10%, hsla(200, 21%, 100%, 0) 80%),
-		// 	-webkit-linear-gradient(225deg, hsla(189, 19%, 72%, 1) 10%, hsla(189, 19%, 72%, 0) 80%),
-		// 	-webkit-linear-gradient(135deg, hsla(200, 9%, 55%, 1) 100%, hsla(200, 9%, 55%, 0) 70%);
-		// background:
-		// 	linear-gradient(45deg, hsla(196, 24%, 100%, 1) 0%, hsla(196, 24%, 100%, 0) 70%),
-		// 	linear-gradient(135deg, hsla(200, 21%, 100%, 1) 10%, hsla(200, 21%, 100%, 0) 80%),
-		// 	linear-gradient(225deg, hsla(189, 19%, 72%, 1) 10%, hsla(189, 19%, 72%, 0) 80%),
-		// 	linear-gradient(315deg, hsla(200, 9%, 55%, 1) 100%, hsla(200, 9%, 55%, 0) 70%);
-		
 	}
 
 	.postPublisher{
@@ -333,8 +326,23 @@ body{
 
 	.previewParagraph{
 		padding:0 12px;
+		max-height:118px;
+		overflow:hidden;
+
+		.readMore{
+			width:100%;
+			height:20px;
+			background-color:rgba(255,255,255,0.95);
+			z-index:10;
+
+			h1{
+				font-size:13px;color:grey;font-weight:normal;
+			}
+		}
 
 		p{
+			margin-top:-18px;
+			white-space:pre-line;
 			font-size:14px;color:#555555;font-weight:normal;
 		}
 	}
@@ -355,7 +363,7 @@ body{
 }
 
 .postCreation{
-	background-color:grey;
+	background-color:white;
 	margin:12px 0;
 	border-radius:2px;
 
@@ -423,7 +431,7 @@ body{
 	}
 
 	.detailPostHead{
-		//height:444px;
+		padding-bottom:9px;
 		width:100%;
 		background-color:black;
 
@@ -431,9 +439,9 @@ body{
 			padding:18px 275px 18px 18px;
 
 			h1{
-
 				font-size:21px;color:#EEE;font-weight:bold;
 			}
+
 		}
 
 		.detailPostAuthor{
@@ -452,6 +460,11 @@ body{
 				h1{
 					margin-left:18px;
 					font-size:16px;color:white;font-weight:bold;
+				}
+
+				h2{
+					margin-left:18px;
+					font-size:12px;color:grey;font-weight:normal;
 				}
 			}
 		}
@@ -477,7 +490,7 @@ body{
 
 			h1{
 				margin-top:3px;
-				font-size:13px;font-weight:normal;color:grey;
+				font-size:12px;font-weight:normal;color:grey;
 			}
 		}
 	}
@@ -491,6 +504,8 @@ body{
 			padding:18px;
 
 			p{
+				margin-top:-26px;
+				white-space:pre-line;
 				line-height:26px;
 				font-size:16px;color:#333333;font-weight:normal;
 			}
@@ -514,45 +529,60 @@ body{
 				}
 			}
 
-			.unfollowButton{
-				margin:9px auto;
-				padding:3px 9px;
-				border-radius:2px;
-				background-color:#333333;
-				font-size:13px;color:grey;
-			}
+			.authorName{
+				padding:6px;
 
-			.followButton{
-				margin:9px auto;
-				padding:3px 9px;
-				border-radius:2px;
-				background-color:#333333;
-				font-size:13px;color:grey;
+				h1{
+					font-size:13px;color:grey;font-weight:normal;
+				}
 			}
 		}
 
 		.spreadInfluence{
+			height:180px;
 
 			.share{
 				margin:0 auto;
-				margin-top:18px;
+				margin-top:36px;
 
 				.icon{
+					margin-top:24px;
 					width:18px;height:18px;
 					border:rgb(0, 153, 255) solid 2px;
 					border-radius:50%;
 					box-shadow:0 0 9px rgb(0, 153, 255);
 
+					h1{
+						margin-left:-3px;
+						text-align:center;
+						margin-top:0;
+						font-size:14px;color:white;font-weight:bold;
+						opacity:0;
+					}
+
 					&:hover{
+						margin-top:0px;
+						margin-bottom:-24px;
+						width:68px;height:68px;
 						cursor:pointer;
-						border:white solid 2px;
+						border:white solid 1px;
 						box-shadow:0 0 90px rgb(0, 153, 255);
+
+						h1{
+							margin-left:0;
+							text-align:center;
+							margin-top:24px;
+							opacity:1;
+						}
 					}
 				}
 			}
 
 			.socialMedia{
-				padding:18px;
+				position:absolute;
+				bottom:0;left:0;
+				width:100%;
+				padding:18px 0;
 
 				h1{
 					font-size:13px;color:grey;font-weight:normal;
@@ -570,6 +600,35 @@ body{
 	}
 }
 
+
+.unfollowButton{
+	margin:0px auto 18px auto;
+	padding:3px 9px;
+	border-radius:2px;
+	background-color:#333333;
+	font-size:13px;color:grey;
+
+	&:hover{
+		cursor:pointer;
+		background-color:$BLUE;
+		color:white;
+	}
+}
+
+.followButton{
+	margin:9px auto;
+	padding:3px 9px;
+	border-radius:2px;
+	background-color:#333333;
+	font-size:13px;color:grey;
+
+	&:hover{
+		cursor:pointer;
+		background-color:$BLUE;
+		color:white;
+	}
+}
+
 .userpage{
 
 	.userpageHead{
@@ -581,7 +640,7 @@ body{
 	}
 
 	.centerColumn{
-		width:720px;
+		width:900px;
 		margin:0 auto;
 	}
 
@@ -589,7 +648,7 @@ body{
 		.profileImg{
 
 			img{
-				width:200px;height:200px;
+				width:100px;height:100px;
 			}
 		}
 
