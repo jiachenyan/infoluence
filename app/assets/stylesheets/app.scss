@@ -635,8 +635,11 @@ body{
 		width:100%;
 		padding:36px;
 		border-bottom:grey solid 1px;
+		background-color:#222222;
+	}
 
-
+	.userpageBody{
+		padding-top:15px;
 	}
 
 	.centerColumn{
@@ -743,7 +746,7 @@ body{
 
 	.profileImgWrapper{
 		margin:0 auto;
-		margin-top:18px;
+		margin-top:36px;
 
 		img{
 			width:200px;height:200px;
