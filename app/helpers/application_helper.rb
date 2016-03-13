@@ -36,8 +36,9 @@ module ApplicationHelper
 		query_ast.take(items_per_page).skip(offset)
 	end
 
-	def json_agg_exec(query_ast)
+	def json_agg_exec(query_ast, options={})
 		data = ActiveRecord::Base.connection.execute <<-SQL.squish
+			#{options[:prefix]}
 			SELECT
 			JSON_AGG("data") AS "data"
 			FROM(#{query_ast.to_sql}) AS "data"
