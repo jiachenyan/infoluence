@@ -195,6 +195,7 @@ class PostsController < ApplicationController
 				Arel.sql("'username'"), @users_tb[:username],
 				Arel.sql("'avatarThumb'"), avatar_url_attr(:thumb),
 				Arel.sql("'avatarMedium'"), avatar_url_attr(:medium),
+				Arel.sql("'userInfo'"), Arel.sql('"users"."properties" -> \'info\''),
 
 				Arel.sql("'totalRdInf'"), @users_tb[:total_read_influence],
 				Arel.sql("'totalShInf'"), @users_tb[:total_share_influence],

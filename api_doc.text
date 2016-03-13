@@ -9,6 +9,7 @@ POST  /users.json
 			"username": string,
 			"avatarThumb": string,
 			"avatarMedium": string,
+			"userInfo": {},
 
 			"totalRdInf": int,
 			"totalShInf": int,
@@ -22,7 +23,7 @@ POST  /users.json
 
 PUT   /user.json 
 	# update user
-	# data: [old_password, password, password_confirmation, name, username]
+	# data: [old_password, password, password_confirmation, name, username, info]
 	# old password required to change password
 	# on success => user object
 	# on error => {"errors": [string]}
@@ -79,6 +80,7 @@ POST  /posts.json
 				"username": string,
 				"avatarThumb": string,
 				"avatarMedium": string,
+				"userInfo": {},
 
 				"totalRdInf": int,
 				"totalShInf": int,
@@ -94,6 +96,7 @@ POST  /posts.json
 				"username": string,
 				"avatarThumb": string,
 				"avatarMedium": string,
+				"userInfo": {},
 
 				"totalRdInf": int,
 				"totalShInf": int,
@@ -137,6 +140,7 @@ GET   /posts/:page.json # timeline
 			"username": string,
 			"avatarThumb": string,
 			"avatarMedium": string,
+			"userInfo": {},
 
 			"totalRdInf": int,
 			"totalShInf": int,
@@ -152,6 +156,7 @@ GET   /posts/:page.json # timeline
 			"username": string,
 			"avatarThumb": string,
 			"avatarMedium": string,
+			"userInfo": {},
 
 			"totalRdInf": int,
 			"totalShInf": int,

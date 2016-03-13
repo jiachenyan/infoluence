@@ -27,7 +27,14 @@ class UsersController < ApplicationController
 			current_user.password_confirmation = params[:password_confirmation]
 		end
 
-		if current_user.update_attributes(params.slice(*User.attribute_names))
+		current_user.assign_attributes(params.slice(*User.attribute_names))
+		
+		if params[:info].present?
+			current_user.properties = Hash.new if current_user.properties.nil?
+			current_user.properties[:info] = params[:info]
+		end
+
+		if current_user.save
 			sign_in(current_user)
 			render jsonize(serialize_user(current_user))
 		else
@@ -114,6 +121,7 @@ class UsersController < ApplicationController
 				@users_tb[:username],
 				avatar_url_attr(:thumb, :avatarThumb),
 				avatar_url_attr(:medium, :avatarMedium),
+				Arel.sql('"users"."properties" -> \'info\'').as('"userInfo"'),
 
 				@users_tb[:total_read_influence].as('"totalRdInf"'),
 				@users_tb[:total_share_influence].as('"totalShInf"'),
@@ -142,6 +150,8 @@ class UsersController < ApplicationController
 			username: user.username,
 			avatarThumb: user.avatar.url(:thumb),
 			avatarMedium: user.avatar.url(:medium),
+
+			userInfo: user.properties.try(:[], 'info'),
 
 			totalRdInf: user.total_read_influence,
 			totalShInf: user.total_share_influence,
