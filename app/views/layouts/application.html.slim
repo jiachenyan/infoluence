@@ -54,7 +54,7 @@ body.c.wh100.ofys ng-controller="ApplicationController" infinite-scroll="loadMor
 
 					.userCol.c.f1
 						.userSearchRes.c ng-controller="UserController" ng-repeat="user in users track by $index"
-							a.r href="/{{user.username}}"
+							a.r href="/{{user.username}}/"
 								.profileImg
 									img ng-src="{{user.avatarThumb}}"
 								.userInfo.c.f1
