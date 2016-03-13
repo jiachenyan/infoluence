@@ -1,0 +1,19 @@
+
+.userpageBody.w100 ng-init="getFollowing()"
+	
+	.userWrapper.c
+		.userRow.r ng-repeat="user in following"
+			.profileImg
+				img ng-src="{{user.avatarThumb}}"
+			.userInfo.c.f1
+				h1
+					|{{user.name}}
+				h2
+					|{{user.username}}
+				h2
+					|{{user.infNum}}
+			.relationship
+				.relationshipStatusButton
+					|Following
+
+

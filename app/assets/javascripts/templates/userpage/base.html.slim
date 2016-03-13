@@ -14,33 +14,13 @@
 				h2
 					|{{userInfo.totalInf}}
 		.userpageNavWrapper.centerColumn.r
-			.userpageNav.c
-				h1.ac
-					|Posts
-			.userpageNav.c
-				h1.ac
-					|Following
-			.userpageNav.c
-				h1.ac
-					|Info
-	.userpageBody.w100 ng-controller="HomeController"
-
-		.timeline ng-init="getFeed()"
-
-			.postCreation.c ng-controller="NewPostController" ng-if="isSignedIn" ng-show="me.username == username"
-				form ng-init="initNewPost()"
-					input placeholder="title" ng-model="title"
-					.c ng-repeat="content in content"
-						textarea ng-if="content.type == 'pg'" placeholder="content" ng-model="content.body"
-					.linkSharing
-						input placeholder="linkUrl"
-					.r
-						.f1
-						.submitButton ng-click="submitPost()"
-							|Publish
-						.ninepx
-
-			timeline-post ng-repeat="post in feed track by $index"
-
+			a href="/{{username}}/"
+				.userpageNav.c
+					h1.ac
+						|Posts
+			a href="/{{username}}/following"
+				.userpageNav.c
+					h1.ac
+						|Following
 	ui-view
 
