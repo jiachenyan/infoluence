@@ -164,7 +164,7 @@ GET   /posts/following/:page.json # timeline
 	# => post object array same as above
 
 
-POST  /link
+POST  /link.json
 	# data: [link]
 	# => link object
 		{

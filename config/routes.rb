@@ -32,7 +32,7 @@ Rails.application.routes.draw do
 		end
 		
 		controller :links, path: '/link' do
-			get '/',                                    action: :save_link
+			post '/',                                    action: :save_link
 		end
 
 		controller :users, path: '/:username' do
