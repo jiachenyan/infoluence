@@ -98,6 +98,10 @@ class UsersController < ApplicationController
 		end
 	end
 
+	def send_followings
+		
+	end
+
 	private
 
 	def serialize_user(user)

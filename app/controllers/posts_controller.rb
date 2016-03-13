@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-	before_action :signed_in_user, only: [:create, :share_post]
+	before_action :signed_in_user, only: [:create, :share_post, :send_follow_timeline]
 
 	POSTS_PER_PAGE = 20
 

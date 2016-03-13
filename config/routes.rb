@@ -18,6 +18,8 @@ Rails.application.routes.draw do
 				put '/logout',                             action: :destroy_session
 
 				put '/follow/:username',                   action: :update_relationship
+
+				get '/following/:page',                    action: :send_followings
 		end
 
 		resources :posts, only: [:create]
