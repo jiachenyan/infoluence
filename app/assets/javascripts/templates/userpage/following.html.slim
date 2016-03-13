@@ -2,7 +2,7 @@
 .userpageBody.w100 ng-init="getFollowing()"
 	
 	.userWrapper.c
-		.userRow.r ng-repeat="user in following"
+		.userRow.r ng-controller="UserController" ng-repeat="user in following"
 			.profileImg
 				img ng-src="{{user.avatarThumb}}"
 			.userInfo.c.f1
@@ -13,7 +13,11 @@
 				h2
 					|{{user.infNum}}
 			.relationship
-				.relationshipStatusButton
-					|Following
+				.unfollowButton ng-if="user.followStatus == true" ng-click="unfollow(post.author.username)"
+					i.fa.fa-minus-square
+					|&nbsp;Unfollow
+				.followButton ng-if="user.followStatus == false" ng-click="follow(post.author.username)"
+					i.fa.fa-plus-square
+					|&nbsp;Follow
 
 

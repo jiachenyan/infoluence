@@ -15,6 +15,7 @@ angular.module('Infoluence').controller 'ApplicationController', [
   $scope.me = null
   $scope.isSignedIn =    AuthService.isSignedIn()
 
+
   $scope.initialize = =>
    $scope.me = CookieService.getUserInfo()
    console.log $scope.me
