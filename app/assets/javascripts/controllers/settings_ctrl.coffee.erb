@@ -1,0 +1,45 @@
+
+angular.module('Infoluence').controller 'SettingsController', [
+
+ 'CookieService'
+ 'UUID'
+ 'UserService'
+ 'FileService'
+
+ '$scope'
+ '$state'
+ '$stateParams'
+
+
+ (CookieService,UUID,UserService,FileService,$scope,$state,$stateParams) ->
+
+  $scope.imageFile = null
+
+
+  $scope.uploadProfileImg = =>
+   console.dir JSON.stringify($scope.imageFile)
+
+   $scope.imgUploading = true
+
+   FileService($scope.imageFile,"/user.json").then (res) =>
+
+    $scope.imgUploading = false
+
+    data = res.data
+    alert JSON.stringify(res.data)
+    if data.Success
+     window.location.replace(window.location)
+    else
+     $scope.imgUploadMsg.pop
+     $scope.imgUploadMsg.push "Please try again."
+
+    # if data.Error
+    #  data.Error.forEach (err) =>
+    #   $scope.settingsErrMsg.push err
+    #   console.log Err
+
+
+
+
+
+]

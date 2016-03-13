@@ -1,0 +1,15 @@
+angular.module('Infoluence').service 'FileService', [
+ '$http'
+ ($http) ->
+
+  @uploadFileToUrl = (file,uploadUrl) ->
+   fd = new FormData
+   fd.append 'authenticity_token', $("meta[name='csrf-token']").attr("content")
+   fd.append 'file', file
+
+   promise = $http.patch(uploadUrl, fd,
+    transformRequest: angular.identity
+    headers: 'Content-Type': undefined)
+  	promise
+
+]
