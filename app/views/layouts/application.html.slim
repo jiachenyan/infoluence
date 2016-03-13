@@ -5,12 +5,35 @@ html
 		base href="/"
 		javascript:
 			WebFontConfig = {google: { families: [ 'Open+Sans:600,400,300:latin','Droid+Serif:400,700:latin','Inconsolata::latin','Ubuntu+Mono::latin'] }};(function() {var wf = document.createElement('script');wf.src = ('https:' == document.location.protocol ? 'https' : 'http') + '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';wf.type = 'text/javascript';wf.async = 'true';var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(wf, s);})();
+		
+		title
+			|Infoluence
+
+		meta http-equiv="Content-Type" content="text/html;charset=utf-8"
+		/ link rel="shortcut icon" href=""
+		/ meta name="description" content=""
+		/ meta name="keywords" content=""
+		/ base href="/"
+
+		/ meta property="og:url" content=""
+		/ meta property="og:type" content="website"
+		/ meta property="og:title" content=""
+		/ meta property="og:image" content=""
+		/ meta property="og:description" content=""
+
+		/ meta name="twitter:card" content="summary"
+		/ meta name="twitter:site" content="@infoluence"
+		/ meta name="twitter:title" content=""
+		/ meta name="twitter:description" content=""
+		/ meta name="twitter:creator" content="@infoluence"
+		/ meta name="twitter:image:src" content=""
+		/ meta name="twitter:url" content=""
 
 		= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
 		= javascript_include_tag 'application', 'data-turbolinks-track' => true
 		= csrf_meta_tags
 
-body.c.wh100 ng-app="Infoluence" ng-controller="ApplicationController" ng-init="initialize()"
+body.c.wh100.ofys ng-app="Infoluence" ng-controller="ApplicationController" ng-init="initialize()"
 	.appMenu
 		a href="/"
 			.c
@@ -26,14 +49,19 @@ body.c.wh100 ng-app="Infoluence" ng-controller="ApplicationController" ng-init="
 				.myPanelButton.c
 					.myProfileImg
 						img ng-src="{{me.avatarThumb}}"
+			a href="/users"
+				.myPanelButton.c
+					i.fa.fa-users
 			a href="/settings"
 				.myPanelButton.c
 					i.fa.fa-cog
 			.myPanelButton.c ng-click="signout()"
 				i.fa.fa-sign-out
 
-	.appBody.f1.c
+	.appBody.c
+
 		.entranceSection.c.s0 ng-controller="EntranceController" ng-if="!isSignedIn"
+
 			.entranceWrapper
 				.entranceNavWrapper.r
 					.entranceNav.f1.c.trans100 ng-click="switchToSignUp()" ng-class="{'selected':entranceState == 'signup'}"
@@ -42,24 +70,25 @@ body.c.wh100 ng-app="Infoluence" ng-controller="ApplicationController" ng-init="
 					.entranceNav.f1.c.trans100 ng-click="switchToSignIn()" ng-class="{'selected':entranceState == 'signin'}"
 						h1.ac
 							|Log In
+
 				form.c ng-show="entranceState == 'signup'"
 					.r
 						.c.f1
 							h1.inputLable
 								|Name
-							input ng-model="signupName" placeholder="You full name"
+							input ng-model="signupName" placeholder="You full name" ng-enter="signup()"
 						.ninepx
 						.c.f1
 							h1.inputLable
 								|Username
-							input ng-model="signupUsername" placeholder="Minimum 4 characters"
+							input ng-model="signupUsername" placeholder="Minimum 4 characters" ng-enter="signup()"
 
 					h1.inputLable
 						|Password
-					input ng-model="signupPassword" type="password" placeholder="Minimun 8 characters"
+					input ng-model="signupPassword" type="password" placeholder="Minimun 8 characters" ng-enter="signup()"
 					h1.inputLable
 						|Confirm Password
-					input ng-model="confirmPassword" type="password" placeholder="Type in again to confirm"
+					input ng-model="confirmPassword" type="password" placeholder="Type in again to confirm" ng-enter="signup()"
 
 					.submitButton ng-click="signup()"
 						|Sign Up
@@ -72,10 +101,10 @@ body.c.wh100 ng-app="Infoluence" ng-controller="ApplicationController" ng-init="
 
 					h1.inputLable
 						|Username
-					input ng-model="login" placeholder="Your Infoluence username"
+					input ng-model="login" placeholder="Your Infoluence username" ng-enter="signin()"
 					h1.inputLable
 						|Password
-					input ng-model="signinPassword" type="password" placeholder="Password"
+					input ng-model="signinPassword" type="password" placeholder="Password" ng-enter="signin()"
 
 					.submitButton ng-click="signin()"
 						|Sign In
@@ -85,4 +114,4 @@ body.c.wh100 ng-app="Infoluence" ng-controller="ApplicationController" ng-init="
 
 
 
-		ui-view.wh100
+		ui-view

@@ -57,6 +57,11 @@ angular.module('Infoluence').config [
    #controller: "HomeController"
    templateUrl: "settings/base.html"
 
+  .state "users",
+   url: "/users"
+   #controller: "HomeController"
+   templateUrl: "users/base.html"
+
   .state "userpage",
    url: "/:username"
    #controller: "HomeController"
