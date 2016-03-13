@@ -17,7 +17,7 @@
 				.profileImg
 					img ng-src="{{post.author.avatarThumb}}"
 				.authorInfo.c
-					a href="/{{post.author.username}}"
+					a href="/{{post.author.username}}/"
 						h1
 							|{{post.author.name}}
 					.f1
@@ -29,7 +29,7 @@
 					img ng-src="{{post.publisher.avatarThumb}}"
 				.publishInfo
 					.r
-						a href="/{{post.author.username}}"
+						a href="/{{post.author.username}}/"
 							h1
 								|{{post.publisher.name}}&nbsp;
 								i.fa.fa-retweet
@@ -59,7 +59,7 @@
 			.spreadInfluence.f1.c
 				.share ng-click="sharePost()"
 					.icon.trans200 ng-class="{'sharing':shareStatus == 'sharing','shared':shareStatus == 'shared','normal':shareStatus == 'shared'}"
-						h1.ac.trans200 ng-show="shareStatus == 'null'"
+						h1.ac.trans200 ng-show="shareStatus == null"
 							|Share
 						h1.ac.trans200 ng-show="shareStatus == 'sharing'"
 							|Sharing..

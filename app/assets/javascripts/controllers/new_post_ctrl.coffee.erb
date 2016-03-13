@@ -17,15 +17,25 @@ angular.module('Infoluence').controller 'NewPostController', [
   #post content is an array of object with different types
   $scope.content = []
 
+  $scope.linkUrl = ""
+  $scope.previousLinkUrl = ""
+
   $scope.initNewPost = =>
    pg = 
     type:"pg"
     body:""
    $scope.content.push pg
 
+  $scope.initializeLinkLoading = =>
+   
+
+
+
 
   $scope.submitPost = =>
+
    console.log "submitting"
+
    params =
     content:        
      title: $scope.title
@@ -36,16 +46,11 @@ angular.module('Infoluence').controller 'NewPostController', [
    PostService.submitPost(params).then (res) =>
     console.log res.data
     FeedFactory.feed.unshift res.data
-    # FeedFactory.pushNewPost(res.data.postId)
-    # $scope.previewing = false
-    # #$scope.refresh()
 
-    # $scope.submitting = false
+  $scope.$watch "linkUrl", =>
+   if ($scope.linkUrl.length - $scope.previousLinkUrl.length) > 5
+    $scope.initializeLinkLoading
 
-    # PostService.getDetailPost(res.data.rootId).then (res) =>
-    #  if res.data.status == 'open' || res.data.status == 'pending_open'
-    #   MyHoldingFactory.addToHoldings(res.data)
-    #  if res.data.status == 'closed' || res.data.status == 'pending_close'
-    #   MyHoldingFactory.removeFromHoldings(res.data)
+
 
 ]

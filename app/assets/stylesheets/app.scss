@@ -397,6 +397,45 @@ body{
 				border-bottom:$LINE_COLOR solid 1px;
 			}
 		}
+
+		.link{
+
+			.linkImg{
+				height:90px;
+			}
+
+			.linkContent{
+				padding:9px;
+
+				h1{
+					font-size:14px;color:#222222;font-weight:bold;
+				}
+
+				h2{
+					font-size:12px;color:grey;font-weight:bold;
+				}
+
+				h3{
+					font-size:12px;color:grey;font-weight:bold;
+				}
+			}
+		}
+
+		.linkLoading{
+
+			height:90px;width:100%;
+			background-color:#111111;
+			box-shadow:0 0 90px $BLUE;
+
+			h1{
+				font-size:12px;color:white;font-weight:normal;
+			}
+
+			loading{
+				position:relative;
+				top:18px;
+			}
+		}
 	}
 }
 
@@ -508,7 +547,7 @@ body{
 			padding:18px;
 
 			p{
-				margin-top:-26px;
+				//margin-top:-26px;
 				white-space:pre-line;
 				line-height:26px;
 				font-size:16px;color:#333333;font-weight:normal;
@@ -671,21 +710,36 @@ body{
 
 	.userpageHead{
 		width:100%;
-		padding:36px;
-		border-bottom:grey solid 1px;
+		height:260px;
+		padding:0 0 0 0;
 		background-color:#222222;
+
+		.userpageNavWrapper{
+			margin-top:18px;
+			background-color:#333333;
+
+			.userpageNav{
+				padding:6px 18px;
+
+				h1{
+
+					font-size:14px;color:grey;font-weight:bold;
+				}
+			}
+		}
 	}
 
 	.userpageBody{
-		padding-top:15px;
+		padding-top:30px;
 	}
 
 	.centerColumn{
-		width:900px;
+		width:842px;
 		margin:0 auto;
 	}
 
 	.userProfile{
+
 		.profileImg{
 
 			img{

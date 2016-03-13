@@ -1,5 +1,6 @@
 .userpage.base.wh100.c ng-controller="UserpageController" ng-init="getUserInfo()"
-	.userpageHead
+	.userpageHead.c
+		.f1
 		.userProfile.centerColumn.r
 			.profileImg
 				img ng-src="{{userInfo.avatarThumb}}"
@@ -12,25 +13,14 @@
 					|{{userInfo.regTime}}
 				h2
 					|{{userInfo.totalInf}}
-
-	.userpageBody.w100 ng-controller="HomeController"
-
-		.timeline ng-init="getFeed()"
-
-			.postCreation.c ng-controller="NewPostController" ng-if="isSignedIn" ng-show="me.username == username"
-				form ng-init="initNewPost()"
-					input placeholder="title" ng-model="title"
-					.c ng-repeat="content in content"
-						textarea ng-if="content.type == 'pg'" placeholder="content" ng-model="content.body"
-					.linkSharing
-						input placeholder="linkUrl"
-					.r
-						.f1
-						.submitButton ng-click="submitPost()"
-							|Publish
-						.ninepx
-
-			timeline-post ng-repeat="post in feed track by $index"
-
+		.userpageNavWrapper.centerColumn.r
+			a href="/{{username}}/"
+				.userpageNav.c
+					h1.ac
+						|Posts
+			a href="/{{username}}/following"
+				.userpageNav.c
+					h1.ac
+						|Following
 	ui-view
 

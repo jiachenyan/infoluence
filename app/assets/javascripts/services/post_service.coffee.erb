@@ -22,6 +22,8 @@ angular.module('Infoluence').service 'PostService', [
    promise = $http(req)
    promise
 
+  @parseLink = (url) =>
+
   @submitPost = (params) =>
 
    url = "/posts.json"

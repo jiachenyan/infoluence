@@ -22,6 +22,9 @@ angular.module('Infoluence').controller 'UserpageController', [
 
   $scope.userInfo = null
 
+  $scope.pageNum = 0
+  $scope.following = []
+
   $scope.getUserInfo = =>
    UserService.getUserInfo($scope.username).then (res) =>
     $scope.userInfo = res.data
@@ -36,6 +39,15 @@ angular.module('Infoluence').controller 'UserpageController', [
   		$scope.post = res.data
 
   		console.log res.data
+
+  $scope.getFollowing = =>
+   UserService.getFollowing($scope.username,$scope.pageNum).then (res) =>
+
+    res.data.forEach (user) =>
+     $scope.following.push user
+
+
+
 
 
 ]

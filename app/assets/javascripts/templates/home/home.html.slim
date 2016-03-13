@@ -7,8 +7,21 @@
 				input placeholder="title" ng-model="title"
 				.c ng-repeat="content in content"
 					textarea ng-if="content.type == 'pg'" placeholder="content" ng-model="content.body"
+					.link
+						.linkImg
+						.linkContent.c
+							h1
+								|saldkf
+							h2
+								|alskdfjasldf
+							h3
+								|laskdfj
+				.linkLoading.c
+					loading
+					h1.ac
+						|Fetching Link..
 				.linkSharing
-					input placeholder="linkUrl"
+					input placeholder="Paste Link URL here" ng-model="linkUrl"
 				.r
 					.f1
 					.submitButton ng-click="submitPost()"

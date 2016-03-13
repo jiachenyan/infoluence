@@ -73,6 +73,17 @@ angular.module('Infoluence').config [
       return $stateParams.username
     ]
 
+  .state "userpage.main",
+   url: "/"
+   templateUrl: "userpage/main.html"
+   #controller: "PostController"
+   resolve:
+    postId: [
+     "$stateParams"
+     ($stateParams) ->
+      return $stateParams.postId
+    ]
+
   .state "userpage.post",
    url: "/posts/:postId"
    templateUrl: "directives/detail_post.html"
@@ -83,6 +94,12 @@ angular.module('Infoluence').config [
      ($stateParams) ->
       return $stateParams.postId
     ]
+
+  .state "userpage.following",
+   url: "/following"
+   templateUrl: "userpage/following.html"
+   #controller: "PostController"
+
 
   ##########################################################
   ##########################################################
