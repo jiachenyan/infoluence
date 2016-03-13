@@ -1,5 +1,6 @@
 
 .w100 ng-controller="HomeController" ng-init="homeInit()"
+	
 	.timeline ng-init="getFeed()"
 
 		.postCreation.c ng-controller="NewPostController" ng-if="isSignedIn"
@@ -40,4 +41,5 @@
 					|Following
 		timeline-post ng-repeat="post in feed track by $index"
 
+	.loadMore ng-mouseover="getFeed()"
 	ui-view style="position:fixed;z-index:99;"

@@ -18,10 +18,8 @@ angular.module('Infoluence').controller 'ApplicationController', [
 
   $scope.initialize = =>
    $scope.me = CookieService.getUserInfo()
-   console.log $scope.me
 
   $scope.loadMoreCurrentStuff = =>
-   console.log "loadMoreCurrentStuff"
    ScrollLoadSetterFactory.loadMore()
 
 

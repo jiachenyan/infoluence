@@ -9,10 +9,16 @@
 					|{{userInfo.name}}
 				h2
 					|{{userInfo.username}}
-				h2
-					|{{userInfo.regTime}}
-				h2
-					|{{userInfo.totalInf}}
+				.unfollowButton ng-if="userInfo.followStatus == true" ng-click="unfollow(post.author.username)"
+					i.fa.fa-minus-square
+					|&nbsp;Unfollow
+				.followButton ng-if="userInfo.followStatus == false" ng-click="follow(post.author.username)"
+					i.fa.fa-plus-square
+					|&nbsp;Follow
+				/ h2
+				/ 	|{{userInfo.regTime}}
+				/ h2
+				/ 	|{{userInfo.totalInf}}
 		.userpageNavWrapper.centerColumn.r
 			a href="/{{username}}/"
 				.userpageNav.c

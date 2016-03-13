@@ -57,6 +57,14 @@ angular.module('Infoluence').controller 'UserpageController', [
     res.data.forEach (user) =>
      $scope.following.push user
 
+  $scope.follow = (username) =>
+   UserService.follow(username).then (res) =>
+    $scope.userInfo.followStatus = true
+
+  $scope.unfollow = (username) =>
+   UserService.follow(username).then (res) =>
+    $scope.userInfo.followStatus = false
+
 
 
 

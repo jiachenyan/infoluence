@@ -40,13 +40,14 @@ angular.module('Infoluence').controller 'EntranceController', [
      login: $scope.login
      password: $scope.signinPassword
 
-   $http(req).then (data) ->
+   $http(req).then (res) ->
+
+    data = res.data
     
     if data.errors != undefined
-     alert(JSON.stringify(res.data))
      data.errors.forEach (err) =>
       $scope.signupErr = true
-      $scope.signupErrMsgs.push "#{err}."
+      $scope.signinErrMsgs.push err
     else
      $scope.signupSuccessShow = true
 
@@ -67,17 +68,15 @@ angular.module('Infoluence').controller 'EntranceController', [
     params:
      name:$scope.signupName
      username:$scope.signupUsername
-     #email:$scope.email
      password:$scope.signupPassword
      password_confirmation:$scope.confirmPassword
 
 
-   $http(req).then (data) ->
+   $http(req).then (res) ->
 
-    console.log data
+    data = res.data
 
     if data.errors != undefined
-     alert(JSON.stringify(res.data))
      data.errors.forEach (err) =>
       $scope.signupErr = true
       $scope.signupErrMsgs.push err

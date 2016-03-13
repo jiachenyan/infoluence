@@ -344,8 +344,10 @@ body{
 			@include align-items(flex-start);
 
 			.errMsg{
-				background-color:red;
+				background-color:rgb(255, 80, 80);
 				color:white;
+				font-size:13px;
+				border-radius:2px;
 				margin:3px 12px;
 				padding:3px;
 			}
@@ -377,7 +379,6 @@ body{
 	margin:0 auto;
 	width:520px;
 	//height:120%;
-	padding-bottom:360px;
 
 	.feedSelectorWrapper{
 		margin-bottom:12px;
@@ -404,6 +405,11 @@ body{
 			border-bottom:$BLUE solid 2px;
 		}
 	}
+}
+
+.loadMore{
+	width:100%;
+	height:900px;
 }
 
 .timelinePost{
