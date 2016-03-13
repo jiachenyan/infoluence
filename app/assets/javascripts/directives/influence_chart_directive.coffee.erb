@@ -10,17 +10,12 @@ angular.module('Infoluence').directive "detailPostInfluenceChart", [
 
 
 	 link: (scope, element, attrs) ->
-	 	width = 300
-			height = 300
+	 	width = element[0].offsetWidth
+			height = element[0].offsetHeight
 			#color = d3.scale.category20()
-			force = d3.layout.force().charge(-30).linkDistance(10).size([
-			  width
-			  height
-			])
-
-			svg = d3.select('#chartSVG').attr('width', width).attr('height', height)
 
    data = scope.post.graphData
+   infId = scope.post.infId
 
    graph = 
     'nodes': []
@@ -45,9 +40,6 @@ angular.module('Infoluence').directive "detailPostInfluenceChart", [
        'target': i
        'value': 1
 
-      console.log "i:#{graph['nodes'][i][2]} j:#{graph['nodes'][j][0]}"
-      console.log "i:#{i} j:#{j}"
-
 
       graph['links'].push link
       break
@@ -55,6 +47,23 @@ angular.module('Infoluence').directive "detailPostInfluenceChart", [
 
     i++
    console.log graph
+
+   maxCharge = -100
+   minCharge = -5
+
+   charge = maxCharge/(1 + Math.pow(2.72,(-3*(data.length - 50))))
+			force = d3.layout.force().charge(charge).linkDistance(1).size([
+			  width
+			  height
+			])
+
+			#svg = d3.select('#chartSVG').attr('width', width).attr('height', height)
+   chartId = "#chartSVG"
+   console.log chartId
+
+
+   svg = d3.select("#chartSVG_#{infId}")
+
 
     
 

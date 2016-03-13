@@ -4,13 +4,14 @@ angular.module('Infoluence').controller 'PostController', [
  'CookieService'
  'UUID'
  'PostService'
+ 'FeedFactory'
 
  '$scope'
  '$state'
  '$stateParams'
 
 
- (CookieService,UUID,PostService,$scope,$state,$stateParams) ->
+ (CookieService,UUID,PostService,FeedFactory,$scope,$state,$stateParams) ->
 
  	$scope.postId = $stateParams.postId
   $scope.me = null
@@ -23,6 +24,8 @@ angular.module('Infoluence').controller 'PostController', [
 
   $scope.sharePost = =>
    PostService.sharePost($scope.postId).then (res) =>
+    console.log res.data
+    FeedFactory.feed.unshift res.data
     console.log JSON.stringify(res)
 
   $scope.getDetailPost = =>

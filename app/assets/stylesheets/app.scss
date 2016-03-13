@@ -270,13 +270,13 @@ body{
 
 	.postPublisher{
 		border-bottom:grey solid 1px;
-
+		padding-bottom:6px;
 
 		.profileImg{
 			margin-right:12px;
 
 			img{
-				width:36px;height:36px;
+				width:32px;height:32px;
 				border:grey solid 1px;
 				border-radius:1px;
 			}
@@ -284,7 +284,7 @@ body{
 
 		h1{
 			margin:0;
-			font-size:14px;color:#333333;font-weight:bold;
+			font-size:13px;color:#333333;font-weight:bold;
 		}
 
 		h2{
@@ -299,7 +299,7 @@ body{
 			margin-right:12px;
 
 			img{
-				width:50px;height:50px;
+				width:52px;height:52px;
 				border:grey solid 1px;
 				border-radius:1px;
 			}
@@ -307,7 +307,7 @@ body{
 
 		h1{
 			margin:0;
-			font-size:15px;color:#333333;font-weight:bold;
+			font-size:16px;color:#333333;font-weight:bold;
 		}
 
 		h2{
@@ -416,7 +416,6 @@ body{
 		position:absolute;
 		right:0;bottom:0;
 		height:100%;width:50%;
-		border-left:grey solid 1px;
 
 		detail-post-influence-chart{
 			width:100%;height:100%;
@@ -460,9 +459,10 @@ body{
 
 	.detailPostPublisher{
 		padding:9px 0;
-		width:64%;
 		margin:0 18px;
 		border-top:grey solid 1px;
+		@include align-self(flex-start);
+
 
 		.profileImg{
 			margin-right:12px;
