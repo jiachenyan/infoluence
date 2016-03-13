@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
 	before_action :signed_in_user,
-		only: [:update, :update_avatar, :destroy_session]
+		only: [:update, :update_avatar, :destroy_session, :update_relationship]
+
+	FOLLOWINGS_PER_PAGE = 50
 
 	def create
 		user = User.new(params.slice(*User.attribute_names))
@@ -99,7 +101,37 @@ class UsersController < ApplicationController
 	end
 
 	def send_followings
-		
+		user = User.find_by_username(params[:username])
+		return render json_error('Invalid username') if user.blank?
+
+		# relationship
+		@urels_tb = UserRelationship.arel_table
+		@users_tb = User.arel_table
+
+		@urels_query_ast = @urels_tb
+		.project(
+				@users_tb[:name],
+				@users_tb[:username],
+				avatar_url_attr(:thumb, :avatarThumb),
+				avatar_url_attr(:medium, :avatarMedium),
+
+				@users_tb[:total_read_influence].as('"totalRdInf"'),
+				@users_tb[:total_share_influence].as('"totalShInf"'),
+				@users_tb[:total_shares].as('"totalShares"'),
+				@users_tb[:total_posts].as('"totalPosts"'),
+
+				arel_sql_epoch(@users_tb, :created_at, :regTime),
+				Arel.sql('TRUE').as('"followStatus"')
+		)
+		.where(@urels_tb[:follower_id].eq(user.id))
+		.join(@users_tb)
+		.on(
+			@urels_tb[:follows_id].eq(@users_tb[:id])
+		)
+
+		@urels_query_ast = paginate(@urels_query_ast, params[:page], FOLLOWINGS_PER_PAGE)
+
+		render jsonize(json_agg_exec(@urels_query_ast))
 	end
 
 	private

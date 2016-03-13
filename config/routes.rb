@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 	scope format: true, constraints: { format: :json } do
 
 		resources :users, only: [:create]
-		controller :users, path: '/user' do
+		controller :users, path: '/user', constraints: { page: RtCst.int } do
 				put '/',                                   action: :update
 				patch '/',                                 action: :update_avatar
 
@@ -18,8 +18,6 @@ Rails.application.routes.draw do
 				put '/logout',                             action: :destroy_session
 
 				put '/follow/:username',                   action: :update_relationship
-
-				get '/following/:page',                    action: :send_followings
 		end
 
 		resources :posts, only: [:create]
@@ -39,6 +37,7 @@ Rails.application.routes.draw do
 
 		controller :users, path: '/:username' do
 			get '/',                                     action: :user_info
+			get '/following/:page',                      action: :send_followings
 		end
 	end
 

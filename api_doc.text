@@ -33,7 +33,12 @@ PATCH /user.json
 	# on success => user object
 
 GET   /:username.json
+	# user info
 	# => user object
+
+GET  /:username/following/:page.json
+	# following list
+	# => user object array
 
 
 POST  /user/login.json
