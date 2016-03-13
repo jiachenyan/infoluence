@@ -102,6 +102,8 @@ class DiscoverController < ApplicationController
 			)
 		)
 
+		@posts_search_query_ast = paginate(@posts_search_query_ast, page, SEARCH_ITEMS_PER_PAGE)
+
 		@posts_search_cte = Arel::Table.new(:posts_search_cte)
 		@posts_search_cte_as = Arel::Nodes::As.new(@posts_search_cte, @posts_search_query_ast)
 

@@ -40,7 +40,7 @@ body.c.wh100.ofys ng-app="Infoluence" ng-controller="ApplicationController" ng-i
 				h1.ac
 					|INFOLUENCE
 				h2.ac
-					|Share the Worth Knowings
+					|Visualialize Your Influence
 
 		.myPanel.r ng-if="me"
 			.f1
@@ -76,7 +76,7 @@ body.c.wh100.ofys ng-app="Infoluence" ng-controller="ApplicationController" ng-i
 						.c.f1
 							h1.inputLable
 								|Name
-							input ng-model="signupName" placeholder="You full name" ng-enter="signup()"
+							input ng-model="signupName" placeholder="Your full name" ng-enter="signup()"
 						.ninepx
 						.c.f1
 							h1.inputLable
@@ -85,10 +85,10 @@ body.c.wh100.ofys ng-app="Infoluence" ng-controller="ApplicationController" ng-i
 
 					h1.inputLable
 						|Password
-					input ng-model="signupPassword" type="password" placeholder="Minimun 8 characters" ng-enter="signup()"
+					input ng-model="signupPassword" type="password" placeholder="Minimun 6 characters" ng-enter="signup()"
 					h1.inputLable
 						|Confirm Password
-					input ng-model="confirmPassword" type="password" placeholder="Type in again to confirm" ng-enter="signup()"
+					input ng-model="confirmPassword" type="password" placeholder="Confirm password (Optional)" ng-enter="signup()"
 
 					.submitButton ng-click="signup()"
 						|Sign Up
