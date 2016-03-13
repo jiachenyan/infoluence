@@ -2,6 +2,8 @@
 .timelinePost.c infinite-scroll="getFeed()" infinite-scroll-distance="1.5"
 
 	.underlineBackground
+		/ .influenceChart.c.wh100 ng-if="post"
+		/ 	detail-post-influence-chart.wh100
 
 	.postPublisher.r ng-if="post.publisher.username != post.author.username"
 		.profileImg

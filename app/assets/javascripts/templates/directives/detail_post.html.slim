@@ -2,7 +2,7 @@
 	.detailPostBackground.f1 ng-click="back()"
 	.detailPost.c
 		.detailPostHead.c
-			.influenceChart.c ng-if="post"
+			.influenceChart.c ng-if="post.infId"
 				detail-post-influence-chart.wh100
 				
 
@@ -35,10 +35,10 @@
 			.relationshipUpdate.f1.c
 				.authorProfileImg
 					img src="https://scontent-iad3-1.xx.fbcdn.net/hprofile-xtp1/v/t1.0-1/p160x160/12193837_1046447422067106_6615205571884963325_n.jpg?oh=193f3310102a1207e9aa9c162b34969a&oe=574AEDB4"
-				.unfollowButton
+				.unfollowButton ng-if="post.author.followStatus == true"
 					i.fa.fa-minus-square
 					|&nbsp;Unfollow
-				.followButton
+				.followButton ng-if="post.author.followStatus == false"
 					i.fa.fa-plus-square
 					|&nbsp;Follow
 			.spreadInfluence.f1.c
