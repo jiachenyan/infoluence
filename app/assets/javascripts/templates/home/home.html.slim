@@ -5,18 +5,21 @@
 		.postCreation.c ng-controller="NewPostController" ng-if="isSignedIn"
 			form ng-init="initNewPost()"
 				input placeholder="title" ng-model="title"
-				.c ng-repeat="content in content"
+				.c ng-repeat="content in content track by $index"
 					textarea ng-if="content.type == 'pg'" placeholder="content" ng-model="content.body"
-					.link
-						.linkImg
-						.linkContent.c
+				.link.r ng-repeat="content in content track by $index" ng-if="content.type == 'lk'" ng-init="link = content.body"
+					.linkImg ng-if='link.images[0]'
+						img ng-src="link.images[0]"
+					.linkContent.c
+						a href="{{link.url}}"
 							h1
-								|saldkf
-							h2
-								|alskdfjasldf
-							h3
-								|laskdfj
-				.linkLoading.c
+								|{{link.title}}
+						h2
+							|{{link.description}}
+						h3
+							|{{link.siteName}}
+
+				.linkLoading.c ng-show="linkFetchStatus == 'fetching'"
 					loading
 					h1.ac
 						|Fetching Link..
@@ -29,10 +32,10 @@
 					.ninepx
 
 		.feedSelectorWrapper.r
-			.feedSelector.c ng-click="switchToPublic()" ng-class="{selected:feedType == ''}"
+			.feedSelector.c ng-click="switchToPublic()" ng-class="{selected:feedType[0] == ''}"
 				h1.ar
 					|Public
-			.feedSelector.c ng-click="switchToFollowing()" ng-class="{selected:feedType == '/following'}"
+			.feedSelector.c ng-click="switchToFollowing()" ng-class="{selected:feedType[0] == '/following'}"
 				h1.ar
 					|Following
 		timeline-post ng-repeat="post in feed track by $index"

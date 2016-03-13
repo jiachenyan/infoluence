@@ -1,0 +1,30 @@
+
+angular.module('Infoluence').factory "ScrollLoadSetterFactory", [
+
+ 'FeedFactory'
+ '$state'
+
+ (FeedFactory,$state) ->
+
+  o =
+   feed: []
+   pageNum: 0
+
+  o.loadMore = =>
+   console.log "load more factory.."
+   console.log $state.current.name
+   if $state.current.name == 'home'
+    FeedFactory.getFeed()
+   if $state.current.name == 'userpage.main'
+    FeedFactory.getFeed()
+
+
+  o.clear = =>
+   o.feed = []
+   o.pageNum =0
+
+
+
+  o
+
+]

@@ -5,17 +5,18 @@ angular.module('Infoluence').controller 'UserpageController', [
  'UUID'
  'PostService'
  'UserService'
+ 'FeedFactory'
 
  '$scope'
  '$state'
  '$stateParams'
 
 
- (CookieService,UUID,PostService,UserService,$scope,$state,$stateParams) ->
+ (CookieService,UUID,PostService,UserService,FeedFactory,$scope,$state,$stateParams) ->
 
  	$scope.username = $stateParams.username
   $scope.me = null
-  $scope.timeline = [123,123]
+  $scope.feed = FeedFactory.userFeed
   $scope.post = null
 
   $scope.rootUrl = "/#{$scope.username}/"
@@ -26,8 +27,16 @@ angular.module('Infoluence').controller 'UserpageController', [
   $scope.following = []
 
   $scope.getUserInfo = =>
+
    UserService.getUserInfo($scope.username).then (res) =>
     $scope.userInfo = res.data
+
+   FeedFactory.clear()
+   FeedFactory.switchToUserPosts($scope.username)
+   FeedFactory.getUserFeed()
+
+  $scope.getUserFeed = =>
+   FeedFactory.getUserFeed()
 
 
   $scope.back = =>

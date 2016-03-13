@@ -8,21 +8,53 @@ angular.module('Infoluence').factory "FeedFactory", [
   o =
    feed: []
    pageNum: 0
+   feedType: [""]
 
-  o.getFeed = (type) =>
+   userFeed: []
+   userFeedPageNum: 0
+   userFeedFeedType: [""]
 
+  o.getFeed = =>
+   console.log "getting feed"
+   console.log o.pageNum
    o.pageNum++
-   FeedService.getFeed(type,o.pageNum).then (res) =>
+   FeedService.getFeed(o.feedType[0],o.pageNum).then (res) =>
 
     data = res.data
 
     data.forEach (post) =>
-     console.log post
 
      post.publishTimeString = moment(post.publishTime * 1000).format("L, h:mm a")
      post.createTimeString = moment(post.createTime * 1000).format("L, h:mm a")
      
      o.feed.push post
+
+  o.switchToPublic = =>
+   o.feedType.pop()
+   o.feedType.push ""
+     
+  o.switchToFollowing = =>
+   o.feedType.pop()
+   o.feedType.push "/following"
+
+  o.getUserFeed = =>
+   console.log "getting feed"
+   console.log o.userFeedPageNum
+   o.userFeedPageNum++
+   FeedService.getFeed(o.userFeedFeedType[0],o.userFeedPageNum).then (res) =>
+
+    data = res.data
+
+    data.forEach (post) =>
+
+     post.publishTimeString = moment(post.publishTime * 1000).format("L, h:mm a")
+     post.createTimeString = moment(post.createTime * 1000).format("L, h:mm a")
+     
+     o.userFeed.push post
+     
+  o.switchToUserPosts = (username) =>
+   o.userFeedFeedType.pop()
+   o.userFeedFeedType.push "/user/#{username}"
 
   o.clear = =>
    o.feed = []

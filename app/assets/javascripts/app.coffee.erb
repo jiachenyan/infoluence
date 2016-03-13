@@ -206,80 +206,80 @@ mod.directive 'infiniteScroll', [
 ]
 
 
-do ->
+# do ->
 
-  mhScrollbar = ->
-    {
-      restrict: 'A'
-      link: (scope, element, attrs) ->
-        conf = getConf(attrs, scope)
-        element.mCustomScrollbar conf
-        return
+#   mhScrollbar = ->
+#     {
+#       restrict: 'A'
+#       link: (scope, element, attrs) ->
+#         conf = getConf(attrs, scope)
+#         element.mCustomScrollbar conf
+#         return
 
-    }
+#     }
 
-  getConf = (attrs, scope) ->
-    confObj = {}
-    for attr of attrs
-      if attr.indexOf('mcs') == 0
-        field = attr.charAt(3).toLowerCase() + attr.substring(4, attr.length)
-        confObj[field] = convert(attrs[attr], scope)
-    confObj
+#   getConf = (attrs, scope) ->
+#     confObj = {}
+#     for attr of attrs
+#       if attr.indexOf('mcs') == 0
+#         field = attr.charAt(3).toLowerCase() + attr.substring(4, attr.length)
+#         confObj[field] = convert(attrs[attr], scope)
+#     confObj
 
-  convert = (input, scope) ->
-    if input == undefined or input == null
-      return null
-    #numbers, booleans
-    primary = primaryData(input, scope)
-    if primary != null
-      return primary
-    #Object Json
-    parsed = null
-    try
-      parser = JSON.parse
-      if jQuery.parseJSON
-        parser = jQuery.parseJSON
-      parsed = parser(input)
-      return primaryData(parsed, scope)
-    catch e
-      #String
-      return input
-    return
+#   convert = (input, scope) ->
+#     if input == undefined or input == null
+#       return null
+#     #numbers, booleans
+#     primary = primaryData(input, scope)
+#     if primary != null
+#       return primary
+#     #Object Json
+#     parsed = null
+#     try
+#       parser = JSON.parse
+#       if jQuery.parseJSON
+#         parser = jQuery.parseJSON
+#       parsed = parser(input)
+#       return primaryData(parsed, scope)
+#     catch e
+#       #String
+#       return input
+#     return
 
-  primaryData = (input, scope) ->
-    #Number
-    temp = Number(input)
-    if !isNaN(temp)
-      return temp
-    #Boolean
-    if input == 'true' or input == 'false'
-      if input == 'true'
-        return true
-      else
-        return false
-    #Object
-    if angular.isObject(input) and !angular.isDate(input) and !angular.isArray(input)
-      for field of input
-        data = primaryData(input[field], scope)
-        input[field] = if data != null then data else parseFunctions(input[field], scope)
-        return input
-    null
+#   primaryData = (input, scope) ->
+#     #Number
+#     temp = Number(input)
+#     if !isNaN(temp)
+#       return temp
+#     #Boolean
+#     if input == 'true' or input == 'false'
+#       if input == 'true'
+#         return true
+#       else
+#         return false
+#     #Object
+#     if angular.isObject(input) and !angular.isDate(input) and !angular.isArray(input)
+#       for field of input
+#         data = primaryData(input[field], scope)
+#         input[field] = if data != null then data else parseFunctions(input[field], scope)
+#         return input
+#     null
 
-  parseFunctions = (input, scope) ->
-    #Function - has the ()
-    if input.indexOf('()') > 0
-      splitted = input.split('.')
-      parsedFunc = scope
-      i = 0
-      length = splitted.length
-      while i < length - 1
-        parsedFunc = parsedFunc[splitted[i]]
-        i++
-      last = splitted[splitted.length - 1].substring(0, splitted[splitted.length - 1].length - 2)
-      return parsedFunc[last]
-    null
+#   parseFunctions = (input, scope) ->
+#     #Function - has the ()
+#     if input.indexOf('()') > 0
+#       splitted = input.split('.')
+#       parsedFunc = scope
+#       i = 0
+#       length = splitted.length
+#       while i < length - 1
+#         parsedFunc = parsedFunc[splitted[i]]
+#         i++
+#       last = splitted[splitted.length - 1].substring(0, splitted[splitted.length - 1].length - 2)
+#       return parsedFunc[last]
+#     null
 
-  'use strict'
-  angular.module('Nvest.scrollbar', []).directive 'mhScrollbar', mhScrollbar
-  return
+#   'use strict'
+#   angular.module('Nvest.scrollbar', []).directive 'mhScrollbar', mhScrollbar
+#   return
 

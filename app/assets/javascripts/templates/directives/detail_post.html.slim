@@ -37,9 +37,22 @@
 
 		.detailPostMain
 			.paragraph
-				.c ng-repeat="e in post.content.data"
+				.c ng-repeat="e in post.content.data" ng-if="e.type == 'pg'"
 					p
 						|{{e.body}}
+
+			.link ng-repeat="link in post.content.data track by $index" ng-if="link.type == 'lk'"
+					.linkImg ng-if='link.body.images[0]'
+						img ng-src="link.body.images[0]"
+					.linkContent.c
+						a href="{{link.body.url}}"
+							h1
+								|{{link.body.title}}
+						h2
+							|{{link.body.description}}
+						h3
+							|{{link.body.siteName}}
+
 
 
 

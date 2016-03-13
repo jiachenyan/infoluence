@@ -1,7 +1,7 @@
 
-	.userpageBody.w100 ng-controller="HomeController"
+	.userpageBody.w100
 
-		.timeline ng-init="getFeed()"
+		.timeline ng-init="getUserFeed()"
 
 			.postCreation.c ng-controller="NewPostController" ng-if="isSignedIn" ng-show="me.username == username"
 				form ng-init="initNewPost()"

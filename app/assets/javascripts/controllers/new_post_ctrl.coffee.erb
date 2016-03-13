@@ -14,21 +14,42 @@ angular.module('Infoluence').controller 'NewPostController', [
 
   $scope.me = null
 
+  $scope.title = ""
   #post content is an array of object with different types
   $scope.content = []
+  $scope.links = []
 
   $scope.linkUrl = ""
   $scope.previousLinkUrl = ""
 
+  $scope.linkFetchStatus = null
+
   $scope.initNewPost = =>
+
    pg = 
     type:"pg"
     body:""
+
    $scope.content.push pg
 
   $scope.initializeLinkLoading = =>
-   
+   $scope.linkFetchStatus = "fetching"
 
+
+   PostService.parseLink($scope.linkUrl).then (res) =>
+    console.log res.data
+    $scope.linkFetchStatus = "fetched"
+
+    link =
+     type: "lk"
+     body: res.data
+
+    alert JSON.stringify(link)
+    $scope.content.push link
+
+    $scope.title = ""
+    $scope.linkUrl = ""
+    $scope.previousLinkUrl = ""
 
 
 
@@ -45,11 +66,20 @@ angular.module('Infoluence').controller 'NewPostController', [
 
    PostService.submitPost(params).then (res) =>
     console.log res.data
+
+    $scope.clear()
     FeedFactory.feed.unshift res.data
 
+  $scope.clear = =>
+   $scope.content = []
+   $scope.links = []
+   $scope.initNewPost()
+
+
   $scope.$watch "linkUrl", =>
-   if ($scope.linkUrl.length - $scope.previousLinkUrl.length) > 5
-    $scope.initializeLinkLoading
+   if $scope.linkFetchStatus != "fetching"
+    if ($scope.linkUrl.length - $scope.previousLinkUrl.length) > 5
+     $scope.initializeLinkLoading()
 
 
 

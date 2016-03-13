@@ -399,13 +399,15 @@ body{
 		}
 
 		.link{
+			margin:3px 15px;
+			background-color:#EEE;
 
 			.linkImg{
 				height:90px;
 			}
 
 			.linkContent{
-				padding:9px;
+				padding:9px 12px;
 
 				h1{
 					font-size:14px;color:#222222;font-weight:bold;
@@ -435,6 +437,33 @@ body{
 				position:relative;
 				top:18px;
 			}
+		}
+	}
+}
+
+
+
+.link{
+	margin:3px 15px;
+	background-color:#EEE;
+
+	.linkImg{
+		height:90px;
+	}
+
+	.linkContent{
+		padding:9px 12px;
+
+		h1{
+			font-size:14px;color:#222222;font-weight:bold;
+		}
+
+		h2{
+			font-size:12px;color:grey;font-weight:bold;
+		}
+
+		h3{
+			font-size:12px;color:grey;font-weight:bold;
 		}
 	}
 }

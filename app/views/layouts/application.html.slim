@@ -33,7 +33,7 @@ html
 		= javascript_include_tag 'application', 'data-turbolinks-track' => true
 		= csrf_meta_tags
 
-body.c.wh100.ofys ng-app="Infoluence" ng-controller="ApplicationController" ng-init="initialize()"
+body.c.wh100.ofys ng-app="Infoluence" ng-controller="ApplicationController" ng-init="initialize()" infinite-scroll="loadMoreCurrentStuff()" infinite-scroll-distance="3"
 	.appMenu
 		a href="/"
 			.c
