@@ -1,18 +1,24 @@
 .base
 	.settingsWrapper ng-controller="SettingsController"
-		.c.f1.imgUpdateWrapper ng-class="{blur:imgUploading}"
+		.c.f1.imgUpdateWrapper
 
 			.profileImgWrapper
 				img ng-src="{{me.avatarMedium}}"
 
 			.profileImgUpdatePanel.f1.c
 				form.c.f1
-					input.chooseFileButton type="file" accept="image/*" data-max-size="2048" file-model="imageFile"
+					.r
+						.f1
+						input.chooseFileButton type="file" accept="image/*" data-max-size="2048" file-model="imageFile"
+						.f1
 					.note
 						h2
 							|.jpg .jpeg .png .bmp Max file size 2MB
 						.errMsg
 							h1 ng-repeat="msg in imgUploadMsg"
 								|{{msg}}
-					.button.mrg0a ng-click="uploadProfileImg()"
-						|Upload
+					.r
+						.f1
+						.submitButton.mrg0a ng-click="uploadProfileImg()"
+							|Upload
+						.f1
