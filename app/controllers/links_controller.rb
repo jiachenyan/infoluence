@@ -15,7 +15,7 @@ class LinksController < ApplicationController
 
 		# look for existing info with og
 		uri = URI.parse(URI.escape(param_url))
-		# begin
+		begin
 			og_reader = Timeout.timeout(2){ OpenGraphReader.fetch!(uri) }
 		rescue => e
 			# error on fetch, try saving link with just url
