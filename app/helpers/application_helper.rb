@@ -59,4 +59,16 @@ module ApplicationHelper
 		arel_sql = arel_sql.as("\"#{as_name}\"") unless as_name.nil?
 		arel_sql
 	end
+
+	def json_build_object(*values)
+		Arel::Nodes::NamedFunction.new('JSON_BUILD_OBJECT', values)
+	end
+
+	def json_build_array(*values)
+		Arel::Nodes::NamedFunction.new('JSON_BUILD_ARRAY', values)
+	end
+
+	def json_agg(*values)
+		Arel::Nodes::NamedFunction.new('JSON_AGG', values)
+	end
 end

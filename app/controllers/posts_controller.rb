@@ -208,6 +208,27 @@ class PostsController < ApplicationController
 		@publishers_cte = Arel::Table.new(:publishers_cte)
 		@publishers_cte_as = Arel::Nodes::As.new(@publishers_cte, @publishers_query_ast)
 
+		# data
+		
+		@inf_data_query_ast = @infs_tb.project(
+			@infs_tb[:post_id],
+			json_agg(json_build_array(
+				@infs_tb[:id],
+				@infs_tb[:inf_type],
+				@infs_tb[:from_inf_id]
+			)).as('"graphData"')
+		)
+		.where(
+			@infs_tb[:post_id].in(
+				@infs_cte.project(@infs_cte[:post_id])
+			)
+		)
+		.group(@infs_tb[:post_id])
+
+		@inf_data_cte = Arel::Table.new(:inf_data_cte)
+		@inf_data_cte_as = Arel::Nodes::As.new(@inf_data_cte, @inf_data_query_ast)
+
+
 		@infs_query_ast = @infs_cte.project(
 			@infs_cte[:infId],
 			@infs_cte[:infType],
@@ -219,20 +240,35 @@ class PostsController < ApplicationController
 			@posts_cte[:createTime],
 
 			@authors_cte[:user_data].as('"author"'),
-			@publishers_cte[:user_data].as('"publisher"')
+			@publishers_cte[:user_data].as('"publisher"'),
+
+			@inf_data_cte[:graphData]
 		)
 		.join(@posts_cte, Arel::Nodes::OuterJoin)
-		.on(@infs_cte[:post_id].eq(@posts_cte[:id]))
+		.on(
+			@infs_cte[:post_id].eq(@posts_cte[:id])
+		)
 		.join(@authors_cte, Arel::Nodes::OuterJoin)
-		.on(@posts_cte[:user_id].eq(@authors_cte[:id]))
+		.on(
+			@posts_cte[:user_id].eq(@authors_cte[:id])
+		)
 		.join(@publishers_cte, Arel::Nodes::OuterJoin)
-		.on(@infs_cte[:user_id].eq(@publishers_cte[:id]))
-		.order(@infs_cte[:publishTime].desc)
+		.on(
+			@infs_cte[:user_id].eq(@publishers_cte[:id])
+		)
+		.join(@inf_data_cte, Arel::Nodes::OuterJoin)
+		.on(
+			@infs_cte[:post_id].eq(@inf_data_cte[:post_id])
+		)
+		.order(
+			@infs_cte[:publishTime].desc
+		)
 		.with(
 			@infs_cte_as,
 			@posts_cte_as,
 			@authors_cte_as,
 			@publishers_cte_as,
+			@inf_data_cte_as
 		)
 	end
 end
