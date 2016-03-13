@@ -93,7 +93,7 @@ class UsersController < ApplicationController
 			totalShares: user.total_shares,
 			totalPosts: user.total_posts,
 			
-			regTime: user.created_at.to_i
+			regTime: user.created_at.to_i,
 			followStatus: current_user.try(:follows?, user)
 		}
 	end

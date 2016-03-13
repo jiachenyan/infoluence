@@ -11,6 +11,7 @@ $FONT_SIZE_REGULAR:13px;
 @import "font-awesome";
 
 *{
+	padding:0;margin:0;
 	position:relative;
 	font-family:"Microsoft Yahei";
 	//font-family:"Open Sans";
@@ -24,8 +25,9 @@ a{
 img{margin-bottom:-4px;}
 
 body{
+	position:fixed;
 	background-color:#222222;
-	width:100%;height:100;
+	width:100%;height:100%;
 }
 
 
@@ -95,8 +97,12 @@ body{
 .appBody{
 	position:fixed;
 	width:100%;
-	height:100%;
 	padding-top:$APP_MENU_H;
+}
+
+.base{
+	width:100%;
+	min-height:100%;
 }
 
 .entranceSection{
@@ -579,6 +585,52 @@ body{
 			p{
 				font-size:14px;color:grey;font-weight:normal;
 			}
+		}
+	}
+}
+
+
+.userWrapper{
+	margin:0 auto;
+	width:520px;
+}
+
+.userRow{
+	width:100%;
+	padding:18px 0;
+	border-bottom:grey solid 1px;
+
+	.profileImg{
+
+		img{
+			width:72px;height:72px;
+			border-radius:2px;
+		}
+	}
+
+	.userInfo{
+		padding-left:18px;
+
+		h1{
+			font-size:16px;color:white;
+		}
+
+		h2{
+			font-size:14px;color:grey;
+		}
+	}
+
+	.relationshipStatusButton{
+		padding:6px 12px;
+		font-size:14px;color:white;font-weight:normal;
+		background-color:rgb(51, 102, 153);
+		border-radius:2px;
+		border:rgb(56, 107, 158) solid 1px;
+		font-size:14px;color:white;
+
+		&:hover{
+			cursor:pointer;
+			background-color:rgb(61, 112, 163);
 		}
 	}
 }

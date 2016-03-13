@@ -101,16 +101,6 @@ graph =
     }
   ]
 
-# angular.module("Infoluence").service "detailPostInflunceChart", () ->
-# 	return
-
-# angular.module('Infoluence').directive 'timelinePost', ->
-
-#  templateUrl: "directives/timeline_post.html"
-#  #controller: "CommentBoxController"
-#  restrict: 'E'
-#  link: (scope, element, attrs) ->
-#   return
 angular.module('Infoluence').directive "detailPostInfluenceChart", [
 
 	'$parse'
@@ -118,7 +108,7 @@ angular.module('Infoluence').directive "detailPostInfluenceChart", [
 
 	 templateUrl: 'directives/detail_post_influence_chart.html'
 	 restrict: 'E'
-	 #replace: true
+	 contoller: 'InfluenceChartController'
 
 
 	 link: (scope, element, attrs) ->

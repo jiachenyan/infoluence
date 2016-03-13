@@ -3,30 +3,30 @@
 
 	.underlineBackground
 
-	.postPublisher.r
+	.postPublisher.r ng-if="post.publisher.username != post.author.username"
 		.profileImg
-			img ng-src="{{post.avatarThumb}}"
+			img ng-src="{{post.publisher.avatarThumb}}"
 		.publisher.f1.c
-			a href="/{{post.username}}"
+			a href="/{{post.publisher.username}}"
 				h1.regularText
-					|{{post.name}}
+					|{{post.publisher.name}}
 			h2
-				|{{post.timeString}}
+				|{{post.publishTimeString}}
 
 	.post
 
 	.postAuthor.r
 		.profileImg
-			img ng-src="{{post.avatarThumb}}"
+			img ng-src="{{post.author.avatarThumb}}"
 		.publisher.f1.c
-			a href="/{{post.username}}"
+			a href="/{{post.author.username}}"
 				h1.regularText
-					|{{post.name}}
+					|{{post.author.name}}
 			h2
-				|{{post.timeString}}
+				|{{post.publishTimeString}}
 
 	.postTitle
-		a href="/posts/{{post.postId}}"
+		a href="/posts/{{post.infId}}"
 			h1
 				|{{post.content.title}}
 

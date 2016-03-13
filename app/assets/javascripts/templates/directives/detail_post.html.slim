@@ -12,17 +12,17 @@
 
 			.detailPostAuthor.r
 				.profileImg
-					img ng-src="{{post.avatarThumb}}"
+					img ng-src="{{post.author.avatarThumb}}"
 				.authorInfo
 					h1
-						|{{post.name}}
+						|{{post.author.name}}
 
 			.detailPostPublisher.r
 				.profileImg
-					img ng-src="{{post.avatarThumb}}"
+					img ng-src="{{post.publisher.avatarThumb}}"
 				.publishInfo
 					h1
-						|{{post.name}} shared
+						|{{post.publisher.name}} shared
 
 		.detailPostMain
 			.paragraph
