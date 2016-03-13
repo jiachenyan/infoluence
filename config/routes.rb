@@ -29,8 +29,13 @@ Rails.application.routes.draw do
 		controller :posts, path: '/posts', constraints: { page: RtCst.int } do
 			get '/:page',                                action: :send_timeline
 			get '/following/:page',                      action: :send_follow_timeline
+			get '/user/:username/:page',                      action: :send_user_timeline
 		end
 		
+		controller :links, path: '/link' do
+			post '/',                                    action: :save_link
+		end
+
 		controller :links, path: '/link' do
 			post '/',                                    action: :save_link
 		end

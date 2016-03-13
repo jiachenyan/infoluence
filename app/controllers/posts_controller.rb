@@ -125,10 +125,36 @@ class PostsController < ApplicationController
 
 		@infs_query_ast = @infs_query_ast
 		.where(
+			@infs_tb[:inf_type].eq('oc')
+			.or(
+				@infs_tb[:inf_type].eq('sh')
+			)
+		)
+		.where(
 			@infs_tb[:user_id].in(
 				@urels_cte.project(@urels_cte[:follows_id])
 			)
 		)
+
+		render jsonize(json_agg_exec(build_infs_query))
+	end
+
+	def send_user_timeline
+		user = User.find_by_username(params[:username])
+		return render json_error('Invalid username') if user.blank?
+
+		infs_query_init
+
+		@infs_query_ast = @infs_query_ast
+		.where(
+			@infs_tb[:inf_type].eq('oc')
+			.or(
+				@infs_tb[:inf_type].eq('sh')
+			)
+		)
+		.where(@infs_tb[:user_id].eq(user.id))
+		.order(@infs_tb[:created_at].desc)
+		@infs_query_ast = paginate(@infs_query_ast, params[:page], POSTS_PER_PAGE)
 
 		render jsonize(json_agg_exec(build_infs_query))
 	end

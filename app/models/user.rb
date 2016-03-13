@@ -6,7 +6,9 @@ class User < ActiveRecord::Base
 		'link', 'links',
 		'trend', 'trends',
 		'share', 'shares',
-		'timeline', 'timelines'
+		'timeline', 'timelines',
+		'search', 'searches',
+		'discover', 'discovers'
 	]
 	attr_accessible(:name, :username)
 
