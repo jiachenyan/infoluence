@@ -82,16 +82,33 @@ POST  /posts.json
 				"regTime ": int,
 			},
 
-			"publisher": null,
+			"publisher": { // same as author
+				"name": string,
+				"username": string,
+				"avatarThumb": string,
+				"avatarMedium": string,
+
+				"totalRdInf": int,
+				"totalShInf": int,
+				"totalShares": int,
+				"totalPosts": int,
+
+				"regTime ": int,
+			 }
 
 			 // types: 'oc', 'rd', 'sh'
-			 "graphData": [infId, type, fromInfId] // null fromInfId when type = 'oc'
+			 "graphData": [infId, type, fromInfId] // null fromInfId when type == 'oc'
 		}
 	# on error => {"errors": [string]}
 
 GET   /post/:id.json
 	# post detail
 	# => post object same as above
+
+POST  /post/share/:from_inf_id
+	# share post
+	# => post object same as above
+
 
 GET   /posts/:page.json # timeline
 	# => post object array
@@ -121,7 +138,7 @@ GET   /posts/:page.json # timeline
 			"regTime ": int,
 		},
 
-		"publisher": { // null when infType == 'oc'
+		"publisher": { 
 			"name": string,
 			"username": string,
 			"avatarThumb": string,
@@ -136,7 +153,7 @@ GET   /posts/:page.json # timeline
 		 },
 
 		 // types: 'oc', 'rd', 'sh'
-		 "graphData": [infId, type, fromInfId] // null fromInfId when type = 'oc'
+		 "graphData": [infId, type, fromInfId] // null fromInfId when type == 'oc'
 	}]
 
 GET   /posts/following/:page.json # timeline
