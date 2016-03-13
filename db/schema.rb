@@ -11,11 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160312232745) do
+ActiveRecord::Schema.define(version: 20160313031542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "pg_trgm"
+
+  create_table "external_links", force: :cascade do |t|
+    t.text     "url"
+    t.text     "origin"
+    t.jsonb    "properties"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "influences", force: :cascade do |t|
     t.text     "inf_type",    null: false
@@ -72,6 +80,10 @@ ActiveRecord::Schema.define(version: 20160312232745) do
     t.integer  "total_share_influence", default: 0, null: false
     t.integer  "total_shares",          default: 0, null: false
     t.integer  "total_posts",           default: 0, null: false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
   end
 
   add_index "users", ["name"], name: "gin_index_users_on_name", using: :gin

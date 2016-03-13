@@ -34,6 +34,10 @@ Rails.application.routes.draw do
 		controller :users, path: '/:username' do
 			get '/',                                     action: :user_info
 		end
+
+		controller :external_links, path: 'link' do
+			post '/',                                    action: :save_link
+		end
 	end
 
 	# load application container by default
