@@ -16,6 +16,7 @@ POST  /users.json
 			"totalPosts": int,
 
 			"regTime ": int,
+			"followStatus": boolean // null when not signed in
 		}
 	# on error => {"errors": [string]}
 

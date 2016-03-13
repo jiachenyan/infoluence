@@ -11,6 +11,7 @@ class PostsController < ApplicationController
 
 		@influence = post.influences.new
 		@influence.inf_type = 'oc'
+		@influence.user_id = post.user_id
 		return render json_error(@influence) unless @influence.save
 
 		# update stats
@@ -88,19 +89,28 @@ class PostsController < ApplicationController
 		else
 			render json_error(@influence)
 		end
-
-
-
-		
 	end
 
 	def send_timeline
-		render jsonize(serialize_infs(params[:page]))
+		infs_query_init
+
+		@infs_query_ast = @infs_query_ast
+		.where(
+			@infs_tb[:inf_type].eq('oc')
+			.or(
+				@infs_tb[:inf_type].eq('sh')
+			)
+		)
+		.order(@infs_tb[:created_at].desc)
+		@infs_query_ast = paginate(@infs_query_ast, params[:page], POSTS_PER_PAGE)
+
+		render jsonize(json_agg_exec(infs_query))
 	end
 
 	def send_follow_timeline
-		# posts = posts union influences
-		render jsonize({todo: 'following timeline'})
+		infs_query_init
+
+		render jsonize(json_agg_exec(infs_query))
 	end
 
 	private
@@ -114,23 +124,6 @@ class PostsController < ApplicationController
 		).take(1)
 
 		json_agg_exec(infs_query).first
-	end
-
-	# for timeline
-	def serialize_infs(page)
-		infs_query_init
-
-		@infs_query_ast
-		.where(
-			@infs_tb[:inf_type].eq('oc')
-			.or(
-				@infs_tb[:inf_type].eq('sh')
-			)
-		)
-		.order(@infs_tb[:created_at].desc)
-		.take(POSTS_PER_PAGE)
-
-		json_agg_exec(infs_query)
 	end
 
 	def infs_query_init
@@ -208,8 +201,8 @@ class PostsController < ApplicationController
 		@publishers_cte = Arel::Table.new(:publishers_cte)
 		@publishers_cte_as = Arel::Nodes::As.new(@publishers_cte, @publishers_query_ast)
 
+
 		# data
-		
 		@inf_data_query_ast = @infs_tb.project(
 			@infs_tb[:post_id],
 			json_agg(json_build_array(
@@ -229,6 +222,7 @@ class PostsController < ApplicationController
 		@inf_data_cte_as = Arel::Nodes::As.new(@inf_data_cte, @inf_data_query_ast)
 
 
+		# query
 		@infs_query_ast = @infs_cte.project(
 			@infs_cte[:infId],
 			@infs_cte[:infType],

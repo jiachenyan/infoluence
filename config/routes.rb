@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+	module RtCst
+		def self.int
+			/[1-9]\d*/
+		end
+	end
+
 	root to: 'static#index'
 
 	scope format: true, constraints: { format: :json } do
@@ -15,12 +21,12 @@ Rails.application.routes.draw do
 		end
 
 		resources :posts, only: [:create]
-		controller :posts, path: '/post' do
+		controller :posts, path: '/post', constraints: { inf_id: RtCst.int, from_inf_id: RtCst.int } do
 			get '/:inf_id',                              action: :send_post
 			post '/share/:from_inf_id',                  action: :share_post
 		end
 
-		controller :posts, path: '/posts' do
+		controller :posts, path: '/posts', constraints: { page: RtCst.int } do
 			get '/:page',                                action: :send_timeline
 			get '/following/:page',                      action: :send_follow_timeline
 		end

@@ -87,8 +87,14 @@ class UsersController < ApplicationController
 			username: user.username,
 			avatarThumb: user.avatar.url(:thumb),
 			avatarMedium: user.avatar.url(:medium),
-			totalInf: user.total_influence,
+
+			totalRdInf: user.total_read_influence,
+			totalShInf: user.total_share_influence,
+			totalShares: user.total_shares,
+			totalPosts: user.total_posts,
+			
 			regTime: user.created_at.to_i
+			followStatus: current_user.try(:follows?, user)
 		}
 	end
 end
