@@ -34,8 +34,20 @@
 
 	.postContentPreview
 		.previewParagraph
-			p ng-repeat="pg in post.content.data"
+			p ng-repeat="pg in post.content.data track by $index" ng-if="pg.type == 'pg'"
 				|{{pg.body}}
+		.link ng-repeat="link in post.content.data track by $index" ng-if="link.type == 'lk'"
+				.linkImg ng-if='link.body.images[0]'
+					img ng-src="link.body.images[0]"
+				.linkContent.c
+					a href="{{link.body.url}}"
+						h1
+							|{{link.body.title}}
+					h2
+						|{{link.body.description}}
+					h3
+						|{{link.body.siteName}}
+
 
 		/ .postContentImg
 		/ 	img src="https://cdn-images-1.medium.com/max/800/1*wl-telbKckBU58z84fwvoQ.jpeg"

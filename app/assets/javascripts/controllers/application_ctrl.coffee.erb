@@ -4,12 +4,13 @@ angular.module('Infoluence').controller 'ApplicationController', [
  'CookieService'
  'UUID'
  'AuthService'
+ 'ScrollLoadSetterFactory'
 
  '$scope'
  '$stateParams'
 
 
- (CookieService,UUID,AuthService,$scope,$stateParams) ->
+ (CookieService,UUID,AuthService,ScrollLoadSetterFactory,$scope,$stateParams) ->
 
   $scope.me = null
   $scope.isSignedIn =    AuthService.isSignedIn()
@@ -17,6 +18,11 @@ angular.module('Infoluence').controller 'ApplicationController', [
   $scope.initialize = =>
    $scope.me = CookieService.getUserInfo()
    console.log $scope.me
+
+  $scope.loadMoreCurrentStuff = =>
+   console.log "loadMoreCurrentStuff"
+   ScrollLoadSetterFactory.loadMore()
+
 
   $scope.signout = =>
    AuthService.signout().then (res) =>
