@@ -1,0 +1,74 @@
+
+angular.module('Infoluence').controller 'SearchController', [
+
+
+ 'SearchService'
+ '$scope'
+ '$stateParams'
+
+
+ (SearchService,$scope,$stateParams) ->
+
+ 	$scope.query = ""
+
+ 	$scope.searchState = false
+
+ 	$scope.users = []
+ 	$scope.posts = []
+ 	typing = null
+
+ 	$scope.userResultBool = true
+ 	$scope.postResultBool = true
+
+  $scope.search = =>
+
+  	$scope.searchState = true
+
+  	console.log $scope.query
+  	if $scope.query.length > 0
+	   clearTimeout(typing)
+	   typing = setTimeout (=>
+		  	SearchService.search($scope.query,1).then (res) =>
+		  		data = res.data
+
+		  		if data.posts != null
+		  			$scope.postResultBool = true
+			  		res.data.posts.forEach (post) =>
+			  			post.totalInf = post.totalRdInf + post.totalShInf*3
+
+
+				   res.data.posts.sort (a,b) =>
+				    a.totalInf - b.totalInf
+
+			  		res.data.posts.forEach (post) =>
+			  			$scope.posts.push post
+			  	else
+			  		$scope.postResultBool = false
+
+		  		if data.users != null
+			  		$scope.userResultBool = true
+
+			  		res.data.users.forEach (user) =>
+			  			$scope.users.push user
+			  	else
+			  		$scope.userResultBool = false
+
+		  		console.log JSON.stringify(res)
+	   ), 300
+
+	  else
+	   clearTimeout(typing)
+
+		 	$scope.users = []
+		 	$scope.posts = []
+
+		$scope.exitSearch = =>
+			$scope.searchState = false
+
+		$scope.turnOnSearch = =>
+			if $scope.query.length > 0
+				$scope.searchState = true
+
+
+
+]

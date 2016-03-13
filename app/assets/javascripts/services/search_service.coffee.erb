@@ -1,0 +1,22 @@
+
+angular.module('Infoluence').service 'SearchService', [
+
+ '$http'
+ ($http) ->
+ 
+  @search = (query,pageNum) =>
+   url = "/discover.json?q=#{query}&p=#{pageNum}"
+   req =
+    method : "GET"
+    url : url
+    dataType : "json"
+   promise = $http(req)
+   promise
+
+
+
+
+
+  return
+
+]

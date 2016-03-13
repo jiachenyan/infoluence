@@ -39,15 +39,72 @@ body.c.wh100.ofys ng-controller="ApplicationController" infinite-scroll="loadMor
 		.f1
 		a href="/"
 			.c
-				h1.ac
+				h1.ac.logoText
 					|INFOLUENCE
-				h2.ac
+				h2.ac.logoSubText
 					|Share the Worth Knowings
 		.f1
-		.searchBar
+		.searchBar ng-controller="SearchController"
 			form
-				input placeholder="Search Infoluence"
-			.searchResultPanel
+				input placeholder="Search Infoluence" ng-model="query" ng-change="search()" ng-focus="turnOnSearch()"
+			.searchResultPanel.c.trans100 ng-show="searchState == true" ng-class="{'searchPanelOn': searchState == true}"
+				.searchPanelBackgroundLayer ng-click="exitSearch()"
+				.searchResultWrapper.r
+
+					.userCol.c.f1
+						.userSearchRes.c ng-controller="UserController" ng-repeat="user in users track by $index"
+							a.r href="/{{user.username}}"
+								.profileImg
+									img ng-src="{{user.avatarThumb}}"
+								.userInfo.c.f1
+									h1
+										|{{user.name}}
+									h2
+										|{{user.username}}
+									.f1
+								.relationship.c
+									.unfollowButton ng-if="user.followStatus == true" ng-click="unfollow(post.author.username)"
+										i.fa.fa-minus-square
+										|&nbsp;Unfollow
+									.followButton ng-if="user.followStatus == false" ng-click="follow(post.author.username)"
+										i.fa.fa-plus-square
+										|&nbsp;Follow
+
+						.noResult ng-show="userResultBool == false"
+							h1.ac
+								|No result matches {{query}}
+						.f1 ng-click="exitSearch()"
+					.ninepx
+
+					.post.col.c.f162 ng-show="postResultBool == false"
+						.postSearchRes.c ng-repeat="post in posts | orderBy: '-totalInf'"
+							a.c href="/{{post.author.username}}"
+								.searchResUserRow.r
+									.profileImg
+										img ng-src="{{post.author.avatarThumb}}"
+									.userInfo
+										h1
+											|{{post.author.name}}
+							a.c href="/posts/{{post.infId}}"
+								h1
+									|{{post.content.title}}
+								.linkThumb ng-repeat="link in post.content.data track by $index" ng-if="link.type == 'lk'"
+										.linkImg ng-if='link.body.images[0]'
+											img ng-src="link.body.images[0]"
+										.linkContent.c
+											a href="{{link.body.url}}"
+												h1
+													|{{link.body.title}}
+											h2
+												|{{link.body.description}}
+											h3
+												|{{link.body.siteName}}
+
+						.noResult
+							h1.ac
+								|No result matches {{query}}
+						.f1 ng-click="exitSearch()"
+
 		
 		.myPanel.r ng-if="me"
 			.f1
@@ -56,6 +113,7 @@ body.c.wh100.ofys ng-controller="ApplicationController" infinite-scroll="loadMor
 				.myPanelButton.c
 					.myProfileImg
 						img ng-src="{{me.avatarThumb}}"
+
 			/ a href="/users"
 			/ 	.myPanelButton.c
 			/ 		i.fa.fa-users

@@ -45,6 +45,12 @@
 	@include flex(1);
 }
 
+.f162{
+	@include display(flex);
+ //display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+	@include flex(1.62);
+}
+
 .ninepx{
 	width:9px;
 }

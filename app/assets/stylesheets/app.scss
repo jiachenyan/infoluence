@@ -59,14 +59,14 @@ body{
 	background-color:#111111;
 	z-index:90;
 
-	h1{
+	.logoText{
 		margin-top:10px;
 		text-align:center;
 		font-size:24px;color:white;font-weight:thin;
 		text-shadow:0 0 180px rgb(51, 102, 153);
 	}
 
-	h2{
+	.logoSubText{
 		margin-top:-3px;
 		font-size:12px;color:grey;font-weight:normal;
 	}
@@ -76,12 +76,14 @@ body{
 		margin-right:300px;
 
 		form{
+
 			input{
 				margin-top:9px;
 				padding:9px 12px;
 				border:none;
 				font-size:14px;
 				color:black;
+				border-radius:2px;
 			}
 		}
 
@@ -91,6 +93,136 @@ body{
 			@include calc(height,"100% - #{$APP_MENU_H}");
 			width:100%;
 			background-color:rgba(12,12,12,0.95);
+			opacity:0;
+
+			.searchPanelBackgroundLayer{
+				position:absolute;
+				width:100%;height:100%;
+			}
+
+			.searchResultWrapper{
+				margin:0 auto;
+				padding-top:18px;
+				width:720px;
+				z-index:10;
+
+				.noResult{
+					background-color:#333333;
+					border-radius:3px;
+					margin:3px;
+
+					h1{
+						font-size:14px;color:grey;
+
+					}
+				}
+
+				.userSearchRes{
+					padding:9px;
+					border:transparent solid 1px;
+					border-bottom:grey solid 1px;
+
+
+					&:hover{
+						cursor:pointer;
+						border:$BLUE solid 1px;
+					}
+
+					.profileImg{
+
+						img{
+							width:50px;height:50px;
+						}
+					}
+
+					.userInfo{
+						padding-left:9px;
+
+						h1{
+							margin:0;
+							font-size:14px;color:white;
+						}
+
+						h2{
+							margin:0;
+							font-size:12px;color:grey;
+						}
+					}
+				}
+
+				.postSearchRes{
+					padding:9px;
+					border:transparent solid 1px;
+					border-bottom:grey solid 1px;
+
+
+					&:hover{
+						cursor:pointer;
+						border:$BLUE solid 1px;
+					}
+
+					h1{
+						font-size:14px;color:white;font-weight:bold;
+					}
+
+					.searchResUserRow{
+						padding:3px 0;
+
+						img{
+							width:24px;height:24px;
+						}
+
+						.userInfo{
+							h1{
+								font-size:14px;color:white;font-weight:bold;
+							}
+						}
+					}
+				}
+
+				.linkThumb{
+					margin:3px;
+					background-color:#EEE;
+
+					.linkImg{
+						height:50px;
+					}
+
+					.linkContent{
+						padding:9px 12px;
+
+						h1{
+							font-size:12px;color:#222222;font-weight:bold;
+						}
+
+						h2{
+							font-size:12px;color:grey;font-weight:bold;
+						}
+
+						h3{
+							font-size:12px;color:grey;font-weight:bold;
+						}
+					}
+				}
+
+
+				
+				.searchResultWrapper{
+					padding:9px;
+
+					h1{
+						font-size:14px;color:white;
+					}
+
+					h2{
+						font-size:12px;color:grey;
+					}
+				}
+			}
+		}
+
+		.searchPanelOn{
+			opacity:1;
 		}
 	}
 
