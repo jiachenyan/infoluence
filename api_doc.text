@@ -80,6 +80,7 @@ POST  /posts.json
 				"totalPosts": int,
 
 				"regTime ": int,
+				"followStatus": boolean // null when not signed in
 			},
 
 			"publisher": { // same as author
@@ -94,6 +95,7 @@ POST  /posts.json
 				"totalPosts": int,
 
 				"regTime ": int,
+				"followStatus": boolean // null when not signed in
 			 }
 
 			 // types: 'oc', 'rd', 'sh'
@@ -136,6 +138,7 @@ GET   /posts/:page.json # timeline
 			"totalPosts": int,
 
 			"regTime ": int,
+			"followStatus": boolean // null when not signed in
 		},
 
 		"publisher": { 
@@ -150,6 +153,7 @@ GET   /posts/:page.json # timeline
 			"totalPosts": int,
 
 			"regTime ": int,
+			"followStatus": boolean // null when not signed in
 		 },
 
 		 // types: 'oc', 'rd', 'sh'
@@ -157,5 +161,4 @@ GET   /posts/:page.json # timeline
 	}]
 
 GET   /posts/following/:page.json # timeline
-	# => todo
 	# => post object array same as above

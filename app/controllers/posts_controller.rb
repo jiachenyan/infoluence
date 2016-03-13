@@ -104,13 +104,33 @@ class PostsController < ApplicationController
 		.order(@infs_tb[:created_at].desc)
 		@infs_query_ast = paginate(@infs_query_ast, params[:page], POSTS_PER_PAGE)
 
-		render jsonize(json_agg_exec(infs_query))
+		render jsonize(json_agg_exec(build_infs_query))
 	end
 
 	def send_follow_timeline
+		# relationship
+		@urels_tb = UserRelationship.arel_table
+		@urels_query_ast = @urels_tb
+		.project(
+			@urels_tb[:follows_id],
+		)
+		.where(
+			@urels_tb[:follower_id].eq(current_user.id)
+		)
+		@urels_cte = Arel::Table.new(:urels_ctes)
+		@urels_cte_as = Arel::Nodes::As.new(@urels_cte, @urels_query_ast)
+
+		# influences
 		infs_query_init
 
-		render jsonize(json_agg_exec(infs_query))
+		@infs_query_ast = @infs_query_ast
+		.where(
+			@infs_tb[:user_id].in(
+				@urels_cte.project(@urels_cte[:follows_id])
+			)
+		)
+
+		render jsonize(json_agg_exec(build_infs_query))
 	end
 
 	private
@@ -123,7 +143,7 @@ class PostsController < ApplicationController
 			@infs_tb[:id].eq(@influence.id)
 		).take(1)
 
-		json_agg_exec(infs_query).first
+		json_agg_exec(build_infs_query).first
 	end
 
 	def infs_query_init
@@ -139,7 +159,7 @@ class PostsController < ApplicationController
 		)
 	end
 
-	def infs_query
+	def build_infs_query
 		@infs_cte = Arel::Table.new(:infs_cte)
 		@infs_cte_as = Arel::Nodes::As.new(@infs_cte, @infs_query_ast)
 
@@ -163,8 +183,10 @@ class PostsController < ApplicationController
 		@posts_cte_as = Arel::Nodes::As.new(@posts_cte, @posts_query_ast)
 
 
-		# users -> authors, publishers
+		# users -> authors, publishers, follow status
 		@users_tb = User.arel_table
+		@urels_tb = UserRelationship.arel_table
+
 		@users_query_ast = @users_tb.project(
 			@users_tb[:id],
 
@@ -179,10 +201,27 @@ class PostsController < ApplicationController
 
 				Arel.sql("'totalShares'"), @users_tb[:total_shares],
 				Arel.sql("'totalPosts'"), @users_tb[:total_posts],
-				Arel.sql("'regTime'"), arel_sql_epoch(@users_tb, :created_at)
+				Arel.sql("'regTime'"), arel_sql_epoch(@users_tb, :created_at),
+
+				Arel.sql("'followStatus'"), Arel.sql(<<-SQL.squish
+					CASE WHEN #{current_user.try(:id) || 'NULL'} IS NULL THEN
+						NULL
+					WHEN "user_relationships"."id" IS NOT NULL THEN
+						TRUE
+					ELSE
+						FALSE
+					END
+				SQL
+				)
 			).as('user_data')
 		)
+		.join(@urels_tb, Arel::Nodes::OuterJoin)
+		.on(
+			@users_tb[:id].eq(@urels_tb[:follows_id])
+			.and(@urels_tb[:follower_id].eq(current_user.try(:id)))
+		)
 
+		# authors
 		@authors_query_ast = @users_query_ast.dup
 		.where(
 			@users_tb[:id].in(
@@ -192,6 +231,7 @@ class PostsController < ApplicationController
 		@authors_cte = Arel::Table.new(:authors_cte)
 		@authors_cte_as = Arel::Nodes::As.new(@authors_cte, @authors_query_ast)
 
+		# publishers
 		@publishers_query_ast = @users_query_ast.dup
 		.where(
 			@users_tb[:id].in(
@@ -257,12 +297,21 @@ class PostsController < ApplicationController
 		.order(
 			@infs_cte[:publishTime].desc
 		)
-		.with(
+
+		unless @urels_cte_as.nil?
+			with_ctes = [@urels_cte_as] # for following timeline
+		else
+			with_ctes = Array.new
+		end
+
+		with_ctes += [
 			@infs_cte_as,
 			@posts_cte_as,
 			@authors_cte_as,
 			@publishers_cte_as,
 			@inf_data_cte_as
-		)
+		]
+
+		@infs_query_ast = @infs_query_ast.with(with_ctes)
 	end
 end
