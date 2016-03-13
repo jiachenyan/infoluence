@@ -12,6 +12,15 @@ angular.module('Infoluence').service 'PostService', [
     dataType : "json"
    promise = $http(req)
    promise
+ 
+  @sharePost = (fromInfluenceId) =>
+   url = "/post/share/#{fromInfluenceId}.json"
+   req =
+    method : "POST"
+    url : url
+    dataType : "json"
+   promise = $http(req)
+   promise
 
   @submitPost = (params) =>
 

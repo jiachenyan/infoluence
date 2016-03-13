@@ -1,106 +1,4 @@
 
-
-
-graph =
-  'nodes': [
-    {
-      'name': 'Myriel'
-    }
-    {
-      'name': 'Myriel'
-    }
-    {
-      'name': 'Myriel'
-    }
-    {
-      'name': 'Myriel'
-    }
-    {
-      'name': 'Myriel'
-    }
-    {
-      'name': 'Myriel'
-    }
-    {
-      'name': 'Myriel'
-    }
-    {
-      'name': 'Myriel'
-    }
-    {
-      'name': 'Myriel'
-    }
-    {
-      'name': 'Myriel'
-    }
-    {
-      'name': 'Myriel'
-    }
-    {
-      'name': 'Myriel'
-    }
-    {
-      'name': 'Myriel'
-    }
-  ]
-  'links': [
-    {
-      'source': 0
-      'target': 1
-      'value': 1
-    }
-    {
-      'source': 0
-      'target': 2
-      'value': 1
-    }
-    {
-      'source': 0
-      'target': 3
-      'value': 1
-    }
-    {
-      'source': 0
-      'target': 4
-      'value': 1
-    }
-    {
-      'source': 0
-      'target': 5
-      'value': 3
-    }
-    {
-      'source': 0
-      'target': 6
-      'value': 1
-    }
-    {
-      'source': 0
-      'target': 7
-      'value': 1
-    }
-    {
-      'source': 0
-      'target': 8
-      'value': 2
-    }
-    {
-      'source': 0
-      'target': 9
-      'value': 1
-    }
-    {
-      'source': 5
-      'target': 10
-      'value': 1
-    }
-    {
-      'source': 5
-      'target': 11
-      'value': 1
-    }
-  ]
-
 angular.module('Infoluence').directive "detailPostInfluenceChart", [
 
 	'$parse'
@@ -121,6 +19,44 @@ angular.module('Infoluence').directive "detailPostInfluenceChart", [
 			])
 
 			svg = d3.select('#chartSVG').attr('width', width).attr('height', height)
+
+   data = scope.post.graphData
+
+   graph = 
+    'nodes': []
+    'links': []
+
+   data.forEach (el) =>
+    graph['nodes'].push el
+
+   i = 0
+   len = data.length
+
+   while i < len
+
+    j = 0
+
+    while j < len
+
+     if graph['nodes'][i][2] == graph['nodes'][j][0]
+
+      link = 
+       'source': j
+       'target': i
+       'value': 1
+
+      console.log "i:#{graph['nodes'][i][2]} j:#{graph['nodes'][j][0]}"
+      console.log "i:#{i} j:#{j}"
+
+
+      graph['links'].push link
+      break
+     j++
+
+    i++
+   console.log graph
+
+    
 
 
 	  # if error

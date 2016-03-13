@@ -21,6 +21,10 @@ angular.module('Infoluence').controller 'PostController', [
   $scope.back = =>
    $state.go("^")
 
+  $scope.sharePost = =>
+   PostService.sharePost($scope.postId).then (res) =>
+    console.log JSON.stringify(res)
+
   $scope.getDetailPost = =>
   	console.log $scope.postId
   	PostService.getDetailPost($scope.postId).then (res) =>

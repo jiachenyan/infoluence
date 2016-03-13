@@ -2,7 +2,7 @@
 	.detailPostBackground.f1 ng-click="back()"
 	.detailPost.c
 		.detailPostHead.c
-			.influenceChart.c
+			.influenceChart.c ng-if="post"
 				detail-post-influence-chart.wh100
 				
 
@@ -42,7 +42,7 @@
 					i.fa.fa-plus-square
 					|&nbsp;Follow
 			.spreadInfluence.f1.c
-				.share
+				.share ng-click="sharePost()"
 					.icon.trans100
 				.socialMedia.c
 					h1.ac

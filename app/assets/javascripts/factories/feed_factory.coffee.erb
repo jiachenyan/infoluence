@@ -17,7 +17,8 @@ angular.module('Infoluence').factory "FeedFactory", [
     data = res.data
 
     data.forEach (post) =>
-     # comment.timestamp  = comment.time
+     console.log post
+
      post.publishTimeString = moment(post.publishTime * 1000).format("L, h:mm:ss a")
      post.createTimeString = moment(post.createTime * 1000).format("L, h:mm:ss a")
      
@@ -25,7 +26,7 @@ angular.module('Infoluence').factory "FeedFactory", [
 
   o.clear = =>
    o.feed = []
-   pageNum:0
+   o.pageNum =0
 
 
 
