@@ -36,8 +36,9 @@ Rails.application.routes.draw do
 			post '/',                                    action: :save_link
 		end
 
-		controller :links, path: '/link' do
-			post '/',                                    action: :save_link
+		controller :discover, path: '/discover' do
+			# ?q=query&p=page
+			get '/',                                     action: :search_all
 		end
 
 		controller :users, path: '/:username' do
