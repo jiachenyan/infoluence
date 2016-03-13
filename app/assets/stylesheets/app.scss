@@ -3,6 +3,7 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 
 $APP_MENU_H:60px;
 $LINE_COLOR:grey;
+$BLUE:rgb(51, 102, 153);
 
 $FONT_SIZE_REGULAR:13px;
 
@@ -217,6 +218,27 @@ body{
 	width:520px;
 	//height:120%;
 	padding-bottom:360px;
+
+	.feedSelectorWrapper{
+		margin-bottom:12px;
+		border-bottom:grey solid 2px;
+
+		.feedSelector{
+			padding:6px;
+			margin-bottom:-2px;
+			border-bottom:transparent solid 2px;
+
+			h1{
+				font-size:13px;color:grey;font-weight:bold;
+			}
+
+			&:hover{
+				cursor:pointer;
+				background-color:#333333;
+				border-bottom:$BLUE solid 2px;
+			}
+		}
+	}
 }
 
 .timelinePost{
@@ -304,7 +326,7 @@ body{
 	.postContentPreview{
 		//height:300px;
 		background-color:#DDDDDD;
-		border-top:grey solid 1px;
+		//border-top:grey solid 1px;
 		// border-left:grey solid 1px;
 		// border-right:grey solid 1px;
 	}

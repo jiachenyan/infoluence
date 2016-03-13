@@ -20,14 +20,18 @@ angular.module('Infoluence').controller 'HomeController', [
    FeedFactory.getFeed($scope.feedType)
 
   $scope.switchToPublic = =>
-   FeedFactory.clear()
+   $scope.clear()
    $scope.feedType = ""
    $scope.getFeed()
 
   $scope.switchToFollowing = =>
-   FeedFactory.clear()
+   $scope.clear()
    $scope.feedType = "/following"
    $scope.getFeed()
+
+  $scope.clear = =>
+   FeedFactory.clear()
+   $scope.feed = FeedFactory.feed
 
 
 

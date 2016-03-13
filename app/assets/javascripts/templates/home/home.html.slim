@@ -12,6 +12,13 @@
 				.submitButton ng-click="submitPost()"
 					|Publish
 
+		.feedSelectorWrapper.r
+			.feedSelector.c ng-click="switchToPublic()"
+				h1.ar
+					|Public
+			.feedSelector.c ng-click="switchToFollowing()"
+				h1.ar
+					|Following
 		timeline-post ng-repeat="post in feed track by $index"
 
 	ui-view style="position:fixed;z-index:99;"
