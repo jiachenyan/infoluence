@@ -1,10 +1,9 @@
 
 html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block;vertical-align:baseline}audio:not([controls]){display:none;height:0}[hidden],template{display:none}a{background-color:transparent}a:active,a:hover{outline:0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:700}dfn{font-style:italic}h1{font-size:2em;margin:0}mark{background:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:1em 40px}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}pre{overflow:auto}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}button,input,optgroup,select,textarea{color:inherit;font:inherit;margin:0}button{overflow:visible}button,select{text-transform:none}button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}input{line-height:normal}input[type=checkbox],input[type=radio]{box-sizing:border-box;padding:0}input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{height:auto}input[type=search]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}textarea{overflow:auto}optgroup{font-weight:700}table{border-collapse:collapse;border-spacing:0}td,th{padding:0}
 
-$APP_MENU_H:60px;
+$APP_MENU_H:48px;
 $LINE_COLOR:grey;
 $BLUE:rgb(51, 102, 153);
-
 $FONT_SIZE_REGULAR:13px;
 
 
@@ -27,6 +26,8 @@ img{margin-bottom:-4px;}
 
 body{
 	background-color:#222222;
+	background-color:black;
+	background-color:#111111;
 	width:100%;
 }
 
@@ -57,13 +58,17 @@ body{
 	height:$APP_MENU_H;
 	width:100%;
 	background-color:#111111;
+	background-color:black;
+	background-color:#111111;
+	//border-bottom:$BLUE solid 1px;
 	z-index:90;
 
 	.logoText{
-		margin-top:10px;
+		padding:0 9px;
+		margin-top:6px;
 		text-align:center;
-		font-size:24px;color:white;font-weight:thin;
-		text-shadow:0 0 180px rgb(51, 102, 153);
+		font-size:21px;color:white;font-weight:thin;
+		color:#CCCCCC;
 	}
 
 	.logoSubText{
@@ -112,8 +117,7 @@ body{
 					margin:3px;
 
 					h1{
-						font-size:14px;color:grey;
-
+						font-size:13px;color:grey;font-weight:normal;
 					}
 				}
 
@@ -173,8 +177,9 @@ body{
 						}
 
 						.userInfo{
+							padding-left:9px;
 							h1{
-								font-size:14px;color:white;font-weight:bold;
+								font-size:14px;color:white;font-weight:normal;
 							}
 						}
 					}
@@ -407,6 +412,10 @@ body{
 	}
 }
 
+.timelineFade{
+	opacity:0.7;
+}
+
 .loadMore{
 	width:100%;
 	height:900px;
@@ -414,10 +423,14 @@ body{
 
 .timelinePost{
 	@include calc(width,"100% - 24px");
-	padding:12px;
-	margin-bottom:12px;
-	background-color:white;
-	border-radius:2px;
+	width:100%;
+	padding:12px 0;
+	margin-bottom:24px;
+
+	.postBorder{
+		width:0px;
+		border-left:#333333 dotted 1px;
+	}
 
 	.underlineBackground{
 		position:absolute;
@@ -428,45 +441,49 @@ body{
 	}
 
 	.postPublisher{
-		border-bottom:grey solid 1px;
-		padding-bottom:6px;
+		padding:0 0px 3px 0px;
 
 		.profileImg{
-			margin-right:12px;
+			margin-right:9px;
 
 			img{
-				width:32px;height:32px;
-				border:grey solid 1px;
-				border-radius:1px;
+				width:38px;height:38px;
+				border:#333333 solid 1px;
 			}
 		}
 
 		h1{
-			margin:0;
-			font-size:13px;color:#333333;font-weight:bold;
+			margin-top:2px;
+			font-size:13px;color:rgb(145, 187, 229);font-weight:normal;
+			color:#CCCCCC;
 		}
 
 		h2{
-			font-size:11px;color:grey;font-weight:normal;
+			margin-top:3px;
+			font-size:12px;color:grey;font-weight:normal;
 		}
 	}
 
 	.postAuthor{
-		padding-top:6px;
+		margin:0 0px;
+		padding:3px 12px 9px 12px;
+		background-color:#333333;
+		background-color:#DDDDDD;
 
 		.profileImg{
-			margin-right:12px;
+			margin-right:9px;
 
 			img{
-				width:52px;height:52px;
-				border:grey solid 1px;
+				width:32px;height:32px;
 				border-radius:1px;
+				border:#CCCCCC solid 1px;
 			}
 		}
 
 		h1{
-			margin:0;
-			font-size:16px;color:#333333;font-weight:bold;
+			font-size:13px;color:rgb(145, 187, 229);font-weight:normal;
+			font-size:12px;color:#333333;font-weight:normal;
+			color:grey;
 		}
 
 		h2{
@@ -474,25 +491,30 @@ body{
 		}
 	}
 
+	.timelinePostContent{
+		background-color:#DDDDDD;
+		margin:0 0px;
+		padding:6px 12px 6px 12px;
+		margin-top:6px;
+	}
+
 	.postTitle{
-		padding:9px 0;
+		padding:3px 0 3px 0;
 
 		h1{
-			font-size:16px;color:#333333;font-weight:bold;
+			font-size:14px;
+			font-weight:bold;
+			color:rgb(23, 58, 105);
 		}
 	}
 
 	.postContentPreview{
-		//height:300px;
+		padding:6px 0 0 0;
 		background-color:#DDDDDD;
-		//border-top:grey solid 1px;
-		// border-left:grey solid 1px;
-		// border-right:grey solid 1px;
 	}
 
 	.previewParagraph{
-		padding:0 12px;
-		max-height:118px;
+		max-height:48px;
 		overflow:hidden;
 
 		.readMore{
@@ -509,7 +531,7 @@ body{
 		p{
 			margin-top:-18px;
 			white-space:pre-line;
-			font-size:14px;color:#555555;font-weight:normal;
+			font-size:12px;color:#555555;font-weight:normal;
 		}
 	}
 
@@ -529,7 +551,6 @@ body{
 }
 
 .postCreation{
-	background-color:white;
 	margin:12px 0;
 	border-radius:2px;
 
@@ -542,6 +563,8 @@ body{
 			border:none;
 			border-bottom:transparent;
 			border-bottom:grey solid 1px;
+			background-color:transparent;
+			color:#EEEEEE;
 
 			&:focus{
 				border:none;
@@ -557,6 +580,7 @@ body{
 			min-height:120px;
 			border-bottom:transparent;
 			resize:vertical;
+			background-color:#DDDDDD;
 
 			&:focus{
 				border:none;
@@ -610,8 +634,9 @@ body{
 
 
 .link{
-	margin:3px 15px;
+	margin-top:6px;
 	background-color:#EEE;
+	overflow:hidden;
 
 	.linkImg{
 		height:90px;
@@ -621,7 +646,7 @@ body{
 		padding:9px 12px;
 
 		h1{
-			font-size:14px;color:#222222;font-weight:bold;
+			font-size:13px;color:#222222;font-weight:bold;
 		}
 
 		h2{
@@ -639,20 +664,39 @@ body{
 	top:0;left:0;
 	width:100%;
 	background-color:rgba(0,0,0,0.5);
+	background-color:rgba(0,0,0,0.9);
+	background:linear-gradient(to bottom, rgba(0, 0, 0, .95) 0%, rgba(22, 23, 26, .95) 75%, rgba(22, 23, 26, .95) 100%);
 	z-index:99;
 	@include align-items(strech);
+	opacity:0;
 
 	.detailPostBackground{
 	}
 }
 
+.postLoading{
+	opacity:0.9;
+	background-color:grey;
+}
+
+.postLoaded{
+	opacity:1;
+}
+
 .detailPost{
-	margin:72px auto 36px auto;
-	width:720px;
-	border-radius:3px;
+	margin:0px auto 0px auto;
+	width:590px;
+	min-height:100%;
 	z-index:99;
-	border:grey solid 1px;
 	@include align-self(flex-start);
+
+	&:hover{
+
+		// //margin-top:-120px;
+	 // -ms-transform: scale(0.7,0.7); /* IE 9 */
+		// -webkit-transform: scale(0.7,0.7); /* Safari */
+		// transform: scale(0.7,0.7); /* Standard syntax */
+	}
 
 	.influenceChart{
 		position:absolute;
@@ -665,12 +709,11 @@ body{
 	}
 
 	.detailPostHead{
-		padding-bottom:9px;
+		padding:36px 0 9px 0;
 		width:100%;
-		background-color:black;
 
 		.postTitle{
-			padding:18px 275px 18px 18px;
+			padding:36px 212px 9px 0px;
 
 			h1{
 				font-size:21px;color:#EEE;font-weight:bold;
@@ -679,12 +722,14 @@ body{
 		}
 
 		.detailPostAuthor{
-			padding:9px 18px;
+			padding:9px 0px;
 
 			.profileImg{
+				margin-right:12px;
 
 				img{
-					width:50px;height:50px;
+					width:38px;height:38px;
+					border:#333333 solid 1px;
 				}
 			}
 
@@ -692,12 +737,10 @@ body{
 				padding:0 0 0 0;
 
 				h1{
-					margin-left:18px;
-					font-size:16px;color:white;font-weight:bold;
+					font-size:14px;color:#EEEEEE;font-weight:normal;
 				}
 
 				h2{
-					margin-left:18px;
 					font-size:12px;color:grey;font-weight:normal;
 				}
 			}
@@ -705,9 +748,9 @@ body{
 	}
 
 	.detailPostPublisher{
-		padding:9px 0;
-		margin:0 18px;
-		border-top:grey solid 1px;
+		padding:9px 0 0 0;
+		margin:0 0px;
+		border-top:#222222 solid 1px;
 		@include align-self(flex-start);
 
 
@@ -736,27 +779,29 @@ body{
 	.detailPostMain{
 
 		width:100%;
-		background-color:white;
+		background-color:rgb(235, 238, 233);
+		box-shadow:0 0 18px rgb(31, 67, 67);
 
 		.paragraph{
-			padding:18px;
+			padding:0px 18px 18px 18px;
 
 			p{
-				//margin-top:-26px;
+				//margin-top:-9px;
 				white-space:pre-line;
-				line-height:26px;
-				font-size:16px;color:#333333;font-weight:normal;
+				line-height:24px;
+				font-size:15px;color:#333333;font-weight:normal;
 			}
 		}
 	}
 
 	.detailPostFoot{
 		width:100%;
-		background-color:#111111;
+		padding:36px 0;
+		//background-color:black;
 
 
 		.relationshipUpdate{
-			border-right:grey solid 1px;
+			border-right:#555555 solid 1px;
 
 			.authorProfileImg{
 				margin:0 auto;

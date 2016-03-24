@@ -1,7 +1,7 @@
 
 .w100 ng-controller="HomeController" ng-init="homeInit()"
 	
-	.timeline ng-init="getFeed()"
+	.timeline.trans150 ng-init="getFeed()" ng-class="{'timelineFade':currentState.name == 'home.post'}"
 
 		.postCreation.c ng-controller="NewPostController" ng-if="isSignedIn"
 			form ng-init="initNewPost()"

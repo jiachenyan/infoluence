@@ -36,13 +36,13 @@ html ng-app="Infoluence"
 body.c.wh100.ofys ng-controller="ApplicationController" infinite-scroll="loadMoreCurrentStuff()" infinite-scroll-distance="3"
  
 	.appMenu.r ng-init="initialize()"
-		.f1
+		/.f1
 		a href="/"
 			.c
 				h1.ac.logoText
 					|INFOLUENCE
-				h2.ac.logoSubText
-					|Share And Visualize Influence
+				/ h2.ac.logoSubText
+				/ 	|Share the Worth Knowning
 
 		.f1
 		.searchBar ng-controller="SearchController"
@@ -73,11 +73,11 @@ body.c.wh100.ofys ng-controller="ApplicationController" infinite-scroll="loadMor
 
 						.noResult ng-show="userResultBool == false"
 							h1.ac
-								|No result matches {{query}}
+								|No user result matches {{query}}
 						.f1 ng-click="exitSearch()"
 					.ninepx
 
-					.post.col.c.f162 ng-show="postResultBool == false"
+					.post.col.c.f162
 						.postSearchRes.c ng-repeat="post in posts | orderBy: '-totalInf'"
 							a.c href="/{{post.author.username}}"
 								.searchResUserRow.r
@@ -101,9 +101,9 @@ body.c.wh100.ofys ng-controller="ApplicationController" infinite-scroll="loadMor
 											h3
 												|{{link.body.siteName}}
 
-						.noResult
+						.noResult ng-show="postResultBool == false"
 							h1.ac
-								|No result matches {{query}}
+								|No post result matches {{query}}
 						.f1 ng-click="exitSearch()"
 
 		

@@ -1,53 +1,54 @@
 
-.timelinePost.c infinite-scroll="getFeed()" infinite-scroll-distance="1.5"
+.timelinePost.r	 infinite-scroll="getFeed()" infinite-scroll-distance="1.5"
+	/.postBorder
+	.postInner.f1.c
+		.underlineBackground
+			/ .influenceChart.c.wh100 ng-if="post"
+			/ 	detail-post-influence-chart.wh100
 
-	.underlineBackground
-		/ .influenceChart.c.wh100 ng-if="post"
-		/ 	detail-post-influence-chart.wh100
-
-	.postPublisher.r ng-if="post.createTime != post.publishTime"
-		.profileImg
-			img ng-src="{{post.publisher.avatarThumb}}"
-		.publisher.f1.c
-			a href="/{{post.publisher.username}}/"
-				h1.regularText
-					|{{post.publisher.name}}
-			h2
-				|{{post.publishTimeString}}
-
-	.post
-
-	.postAuthor.r
-		.profileImg
-			img ng-src="{{post.author.avatarThumb}}"
-		.publisher.f1.c
-			a href="/{{post.author.username}}/"
-				h1.regularText
-					|{{post.author.name}}
-			h2
-				|{{post.publishTimeString}}
-
-	.postTitle
-		a href="{{rootUrl}}posts/{{post.infId}}"
-			h1
-				|{{post.content.title}}
-
-	.postContentPreview
-		.previewParagraph
-			p ng-repeat="pg in post.content.data track by $index" ng-if="pg.type == 'pg'"
-				|{{pg.body}}
-		.link ng-repeat="link in post.content.data track by $index" ng-if="link.type == 'lk'"
-				.linkImg ng-if='link.body.images[0]'
-					img ng-src="link.body.images[0]"
-				.linkContent.c
-					a href="{{link.body.url}}" target="_blank"
-						h1
-							|{{link.body.title}}
-					h2
-						|{{link.body.description}}
-					h3
-						|{{link.body.siteName}}
+		.postPublisher.r
+			.profileImg
+				img ng-src="{{post.publisher.avatarThumb}}"
+			.publisher.f1.c
+				a href="/{{post.publisher.username}}/"
+					h1.regularText
+						|{{post.publisher.name}}
+				h2
+					b ng-if="post.author.username != post.publisher.username"
+						i.fa.fa-retweet.blue
+						|&nbsp;
+					|{{post.publishTimeString}}
 
 
-		/ .postContentImg
-		/ 	img src="https://cdn-images-1.medium.com/max/800/1*wl-telbKckBU58z84fwvoQ.jpeg"
+
+		.timelinePostContent.c
+			.postTitle
+				a href="{{rootUrl}}posts/{{post.infId}}"
+					h1
+						|{{post.content.title}} {{post.totalReads + post.totalShares*5}}
+
+			.postContentPreview
+				.previewParagraph
+					p ng-repeat="pg in post.content.data track by $index" ng-if="pg.type == 'pg'"
+						|{{pg.body}}
+				.link ng-repeat="link in post.content.data track by $index" ng-if="link.type == 'lk'"
+						.linkImg ng-if='link.body.images[0]'
+							img ng-src="link.body.images[0]"
+						.linkContent.c
+							a href="{{link.body.url}}" target="_blank"
+								h1
+									|{{link.body.title}}
+							h2
+								|{{link.body.description}}
+							h3
+								|{{link.body.siteName}}
+
+		.postAuthor.r ng-if="post.author.username != post.publisher.username"
+			.profileImg
+				img ng-src="{{post.author.avatarThumb}}"
+			.publisher.f1.c
+				a href="/{{post.author.username}}/"
+					h1.regularText
+						|{{post.author.name}}
+				h2
+					|{{post.publishTimeString}}

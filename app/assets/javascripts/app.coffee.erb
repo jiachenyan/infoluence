@@ -12,6 +12,25 @@ seed = angular.module('Infoluence', [
 
 ])
 
+angular.module('Infoluence').run [
+
+ "$rootScope"
+ "$location"
+ "$state"
+
+ ($rootScope, $location, $state) ->
+
+
+  $rootScope.$on '$stateChangeSuccess', (event, toState, toParams) ->
+
+   $rootScope.currentState = $state.current
+   #$rootScope.rootUrl = window.location.pathname
+
+   return
+
+  return
+
+]
 
 angular.module('Infoluence').directive 'preventDefault', ->
   

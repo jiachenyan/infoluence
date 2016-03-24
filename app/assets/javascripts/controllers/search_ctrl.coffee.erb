@@ -24,7 +24,6 @@ angular.module('Infoluence').controller 'SearchController', [
 
   	$scope.searchState = true
 
-  	console.log $scope.query
   	if $scope.query.length > 0
 	   clearTimeout(typing)
 	   typing = setTimeout (=>
@@ -42,6 +41,7 @@ angular.module('Infoluence').controller 'SearchController', [
 
 			  		res.data.posts.forEach (post) =>
 			  			$scope.posts.push post
+			  			console.log "push post"
 			  	else
 			  		$scope.postResultBool = false
 

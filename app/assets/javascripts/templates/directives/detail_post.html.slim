@@ -1,12 +1,12 @@
-.detailPostBase.wh100.ofys.r ng-controller="PostController" ng-init="getDetailPost()"
+.detailPostBase.wh100.ofys.r.trans200 ng-controller="PostController" ng-init="getDetailPost()" ng-class="{'postLoading':postLoadingStatus == 'loading','postLoaded':postLoadingStatus == 'loaded'}"
 
 	.detailPostBackground.f1 ng-click="back()"
 
-	.detailPost.c
+	.detailPost.c.trans200
 
 		.detailPostHead.c
 
-			.influenceChart.c ng-if="post.infId"
+			.influenceChart.c ng-if="post"
 				detail-post-influence-chart.wh100
 				
 			.postTitle
@@ -56,7 +56,7 @@
 
 
 
-		.detailPostFoot.r
+		.detailPostFoot.r ng-if="post.author.username != me.username" ng-show="post"
 			.relationshipUpdate.f1.c
 				.authorProfileImg
 					img ng-src="{{post.author.avatarThumb}}"

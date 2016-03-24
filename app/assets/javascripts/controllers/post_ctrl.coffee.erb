@@ -22,6 +22,8 @@ angular.module('Infoluence').controller 'PostController', [
 
   $scope.shareStatus = null
 
+  $scope.postLoadingStatus = null
+
 
   $scope.back = =>
    $state.go("^")
@@ -35,11 +37,15 @@ angular.module('Infoluence').controller 'PostController', [
 
   $scope.getDetailPost = =>
 
+   $scope.postLoadingStatus = "loading"
+
   	PostService.getDetailPost($scope.postId).then (res) =>
     post = res.data
     post.publishTimeString = moment(post.publishTime * 1000).format("L, h:mm a")
     post.createTimeString = moment(post.createTime * 1000).format("L, h:mm a")
   		$scope.post = post
+
+    $scope.postLoadingStatus = "loaded"
 
   $scope.follow = (username) =>
    UserService.follow(username).then (res) =>
